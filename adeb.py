@@ -440,7 +440,7 @@ def updatePassword():
 
 
 
-@app.route('/verifyOtp1', methods=['POST'])
+@app.route('/enterOtp', methods=['POST'])
 def verifyOtp1():
     try:
         inputdata =  commonfile.DecodeInputdata(request.get_data())
@@ -511,6 +511,29 @@ def adminLogin():
         return output
 
 
+
+
+
+
+@app.route('/selectallUsers', methods=['GET'])
+def selectallUsers():
+    try:
+        columns=" us.usertype,um.name,um.walletBalance,um.email,um.status,um.password,um.mobileNo,um.gender,um.deviceKey  "
+        whereCondition=" and um.usertypeId=us.id"
+        data = databasefile.SelectQuery4("userTypeMaster",columns)
+       
+
+        if data:           
+            Data = {"status":"true","message":"","result":data["result"]}
+            return Data
+        else:
+            output = {"status":"false","message":"No Data Found","result":""}
+            return output
+
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"status":"false","message":"something went wrong","result":""}
+        return output 
 
 
 
