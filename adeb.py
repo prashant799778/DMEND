@@ -30,6 +30,28 @@ app.config['SECRET_KEY'] = 'secret!'
 
 
 
+
+@app.route('/selectUserTypeMaster', methods=['GET'])
+def selectUserTypeMaster():
+    try:
+        columns=" id, usertype "
+        
+        data = databasefile.SelectQueryMaxId("userTypeMaster",columns)
+       
+
+        if data:           
+            Data = {"status":"true","message":"","result":data["result"]}
+            return Data
+        else:
+            output = {"status":"false","message":"No Data Found","result":""}
+            return output
+
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"status":"false","message":"something went wrong","result":""}
+        return output 
+
+
 @app.route('/userSignup', methods=['POST'])
 def userSignup():
     try:
