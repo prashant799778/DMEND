@@ -93,7 +93,7 @@ def userSignup():
                 print(updateOtp,'updatedata')
                 if updateOtp != "0":
                     column = '*'
-                    data = databasefile.SelectQuery("userMaster",column,WhereCondition)                  
+                    data = databasefile.SelectQuery1("userMaster",column,WhereCondition)                  
                     print(data,"===================")
                     return data
                 else:
@@ -130,9 +130,9 @@ def userSignup():
                 if data != "0":
                     column = '*'
                     
-                    data = databasefile.SelectQuery2("userMaster",column,WhereCondition,"",startlimit,endlimit)
+                    data = databasefile.SelectQuery1("userMaster",column,WhereCondition,"",startlimit,endlimit)
                     print(data)
-                    Data = {"status":"true","message":"","result":data["result"][0]}                  
+                    Data = {"status":"true","message":"","result":data["result"]}                  
                     return Data
                 else:
                     return commonfile.Errormessage()
@@ -160,7 +160,7 @@ def userverifyOtp():
 
             column="mobileNo,otp,userId,userTypeId"
             whereCondition= "  otp='" + otp+ "' and mobileNo='" + mobileNo+"'"
-            verifyOtp=databasefile.SelectQuery(" userMaster ",column,whereCondition)
+            verifyOtp=databasefile.SelectQuery1(" userMaster ",column,whereCondition)
             print("verifyOtp======",verifyOtp)
             if  (verifyOtp["status"]!="false") or verifyOtp!=None: 
                 return verifyOtp
@@ -246,7 +246,7 @@ def userlogin():
         inputdata =  commonfile.DecodeInputdata(request.get_data())
         startlimit,endlimit="",""
         keyarr = ['password','mobileNo']
-        commonfile.writeLog("Login",inputdata,0)
+        commonfile.writeLog("userLogin",inputdata,0)
         msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
         if msg == "1":
             mobileNo = inputdata["mobileNo"]
@@ -255,10 +255,10 @@ def userlogin():
             whereCondition= "us.mobileNo = '" + str(mobileNo) + "' and us.password = '" + password + "' and us.userTypeId=um.id"
             loginuser=databasefile.SelectQuery1("userMaster as us,usertypeMaster as um",column,whereCondition)
             if (loginuser!=0):   
-                Data = {"result":loginuser,"status":"true"}                  
-                return Data
+                              
+                return loginuser
             else:
-                data={"status":"Failed","result":"Login Failed"}
+                data={"status":"false","message":"Please enter correct Password & Email","result":""}
                 return data
 
         else:
@@ -333,10 +333,10 @@ def addmoney():
                 addmoney=databasefile.UpdateQuery('userMaster',columns,whereCondition)
 
 
-                Data = {"result":loginuser,"status":"true"}                  
-                return Data
+                                
+                return loginuser
             else:
-                data={"status":"Failed","result":"Login Failed"}
+                data={"status":"false","message":"Login Failed","result":"Login Failed"}
                 return data
 
         else:
@@ -447,7 +447,7 @@ def verifyOtp1():
         startlimit,endlimit="",""
         keyarr = ['otp','email']
         print(inputdata,"B")
-        commonfile.writeLog("verifyOtp1",inputdata,0)
+        commonfile.writeLog("enterOtp",inputdata,0)
         msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
         if msg =="1":
             otp=str(inputdata['otp'])
@@ -455,7 +455,7 @@ def verifyOtp1():
 
             column="email"
             whereCondition= " and otp='" + otp+ "' and email='" + email+ "'  "
-            data1=databasefile.SelectQuery("userMaster",column,whereCondition,"",startlimit,endlimit)
+            data1=databasefile.SelectQuery1("userMaster",column,whereCondition,"",startlimit,endlimit)
             if  (data1["status"]!="false"):   
                 Data = {"status":"true","message":"","result":data1["result"]}                  
                 return Data
@@ -473,9 +473,144 @@ def verifyOtp1():
     except Exception as e :
         print("Exceptio`121QWAaUJIHUJG n---->" +str(e))    
         output = {"result":"somthing went wrong","status":"false"}
-        return output         
+        return output
+
+
+@app.route('/updatepaymentType', methods=['POST'])
+def updatepaymentType():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        startlimit,endlimit="",""
+        keyarr = ['paymentType','id']
+        commonfile.writeLog("updatepaymentType",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        if msg=="1":
+            paymentType = inputdata["paymentType"]
+            id = inputdata["id"]
+            column= " * "
+            whereCondition="id = '" + str(id)+ "'"
+            data1 = databasefile.SelectQuery1("paymentTypeMaster",column,whereCondition)
+            print(data1,"data1")
+            if data1 != 0:
+                column = ""
+                whereCondition = ""
+                column= " paymentType='" + str(paymentType) + "'"
+                whereCondition="id = '" + str(id)+ "'"
+                data = databasefile.UpdateQuery("paymentTypeMaster",column,whereCondition)
+                print(data,'===')
+                output = {"result":"Updated Successfully","status":"true"}
+                return output
+            else:
+                output = {"result":"Data Not Found","status":"true"}
+                return output
+        else:
+            return msg
+    except KeyError :
+        print("Key Exception---->")   
+        output = {"result":"key error","status":"false"}
+        return output  
+
+    except Exception as e :
+        print("Exception---->" +str(e))    
+        output = {"result":"somthing went wrong","status":"false"}
+        return output
+
+@app.route('/paymentTypeMaster', methods=['GET'])
+def paymentTypeMaster():
+    try:
+        msg = "1"
+        if msg=="1":
+            column="id ,paymentType"
+            whereCondition=""
+            data=databasefile.SelectQuery("paymentTypeMaster",column,whereCondition)
+        
+            if (data!=0):           
+                
+                return data
+            else:
+                output = {"message":"No Data Found","result":"No Data Found","status":"false"}
+                return output
+        else:
+            return msg
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"result":"something went wrong","status":"false"}
+        return output
+
+
+@app.route('/addpaymentType', methods=['POST'])
+def addpaymentType():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        startlimit,endlimit="",""
+        keyarr = ['paymentType']
+        commonfile.writeLog("addpaymentType",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        if msg=="1":
+            paymentType = inputdata["paymentType"]
+            column="*"
+            whereCondition= "paymentType='"+str(paymentType)+ "'"
+            data=databasefile.SelectQuery1("paymentTypeMaster",column,whereCondition)
+            print(data,'data')
+            if data['status']=='false':
+                column="paymentType"
+                values="'"+str(paymentType)+"' "
+                insertdata=databasefile.InsertQuery("paymentTypeMaster",column,values)
+                column="*"
+                whereCondition= " paymentType='"+str(paymentType)+ "'"
+                data1=databasefile.SelectQuery1("paymentTypeMaster",column,whereCondition)
+
+                output= {"result":"User Added Successfully","ambulance Details":data1['result'],"status":"true"}
+                return output
+            else:
+                output = {"result":"User Already Added Existed ","status":"true","ambulance Details":data}
+                return output
+        else:
+            return msg 
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"result":"something went wrong","status":"false"}
+        return output
+
+
+
+
+@app.route('/deletepaymentTypeMaster', methods=['POST'])
+def deletepaymentTypeMaster():
+    try: 
+
+        inputdata =  commonfile.DecodeInputdata(request.get_data()) 
+        WhereCondition=""
+  
+        if len(inputdata) > 0:           
+            commonfile.writeLog("paymentTypeMaster",inputdata,0)
+        
+        keyarr = ['id']
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        if "id" in inputdata:
+            if inputdata['id'] != "":
+                Id =inputdata["id"] 
+                WhereCondition=WhereCondition+" and id='"+str(Id)+"'" 
+        if msg == "1":                        
+            
+            data = databasefile.DeleteQuery("paymentTypeMaster",WhereCondition)
+
+            if data != "0":
+                return data
+            else:
+                return commonfile.Errormessage()
+        else:
+            return msg
+
+    except Exception as e :
+        print("Exception--->" + str(e))                                  
+        return commonfile.Errormessage()
+
+
+
 #_________________-admin____________________-
 #admin _______Login
+
 
 
 @app.route('/adminLogin', methods=['POST'])
@@ -491,7 +626,7 @@ def adminLogin():
             password = inputdata["password"]
             column=  "us.mobileNo,us.name,us.userTypeId,um.usertype,us.userId"
             whereCondition= " us.email = '" + str(email) + "' and us.password = '" + str(password) + "'  and  us.userTypeId=um.id"
-            loginuser=databasefile.SelectQuery("userMaster as us,usertypeMaster as um",column,whereCondition)
+            loginuser=databasefile.SelectQuery1("userMaster as us,usertypeMaster as um",column,whereCondition)
             if (loginuser['status']!='false'):   
                                
                 return loginuser
@@ -572,7 +707,7 @@ def aboutUs():
                         column = '*'
                         WhereCondition = " and description = '" + str(description) + "'"
                         
-                        data11 = databasefile.SelectQuery("aboutUs",column,WhereCondition,"",startlimit,endlimit)
+                        data11 = databasefile.SelectQuery1("aboutUs",column,WhereCondition,"",startlimit,endlimit)
                         return data11
                 if flag == 'u':
                     WhereCondition = " and id='" + str(aboutId) + "'"
