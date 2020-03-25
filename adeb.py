@@ -542,6 +542,108 @@ def selectallUsers():
 
 
 
+@app.route('/aboutUs', methods=['POST'])
+def aboutUs(): 
+    try: 
+        startlimit,endlimit="",""   
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        aboutId = '1'
+        keyarr = ['description','flag']
+        commonfile.writeLog("aboutUs",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+       
+        if msg == "1":      
+            description = commonfile.EscapeSpecialChar(inputdata["description"])
+            flag = inputdata["flag"]
+            print('====',flag)
+        
+            WhereCondition = " "
+            count = databasefile.SelectCountQuery("aboutUs",WhereCondition,"")
+            
+            if int(count) > 0 and flag == 'n':
+                print('F')         
+                return commonfile.aboutUsDescriptionAlreadyExistMsg()
+            else:
+                if flag == 'n':
+                    columns = " description"          
+                    values = " '" + str(description) + "'"       
+                    data = databasefile.InsertQuery("aboutUs",columns,values)
+                    if data != "0":
+                        column = '*'
+                        WhereCondition = " and description = '" + str(description) + "'"
+                        
+                        data11 = databasefile.SelectQuery("aboutUs",column,WhereCondition,"",startlimit,endlimit)
+                        return data11
+                if flag == 'u':
+                    WhereCondition = " and id='" + str(aboutId) + "'"
+                    column = " description = '" + str(description) + "'"
+                    data = databasefile.UpdateQuery("aboutUs",column,WhereCondition)
+                    return data
+                else:
+                    return commonfile.Errormessage()
+        else:
+            return msg
+
+    except Exception as e:
+        print("Exception--->" + str(e))                                  
+        return commonfile.Errormessage() 
+
+
+@app.route('/deleteAboutUs', methods=['POST'])
+def deleteAboutUs():
+    try:
+
+
+        inputdata =  commonfile.DecodeInputdata(request.get_data()) 
+
+        WhereCondition=""
+  
+        if len(inputdata) > 0:           
+            commonfile.writeLog("deleteAboutUs",inputdata,0)
+        
+        keyarr = ['id']
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        if "id" in inputdata:
+            if inputdata['id'] != "":
+                Id =inputdata["id"] 
+                WhereCondition=WhereCondition+" and id='"+str(Id)+"'" 
+        if msg == "1":                        
+            
+            data = databasefile.DeleteQuery("aboutUs",WhereCondition)
+
+            if data != "0":
+                return data
+            else:
+                return commonfile.Errormessage()
+        else:
+            return msg
+
+    except Exception as e :
+        print("Exception--->" + str(e))                                  
+        return commonfile.Errormessage()
+
+
+@app.route('/allaboutUs', methods=['POST'])
+def allaboutUs():
+    try:
+        columns=" * "
+        
+        data = databasefile.SelectQueryMaxId("aboutUs",columns)
+       
+
+        if data:           
+            Data = {"status":"true","message":"","result":data["result"]}
+            return Data
+        else:
+            output = {"status":"false","message":"No Data Found","result":""}
+            return output
+
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"status":"false","message":"something went wrong","result":""}
+        return output
+
+
 
 
 
