@@ -239,6 +239,48 @@ def updateDriverProfile():
 
 
 
+@app.route('/userProfile', methods=['POST'])
+def userProfile():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data()) 
+        startlimit,endlimit="",""
+        keyarr = ['userId']
+        commonfile.writeLog("userProfile",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+       
+        if msg == "1":
+            
+        
+
+            
+            
+            if 'userId' in inputdata:
+                userId=inputdata["userId"]    
+                
+            
+            whereCondition= " userId= '"+str(userId)+"' and userTypeId='2' "
+            column='userId,name,mobileNo,password,email'
+
+            
+         
+            data11=databasefile.SelectQuery('userMaster',column,whereCondition)
+         
+
+            if data11['status'] != "false":
+                Data = {"status":"true","message":"data Updated Successfully","result":data11['result']}                  
+                return Data
+            else:
+                data={"status":"false","result":"","message":"Invalid User"}
+                return data
+                        
+        else:
+            return msg 
+    except Exception as e :
+        print("Exception---->" +str(e))           
+        output = {"status":"false","message":"something went wrong","result":""}
+        return output           
+
+
 #user Login
 @app.route('/userLogin', methods=['POST'])
 def userlogin():
