@@ -648,7 +648,310 @@ def deletepaymentTypeMaster():
         print("Exception--->" + str(e))                                  
         return commonfile.Errormessage()
 
+#___________driver_
 
+@app.route('/driverSignup', methods=['POST'])
+def driverSignup():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data()) 
+        startlimit,endlimit="",""
+        keyarr = ['mobileNo','deviceKey']
+        commonfile.writeLog("driverSignup",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+       
+        if msg == "1":
+            
+            column,values="",""
+            
+           
+            
+            mobileNo=inputdata["mobileNo"]
+            deviceKey=inputdata["deviceKey"]
+            usertypeId="3"
+            
+          
+            
+            digits = "0123456789"
+            otp = " "
+            for i in range(4):
+                otp += digits[math.floor(random.random() * 10)]
+
+           
+
+            UserId = (commonfile.CreateHashKey(mobileNo,userTypeId)).hex
+            
+            
+            WhereCondition = " and mobileNo = '" + str(mobileNo) + "'"
+            count = databasefile.SelectCountQuery("userMaster",WhereCondition,"")
+            
+            if int(count) > 0:
+                WhereCondition = " mobileNo = '" + str(mobileNo) + "'"
+                column = " otp = '" + str(otp)  + "'"
+                updateOtp = databasefile.UpdateQuery("userMaster",column,WhereCondition)
+                print(updateOtp,'updatedata')
+                if updateOtp != "0":
+                    column = '*'
+                    data = databasefile.SelectQuery1("userMaster",column,WhereCondition)                  
+                    print(data,"===================")
+                    return data
+                else:
+                    return commonfile.Errormessage()
+                
+            else:
+               
+
+                if 'email' in inputdata:
+                    email=inputdata["email"]
+                    column=column+" ,email"
+                    values=values+"','"+str(email)
+                if 'password' in inputdata:
+                    password=inputdata["password"]
+                    column=column+" ,password"
+                    values=values+"','"+str(password)
+                if 'name' in inputdata:
+                    name=inputdata["name"]
+                    column=column+" ,name"
+                    values=values+"','"+str(name)
+
+
+
+ 
+                currentLocationlatlong=""
+
+                column="mobileNo,userId,otp,userTypeId,deviceKey"+column
+                
+                
+                values=  "'"+str(mobileNo)+"','"+str(UserId)+"','"+str(otp)+"','"+str('2')+"','"+str(deviceKey)+values+ "'"
+                data=databasefile.InsertQuery("userMaster",column,values)
+             
+
+                if data != "0":
+                    column = '*'
+                    
+                    data = databasefile.SelectQuery1("userMaster",column,WhereCondition,"",startlimit,endlimit)
+                    print(data)
+                    Data = {"status":"true","message":"","result":data["result"]}                  
+                    return Data
+                else:
+                    return commonfile.Errormessage()
+                        
+        else:
+            return msg 
+    except Exception as e :
+        print("Exception---->" +str(e))           
+        output = {"status":"false","message":"something went wrong","result":""}
+        return output
+
+
+@app.route('/driverVerifyOtp', methods=['POST'])
+def driververifyOtp():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        startlimit,endlimit="",""
+        keyarr = ['otp','mobileNo']
+        print(inputdata,"B")
+        commonfile.writeLog("driververifyOtp",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        if msg =="1":
+            otp=str(inputdata['otp'])
+            mobileNo=str(inputdata['mobileNo'])
+
+            column="mobileNo,otp,userId,userTypeId"
+            whereCondition= "  otp='" + otp+ "' and mobileNo='" + mobileNo+"'"
+            verifyOtp=databasefile.SelectQuery1(" userMaster ",column,whereCondition)
+            print("verifyOtp======",verifyOtp)
+            if  (verifyOtp["status"]!="false") or verifyOtp!=None: 
+                return verifyOtp
+            else:
+                return verifyOtp 
+        else:
+            return msg         
+ 
+    except KeyError :
+        print("Key Exception---->")   
+        output = {"result":"key error","status":"false"}
+        return output  
+
+    except Exception as e :
+        print("Exceptio`121QWAaUJIHUJG n---->" +str(e))    
+        output = {"result":"somthing went wrong","status":"false"}
+        return output
+
+
+
+
+@app.route('/driverProfile', methods=['POST'])
+def driverProfile():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data()) 
+        startlimit,endlimit="",""
+        keyarr = ['userId']
+        commonfile.writeLog("driverProfile",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+       
+        if msg == "1":
+            
+        
+
+            
+            
+            if 'userId' in inputdata:
+                userId=inputdata["userId"]    
+                
+            
+            whereCondition= " userId= '"+str(userId)+"' and userTypeId='3' "
+            column='userId,name,mobileNo,password,email'
+
+            
+         
+            data11=databasefile.SelectQuery('userMaster',column,whereCondition)
+         
+
+            if data11['status'] != "false":
+                Data = {"status":"true","message":"data Updated Successfully","result":data11['result']}                  
+                return Data
+            else:
+                data={"status":"false","result":"","message":"Invalid User"}
+                return data
+                        
+        else:
+            return msg 
+    except Exception as e :
+        print("Exception---->" +str(e))           
+        output = {"status":"false","message":"something went wrong","result":""}
+        return output
+
+
+@app.route('/updateDriverProfile', methods=['POST'])
+def updateDriverProfile():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data()) 
+        startlimit,endlimit="",""
+        keyarr = ["name","email","password",'userId']
+        commonfile.writeLog("updateDriverProfile",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+       
+        if msg == "1":
+            name,email,password,userTypeId,mobileNo,gender="","","","","",""
+            column,values="",""
+            columns2,values2="",""
+        
+
+            
+            if 'email' in inputdata:
+                email=inputdata["email"]
+                column=" email='"+str(email)+"' " 
+            if 'name' in inputdata:
+                name=inputdata["name"]
+                column=column+" ,name='"+str(name)+"' "  
+                column2= " name='"+str(name)+"' " 
+            if 'password' in inputdata:
+                password=inputdata["password"]
+                column=column+" ,password= '"+str(password)+"' "                
+            if 'mobileNo' in inputdata:
+                mobileNo=inputdata["mobileNo"]
+                column=column+" ,mobileNo='"+str(mobileNo)+"' "
+                column2=column2+" ,mobileNo='"+str(mobileNo)+"' "  
+
+            if 'userId' in inputdata:
+                driverId=inputdata["userId"]    
+                
+            
+            whereCondition= " driverId= '"+str(driverId)+"' "
+            whereCondition2= " userId ='"+str(driverId)+"' "
+          
+            data=databasefile.UpdateQuery("driverMaster",column2,whereCondition)
+            data11=databasefile.UpdateQuery('userMaster',column,whereCondition2)
+         
+
+            if data != "0":
+                Data = {"status":"true","message":"data Updated Successfully","result":"data Updated Successfully"}                  
+                return Data
+            else:
+                return commonfile.Errormessage()
+                        
+        else:
+            return msg 
+    except Exception as e :
+        print("Exception---->" +str(e))           
+        output = {"status":"false","message":"something went wrong","result":""}
+        return output                    
+
+
+#driver Login
+@app.route('/driverLogin', methods=['POST'])
+def driverlogin():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        startlimit,endlimit="",""
+        keyarr = ['password','mobileNo']
+        commonfile.writeLog("driverLogin",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        if msg == "1":
+            mobileNo = inputdata["mobileNo"]
+            password = inputdata["password"]
+            column=  "us.mobileNo,us.name,us.userId,um.name as userName"
+            whereCondition= "us.mobileNo = '" + str(mobileNo) + "' and us.password = '" + password + "' and us.userTypeId=um.id"
+            loginuser=databasefile.SelectQuery1("userMaster as us,usertypeMaster as um",column,whereCondition)
+            if (loginuser!=0):   
+                              
+                return loginuser
+            else:
+                data={"status":"false","message":"Please enter correct Password & Email","result":""}
+                return data
+
+        else:
+            return msg 
+    except KeyError as e:
+        print("Exception---->" +str(e))        
+        output = {"result":"Input Keys are not Found","status":"false"}
+        return output    
+    except Exception as e :
+        print("Exception---->" +str(e))           
+        output = {"result":"something went wrong","status":"false"}
+        return output
+       
+
+@app.route('/driverWallet', methods=['POST'])
+def driverWallet():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        startlimit,endlimit="",""
+        keyarr = ['mobileNo','userId']
+        commonfile.writeLog("driverWallet",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        if msg == "1":
+            mobileNo = inputdata["mobileNo"]
+            userId=inputdata['userId']
+           
+            column=  "us.walletBalance  as money"
+            whereCondition= "us.mobileNo = '" + str(mobileNo) + "'and us.userTypeId=um.id and us.userId='" + str(mobileNo) + "'"
+            loginuser=databasefile.SelectQuery1("userMaster as us,usertypeMaster as um",column,whereCondition)
+            if (loginuser!=0):
+                Data = {"result":loginuser,"status":"true"}                  
+                return Data
+            else:
+                data={"status":"Failed","result":"Login Failed"}
+                return data
+
+        else:
+            return msg 
+    except KeyError as e:
+        print("Exception---->" +str(e))        
+        output = {"result":"Input Keys are not Found","status":"false"}
+        return output    
+    except Exception as e :
+        print("Exception---->" +str(e))           
+        output = {"result":"something went wrong","status":"false"}
+        return output
+
+
+#______________________________________________
+
+
+
+
+#________________________
 
 #_________________-admin____________________-
 #admin _______Login
