@@ -1326,7 +1326,7 @@ def addUserRating():
     try:
         inputdata =  commonfile.DecodeInputdata(request.get_data())
         startlimit,endlimit="",""
-        keyarr = ['driverId',bookingId,ratingId]
+        keyarr = ['driverId','bookingId','ratingId']
         commonfile.writeLog("addpaymentType",inputdata,0)
         msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
         if msg=="1":
@@ -1357,7 +1357,7 @@ def addDriverRating():
     try:
         inputdata =  commonfile.DecodeInputdata(request.get_data())
         startlimit,endlimit="",""
-        keyarr = ['userId',bookingId,ratingId]
+        keyarr = ['userId','bookingId','ratingId']
         commonfile.writeLog("addpaymentType",inputdata,0)
         msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
         if msg=="1":
@@ -1380,6 +1380,38 @@ def addDriverRating():
         print("Exception---->" + str(e))    
         output = {"result":"something went wrong","status":"false"}
         return output
+
+
+
+@app.route('/addFavDriver', methods=['POST'])
+def addFavDriver():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        startlimit,endlimit="",""
+        keyarr = ['userId','driverId']
+        commonfile.writeLog("addFavDriver",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        if msg=="1":
+            userId = inputdata["userId"]
+            driverId=inputdata['driverId']
+           
+            
+           
+            column="userId,driverId"
+            values="'"+str(userId)+"' ,'"+str(driverId)+"'"
+            insertdata=databasefile.InsertQuery("favDriver",column,values)
+            
+
+            output= {"result":"User Added Successfully","message":"","status":"true"}
+            return output
+            
+        else:
+            return msg 
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"result":"something went wrong","status":"false"}
+        return output  
+
 
 #screendependency left
 @app.route('/addDrivertest', methods=['POST'])
@@ -1516,6 +1548,44 @@ def driverVerify():
 
 
 
+
+
+
+
+@app.route('/getNearDriver', methods=['POST'])
+def getNearDriver():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        startlimit,endlimit="",""
+        keyarr = ['startLocationLat','startLocationLong']
+        commonfile.writeLog("getNearDriver",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        if msg == "1":
+            startlat ,startlng,userId= inputdata["startLocationLat"],inputdata["startLocationLong"],""#,inputdata["userId"]
+            column=  "d.driverId,d.name, d.mobileNo, b.lat, b.lng,SQRT(POW(69.1 * (b.lat - "+str(startlat)+"), 2) +POW(69.1 * ("+str(startlng)+" - b.lng) * COS(b.lat / 57.3), 2)) AS distance "
+            whereCondition= "and d.status=1 and b.onTrip=0 and b.onDuty=1 and b.driverId=a.driverId HAVING distance < 25 "
+            orderby="  distance "
+            nearByDriver=databasefile.SelectQueryOrderbyAsc("driverMaster d,ambulanceRideStatus as b",column,whereCondition,"",orderby,"","")
+             if (nearByAmbulance!=0):   
+                #for i in nearByAmbulance["result"]: 
+                    # topic=str(nearByAmbulance["result"][i]["ambulanceId"])+"/booking"
+                    # print(nearByAmbulance["result"][i]["ambulanceId"]) 
+                    # client.publish(topic, "Hello world11111111111111111")
+                    # print("2222222222222")             
+                return nearByAmbulance
+            else:
+                nearByAmbulance["message"]="No Ambulance Found"
+                return nearByAmbulance
+        else:
+            return msg 
+    except KeyError as e:
+        print("Exception---->" +str(e))        
+        output = {"result":"Input Keys are not Found","status":"false"}
+        return output    
+    except Exception as e :
+        print("Exception---->" +str(e))           
+        output = {"result":"something went wrong","status":"false"}
+        return output
 
 
 
