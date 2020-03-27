@@ -1566,7 +1566,7 @@ def getNearDriver():
             whereCondition= "and d.status=1 and b.onTrip=0 and b.onDuty=1 and b.driverId=a.driverId HAVING distance < 25 "
             orderby="  distance "
             nearByDriver=databasefile.SelectQueryOrderbyAsc("driverMaster d,ambulanceRideStatus as b",column,whereCondition,"",orderby,"","")
-             if (nearByDriver!=0):   
+            if (nearByDriver!=0):   
                         
                 return nearByDriver
             else:
