@@ -1524,7 +1524,7 @@ def driverVerify():
            driverId=inputdata['driverId']
            status=inputdata['status']
            WhereCondition = " driverId = '" + str(driverId) + "'"
-           column = " status='" + str(status) + "'"
+           column = " documentstatus='" + str(status) + "'"
            print(column,'column')
            data = databasefile.UpdateQuery("driverMaster",column,WhereCondition)
            print(data)
