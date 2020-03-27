@@ -1126,7 +1126,7 @@ def allaboutUs():
 @app.route('/allbookingTypeMaster', methods=['POST'])
 def allbookingTypeMaster ():
     try:
-        columns=" * "
+        columns="id,bookingType "
         
         data = databasefile.SelectQueryMaxId("bookingTypeMaster ",columns)
        
