@@ -977,8 +977,7 @@ def adminLogin():
                 return loginuser
             else:
             	loginuser = {"status":"False","message":"Please enter correct password & email","result":""}
-                
-                return loginuser
+            	return loginuser
         else:
             return msg 
     except KeyError as e:
