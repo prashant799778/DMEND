@@ -69,7 +69,7 @@ def userSignup():
             
             mobileNo=inputdata["mobileNo"]
             deviceKey=inputdata["deviceKey"]
-            usertypeId="2"
+            usertypeId="1"
             
           
             
@@ -667,7 +667,7 @@ def driverSignup():
             
             mobileNo=inputdata["mobileNo"]
             deviceKey=inputdata["deviceKey"]
-            usertypeId="3"
+            usertypeId="2"
             
           
             
@@ -1381,7 +1381,7 @@ def addDriverRating():
         output = {"result":"something went wrong","status":"false"}
         return output
 
-
+#screendependency left
 @app.route('/addDrivertest', methods=['POST'])
 def addDrivertest():
     try:
@@ -1398,15 +1398,15 @@ def addDrivertest():
         if msg == "1":
             mobileNo=inputdata['mobileNo']
             name=inputdata['name']
-            driverTypeId=int(inputdata['userTypeId'])
+           
            
             column = " * "
-            whereCondition= " mobileNo='"+str(mobileNo)+ "' and usertypeId='3' "
+            whereCondition= " mobileNo='"+str(mobileNo)+ "' and usertypeId='2' "
             data= databasefile.SelectQuery("userMaster",column,whereCondition)
 
             column11="id,driverId"
 
-            whereCondition1= " mobileNo='"+str(mobileNo)+ "' and driverTypeId='"+str(driverTypeId)+ "'"
+            whereCondition1= " mobileNo='"+str(mobileNo)+ "' "
             data1= databasefile.SelectQuery("driverMaster",column11,whereCondition1)
 
             print(data1,'data')
@@ -1415,7 +1415,7 @@ def addDrivertest():
             mobileNo= inputdata["mobileNo"]
             driverId=data['result']['userId']
           
-            if data1['status'] == 0:
+            if data1['status'] !='false':
                 WhereCondition = " driverId = '" + str(driverId) + "'"
                 column = " name='" + str(name) + "' ,dlNo = '" + str(DlNo) + "',dlFrontFilename = '" + str(dlFrontFilename) + "',dlFrontFilepath = '" + str(DlFrontPicPath) + "',dlBackFilename = '" + str(dlBackFilename) + "',dlBackFilepath = '" + str(DlBackPicPath) + "',driverTypeId='" + str(driverTypeId) + "',cleanRecord='" + str(cleanRecord) + "'  ,backgroundCheck='" + str(backgroundCheck) + "',recommendiationLetter='" + str(recommendationLetter) + "',healthrecord='" + str(healthrecord) + "',misconduct='" + str(misconduct) + "',socialsecuritynumberTrace='" + str(socialsecuritynumberTrace) + "',trafficScreening ='" + str(trafficScreening) + "'"
                 print(column,'column')
@@ -1424,6 +1424,7 @@ def addDrivertest():
                 return {"result":data,"status":"true"}
 
             else:
+
                 data123={"result":"Test done","status":"false"}
                 return data123
         
@@ -1438,7 +1439,7 @@ def addDrivertest():
         return output
             
 
-@app.route('/driverinterview', methods=['POST'])
+@app.route('/driverInterview', methods=['POST'])
 def driverinterview():
     try:
         inputdata=request.form.get('data')
@@ -1447,7 +1448,7 @@ def driverinterview():
         inputdata=json.loads(inputdata)
         startlimit,endlimit="",""
 
-        commonfile.writeLog("addDrivertest",inputdata,0)
+        commonfile.writeLog("driverInterview",inputdata,0)
         msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
         print(msg,'msg')
        
@@ -1484,7 +1485,7 @@ def driverVerify():
         inputdata=json.loads(inputdata)
         startlimit,endlimit="",""
 
-        commonfile.writeLog("addDrivertest",inputdata,0)
+        commonfile.writeLog("driverVerify",inputdata,0)
         msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
         print(msg,'msg')
        
