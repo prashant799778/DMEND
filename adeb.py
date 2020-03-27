@@ -1145,8 +1145,8 @@ def allbookingTypeMaster():
 
 
 
-@app.route('/allgearType', methods=['POST'])
-def allgearType():
+@app.route('/allCarType', methods=['POST'])
+def allCarType():
     try:
         columns="id,name "
         
@@ -1167,8 +1167,8 @@ def allgearType():
 
 
 
-@app.route('/allfunctionType', methods=['POST'])
-def allfunctionalityType():
+@app.route('/allGearType', methods=['POST'])
+def allgearType():
     try:
         columns="id,name "
         
@@ -1242,7 +1242,7 @@ def updateDriverLatLong():
         return output
 
 
-@app.route('/driverAvialability', methods=['POST'])
+@app.route('/driverAvailability', methods=['POST'])
 def driverAvialability():
     try:
         
