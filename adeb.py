@@ -1294,6 +1294,29 @@ def driverAvialability():
         return output
 
 
+@app.route('/allratingMaster', methods=['POST'])
+def allratingMaster():
+    try:
+        columns="id,name "
+        
+        data = databasefile.SelectQueryMaxId("ratingMaster",columns)
+       
+
+        if data:           
+            Data = {"status":"true","message":"","result":data["result"]}
+            return Data
+        else:
+            output = {"status":"false","message":"No Data Found","result":""}
+            return output
+
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"status":"false","message":"something went wrong","result":""}
+        return output
+
+
+
+
 
 
 
