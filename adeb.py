@@ -1566,16 +1566,12 @@ def getNearDriver():
             whereCondition= "and d.status=1 and b.onTrip=0 and b.onDuty=1 and b.driverId=a.driverId HAVING distance < 25 "
             orderby="  distance "
             nearByDriver=databasefile.SelectQueryOrderbyAsc("driverMaster d,ambulanceRideStatus as b",column,whereCondition,"",orderby,"","")
-             if (nearByAmbulance!=0):   
-                #for i in nearByAmbulance["result"]: 
-                    # topic=str(nearByAmbulance["result"][i]["ambulanceId"])+"/booking"
-                    # print(nearByAmbulance["result"][i]["ambulanceId"]) 
-                    # client.publish(topic, "Hello world11111111111111111")
-                    # print("2222222222222")             
-                return nearByAmbulance
+             if (nearByDriver!=0):   
+                        
+                return nearByDriver
             else:
-                nearByAmbulance["message"]="No Ambulance Found"
-                return nearByAmbulance
+                nearByDriver["message"]="No Ambulance Found"
+                return nearByDriver
         else:
             return msg 
     except KeyError as e:
