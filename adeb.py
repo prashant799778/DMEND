@@ -973,13 +973,12 @@ def adminLogin():
             whereCondition= " us.email = '" + str(email) + "' and us.password = '" + str(password) + "'  and  us.userTypeId=um.id"
             loginuser=databasefile.SelectQuery1("userMaster as us,usertypeMaster as um",column,whereCondition)
             if (loginuser['status']!='false'):   
-                               
-                return loginuser
+            	return loginuser
             else:
             	loginuser = {"status":"False","message":"Please enter correct password & email","result":""}
             	return loginuser
         else:
-            return msg 
+        	return msg 
     except KeyError as e:
         print("Exception---->" +str(e))        
         output = {"result":"Input Keys are not Found","status":"false"}
