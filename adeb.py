@@ -411,10 +411,10 @@ def generateOtp():
             for i in range(4):
                 OTP += digits[math.floor(random.random() * 10)]
             message = Mail(
-                from_email = 'medparliament@medachievers.com',
+                from_email = 'adeb@achievers.com',
                 to_emails = str(email),
                 subject = "Otp for Reset Password",
-                html_content = '<strong> Otp To Reset Your Password is:' + str(OTP) + ' </strong> <br> <br> Thanks<br> <br> MedParliament Team')
+                html_content = '<strong> Otp To Reset Your Password is:' + str(OTP) + ' </strong> <br> <br> Thanks<br> <br> ADEB Team')
             sg = SendGridAPIClient('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')
             response = sg.send(message)
            
