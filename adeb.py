@@ -823,7 +823,7 @@ def driverProfile():
 
 
 @app.route('/updateDriverProfile', methods=['POST'])
-def updateDriverProfile():
+def updateDriverProfile12():
     try:
         inputdata =  commonfile.DecodeInputdata(request.get_data()) 
         startlimit,endlimit="",""
