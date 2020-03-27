@@ -1167,12 +1167,12 @@ def allgearType():
 
 
 
-@app.route('/allfunctionalityType', methods=['POST'])
+@app.route('/allfunctionType', methods=['POST'])
 def allfunctionalityType():
     try:
         columns="id,name "
         
-        data = databasefile.SelectQueryMaxId(" functionalityType  ",columns)
+        data = databasefile.SelectQueryMaxId(" functionType   ",columns)
        
 
         if data:           
@@ -1188,6 +1188,58 @@ def allfunctionalityType():
         return output
 
 
+
+@app.route('/updateDriverLatLong', methods=['POST'])
+def updateDriverLatLong():
+    try:
+        
+        inputdata=commonfile.DecodeInputdata(request.get_data())
+       
+        keyarr = ['driverId']
+       
+        
+        startlimit,endlimit="",""
+
+        commonfile.writeLog("updateDriverLatLong",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        #print(msg,'msg')
+       
+        if msg == "1":
+
+            if 'lat' in inputdata:
+                lat=inputdata["lat"]
+
+            if 'lng' in inputdata:
+                lng=inputdata["lng"]
+
+            if 'driverId' in inputdata:
+                driverId=inputdata["driverId"]
+
+           
+           
+                
+                
+            WhereCondition2=" driverId= '" + str(ambulanceId) + "'"
+            columns23="lat='" + str(lat) + "',lng='" + str(lng) + "'"
+            data122=databasefile.UpdateQuery('driverRideStatus',columns23,WhereCondition2)
+            print("333333333333")
+            if data122 != "0":
+                data11={"result":"","message":"Updated successfully","status":"true"}
+                return data11
+
+            else:
+            	data={"result":"","message":"please enter keys lat,lng & driverId","status":"false"}
+            	return data
+
+
+                        
+               
+        else:
+            return msg
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"result":"something went wrong","status":"false"}
+        return output
 
 
 
