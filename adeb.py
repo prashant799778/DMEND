@@ -1456,10 +1456,9 @@ def driverinterview():
            driverId=inputdata['driverId']
            WhereCondition = " driverId = '" + str(driverId) + "'"
            column = " interviewStatus='1'"
-	       print(column,'column')
-	       data = databasefile.UpdateQuery("driverMaster",column,WhereCondition)
-	       print(data)
-	        return {"result":"Updated successfully","message":"Updated Successfully","status":"true"}
+           data = databasefile.UpdateQuery("driverMaster",column,WhereCondition)
+           print(data)
+           return {"result":"Updated successfully","message":"Updated Successfully","status":"true"}
 
         
         else:
