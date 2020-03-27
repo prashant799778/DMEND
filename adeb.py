@@ -1124,11 +1124,55 @@ def allaboutUs():
 
 
 @app.route('/allbookingTypeMaster', methods=['POST'])
-def allbookingTypeMaster ():
+def allbookingTypeMaster():
     try:
         columns="id,bookingType "
         
         data = databasefile.SelectQueryMaxId("bookingTypeMaster ",columns)
+       
+
+        if data:           
+            Data = {"status":"true","message":"","result":data["result"]}
+            return Data
+        else:
+            output = {"status":"false","message":"No Data Found","result":""}
+            return output
+
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"status":"false","message":"something went wrong","result":""}
+        return output
+
+
+
+@app.route('/allgearType', methods=['POST'])
+def allgearType():
+    try:
+        columns="id,name "
+        
+        data = databasefile.SelectQueryMaxId("gearType  ",columns)
+       
+
+        if data:           
+            Data = {"status":"true","message":"","result":data["result"]}
+            return Data
+        else:
+            output = {"status":"false","message":"No Data Found","result":""}
+            return output
+
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"status":"false","message":"something went wrong","result":""}
+        return output
+
+
+
+@app.route('/allfunctionalityType', methods=['POST'])
+def allfunctionalityType():
+    try:
+        columns="id,name "
+        
+        data = databasefile.SelectQueryMaxId(" functionalityType  ",columns)
        
 
         if data:           
