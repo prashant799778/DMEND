@@ -1570,7 +1570,7 @@ def getNearDriver():
                         
                 return nearByDriver
             else:
-                nearByDriver["message"]="No Ambulance Found"
+                nearByDriver["message"]="No Driver Found"
                 return nearByDriver
         else:
             return msg 
