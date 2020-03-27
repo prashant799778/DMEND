@@ -4,8 +4,8 @@ import commonfile
 import json
 import smtplib 
 import config
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
+# from sendgrid import SendGridAPIClient
+# from sendgrid.helpers.mail import Mail
 
 def InsertQuery(table,columns,values):
     try:
