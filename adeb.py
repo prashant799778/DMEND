@@ -19,7 +19,7 @@ import ConstantData
 # from sendgrid import SendGridAPIClient
 # from sendgrid.helpers.mail import Mail
 import re
-import razorpay
+#import razorpay
 
 
 
