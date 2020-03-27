@@ -1385,7 +1385,6 @@ def addDriverRating():
 @app.route('/addDrivertest', methods=['POST'])
 def addDrivertest():
     try:
-        print('Hello')
         inputdata=request.form.get('data')
         print(inputdata,'inputdata')
         keyarr = ['mobileNo','name','userTypeId']
@@ -1417,8 +1416,8 @@ def addDrivertest():
             driverId=data['result']['userId']
           
             if data1['status'] == 0:
-                WhereCondition = " mobileNo = '" + str(mobileNo) + "'"
-                column = " name='" + str(name) + "' ,dlNo = '" + str(DlNo) + "',dlFrontFilename = '" + str(dlFrontFilename) + "',dlFrontFilepath = '" + str(DlFrontPicPath) + "',dlBackFilename = '" + str(dlBackFilename) + "',dlBackFilepath = '" + str(DlBackPicPath) + "',driverTypeId='" + str(driverTypeId) + "',cleanRecord='" + str(cleanRecord) + "'  ,backgroundCheck='" + str(backgroundCheck) + "',recommendiationLetter='" + str(recommendationLetter) + "',healthrecord='" + str(healthrecord) + "',misconduct='" + str(misconduct) + "',socialsecuritynumberTrace='" + str(socialsecuritynumberTrace) + "',trafficScreening ='" + str(trafficScreening) + "',status='1'"
+                WhereCondition = " driverId = '" + str(driverId) + "'"
+                column = " name='" + str(name) + "' ,dlNo = '" + str(DlNo) + "',dlFrontFilename = '" + str(dlFrontFilename) + "',dlFrontFilepath = '" + str(DlFrontPicPath) + "',dlBackFilename = '" + str(dlBackFilename) + "',dlBackFilepath = '" + str(DlBackPicPath) + "',driverTypeId='" + str(driverTypeId) + "',cleanRecord='" + str(cleanRecord) + "'  ,backgroundCheck='" + str(backgroundCheck) + "',recommendiationLetter='" + str(recommendationLetter) + "',healthrecord='" + str(healthrecord) + "',misconduct='" + str(misconduct) + "',socialsecuritynumberTrace='" + str(socialsecuritynumberTrace) + "',trafficScreening ='" + str(trafficScreening) + "'"
                 print(column,'column')
                 data = databasefile.UpdateQuery("driverMaster",column,WhereCondition)
                 print(data)
@@ -1430,6 +1429,64 @@ def addDrivertest():
         
         else:
             return msg
+
+
+
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"result":"something went wrong","status":"false"}
+        return output
+            
+
+@app.route('/driverVerify', methods=['POST'])
+def driverVerify():
+    try:
+        inputdata=request.form.get('data')
+        print(inputdata,'inputdata')
+        keyarr = ['mobileNo','name','userTypeId']
+        inputdata=json.loads(inputdata)
+        startlimit,endlimit="",""
+
+        commonfile.writeLog("addDrivertest",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        print(msg,'msg')
+       
+        if msg == "1":
+            mobileNo=inputdata['mobileNo']
+            name=inputdata['name']
+            driverTypeId=int(inputdata['userTypeId'])
+           
+            status = inputdata["status"]
+            column = " * "
+            whereCondition= " mobileNo='"+str(mobileNo)+ "' and usertypeId='3' "
+            data= databasefile.SelectQuery("userMaster",column,whereCondition)
+
+            column11="id,driverId"
+
+            whereCondition1= " mobileNo='"+str(mobileNo)+ "' and driverTypeId='"+str(driverTypeId)+ "'"
+            data1= databasefile.SelectQuery("driverMaster",column11,whereCondition1)
+
+            print(data1,'data')
+
+           
+            mobileNo= inputdata["mobileNo"]
+            driverId=data['result']['userId']
+          
+            if status == 1:
+                WhereCondition = " driverId = '" + str(driverId) + "'"
+                column = " interviewStatus='" + str(interviewStatus) + "'"
+                print(column,'column')
+                data = databasefile.UpdateQuery("driverMaster",column,WhereCondition)
+                print(data)
+                return {"result":data,"status":"true"}
+
+            if status == 2:
+                return {"result","rejected"}
+        
+        else:
+            return msg
+
+
 
     except Exception as e :
         print("Exception---->" + str(e))    
