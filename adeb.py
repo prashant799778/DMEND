@@ -16,10 +16,10 @@ import databasefile
 from config import Connection
 import commonfile
 import ConstantData
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
+# from sendgrid import SendGridAPIClient
+# from sendgrid.helpers.mail import Mail
 import re
-import razorpay
+#import razorpay
 
 
 
@@ -823,7 +823,7 @@ def driverProfile():
 
 
 @app.route('/updateDriverProfile', methods=['POST'])
-def updateDriverProfile():
+def updateDriverProfile12():
     try:
         inputdata =  commonfile.DecodeInputdata(request.get_data()) 
         startlimit,endlimit="",""
@@ -973,14 +973,12 @@ def adminLogin():
             whereCondition= " us.email = '" + str(email) + "' and us.password = '" + str(password) + "'  and  us.userTypeId=um.id"
             loginuser=databasefile.SelectQuery1("userMaster as us,usertypeMaster as um",column,whereCondition)
             if (loginuser['status']!='false'):   
-                               
-                return loginuser
+            	return loginuser
             else:
             	loginuser = {"status":"False","message":"Please enter correct password & email","result":""}
-                
-                return loginuser
+            	return loginuser
         else:
-            return msg 
+        	return msg 
     except KeyError as e:
         print("Exception---->" +str(e))        
         output = {"result":"Input Keys are not Found","status":"false"}
@@ -1125,61 +1123,275 @@ def allaboutUs():
 
 
 
-@app.route('/addDrivertest', methods=['POST'])
-def addDrivertest():
+@app.route('/allbookingTypeMaster', methods=['POST'])
+def allbookingTypeMaster():
     try:
-        print('Hello')
-        inputdata=request.form.get('data')
-        print(inputdata,'inputdata')
-        keyarr = ['mobileNo','name','userTypeId']
-        inputdata=json.loads(inputdata)
+        columns="id,bookingType "
+        
+        data = databasefile.SelectQueryMaxId("bookingTypeMaster ",columns)
+       
+
+        if data:           
+            Data = {"status":"true","message":"","result":data["result"]}
+            return Data
+        else:
+            output = {"status":"false","message":"No Data Found","result":""}
+            return output
+
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"status":"false","message":"something went wrong","result":""}
+        return output
+
+
+
+@app.route('/allCarType', methods=['POST'])
+def allCarType():
+    try:
+        columns="id,name "
+        
+        data = databasefile.SelectQueryMaxId("gearType  ",columns)
+       
+
+        if data:           
+            Data = {"status":"true","message":"","result":data["result"]}
+            return Data
+        else:
+            output = {"status":"false","message":"No Data Found","result":""}
+            return output
+
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"status":"false","message":"something went wrong","result":""}
+        return output
+
+
+
+@app.route('/allGearType', methods=['POST'])
+def allgearType():
+    try:
+        columns="id,name "
+        
+        data = databasefile.SelectQueryMaxId(" functionType   ",columns)
+       
+
+        if data:           
+            Data = {"status":"true","message":"","result":data["result"]}
+            return Data
+        else:
+            output = {"status":"false","message":"No Data Found","result":""}
+            return output
+
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"status":"false","message":"something went wrong","result":""}
+        return output
+
+
+
+@app.route('/updateDriverLatLong', methods=['POST'])
+def updateDriverLatLong():
+    try:
+        
+        inputdata=commonfile.DecodeInputdata(request.get_data())
+       
+        keyarr = ['driverId']
+       
+        
         startlimit,endlimit="",""
 
-        commonfile.writeLog("addDrivertest",inputdata,0)
+        commonfile.writeLog("updateDriverLatLong",inputdata,0)
         msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
-        print(msg,'msg')
+        #print(msg,'msg')
        
         if msg == "1":
-            mobileNo=inputdata['mobileNo']
-            name=inputdata['name']
-            driverTypeId=int(inputdata['userTypeId'])
-           
-            column = " * "
-            whereCondition= " mobileNo='"+str(mobileNo)+ "' and usertypeId='3' "
-            data= databasefile.SelectQuery("userMaster",column,whereCondition)
 
-            column11="id,driverId"
+            if 'lat' in inputdata:
+                lat=inputdata["lat"]
 
-            whereCondition1= " mobileNo='"+str(mobileNo)+ "' and driverTypeId='"+str(driverTypeId)+ "'"
-            data1= databasefile.SelectQuery("driverMaster",column11,whereCondition1)
+            if 'lng' in inputdata:
+                lng=inputdata["lng"]
 
-            print(data1,'data')
+            if 'driverId' in inputdata:
+                driverId=inputdata["driverId"]
 
            
-            mobileNo= inputdata["mobileNo"]
-            driverId=data['result']['userId']
-          
-            if data1['status'] == 0:
-                WhereCondition = " mobileNo = '" + str(mobileNo) + "'"
-                column = " name='" + str(name) + "' ,dlNo = '" + str(DlNo) + "',dlFrontFilename = '" + str(dlFrontFilename) + "',dlFrontFilepath = '" + str(DlFrontPicPath) + "',dlBackFilename = '" + str(dlBackFilename) + "',dlBackFilepath = '" + str(DlBackPicPath) + "',driverTypeId='" + str(driverTypeId) + "',cleanRecord='" + str(cleanRecord) + "'  ,backgroundCheck='" + str(backgroundCheck) + "',recommendiationLetter='" + str(recommendationLetter) + "',healthrecord='" + str(healthrecord) + "',misconduct='" + str(misconduct) + "',socialsecuritynumberTrace='" + str(socialsecuritynumberTrace) + "',trafficScreening ='" + str(trafficScreening) + "',status='1'"
-                print(column,'column')
-                data = databasefile.UpdateQuery("driverMaster",column,WhereCondition)
-                print(data)
-                return {"result":data,"status":"true"}
+           
+                
+                
+            WhereCondition2=" driverId= '" + str(ambulanceId) + "'"
+            columns23="lat='" + str(lat) + "',lng='" + str(lng) + "'"
+            data122=databasefile.UpdateQuery('driverRideStatus',columns23,WhereCondition2)
+            print("333333333333")
+            if data122 != "0":
+                data11={"result":"","message":"Updated successfully","status":"true"}
+                return data11
 
             else:
-                data123={"result":"Test done","status":"false"}
-                return data123
-        
+            	data={"result":"","message":"please enter keys lat,lng & driverId","status":"false"}
+            	return data
+
+
+                        
+               
         else:
             return msg
-
     except Exception as e :
         print("Exception---->" + str(e))    
         output = {"result":"something went wrong","status":"false"}
         return output
+
+
+@app.route('/driverAvailability', methods=['POST'])
+def driverAvialability():
+    try:
+        
+        inputdata=commonfile.DecodeInputdata(request.get_data())
+       
+        keyarr = ['driverId']
+       
+        
+        startlimit,endlimit="",""
+
+        commonfile.writeLog("updateDriverLatLong",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        #print(msg,'msg')
+       
+        if msg == "1":
+
+            if 'avial' in inputdata:
+                avial=inputdata["avial"]
+
             
+
+            if 'driverId' in inputdata:
+                driverId=inputdata["driverId"]
+
+           
+           
                 
+                
+            WhereCondition2=" driverId= '" + str(ambulanceId) + "'"
+            columns23="onDuty='" + str(avial) + "'"
+            data122=databasefile.UpdateQuery('driverRideStatus',columns23,WhereCondition2)
+            print("333333333333")
+            if data122 != "0":
+                data11={"result":"","message":"Updated successfully","status":"true"}
+                return data11
+
+            else:
+            	data={"result":"","message":"please enter keys lat,lng & driverId","status":"false"}
+            	return data
+
+
+                        
+               
+        else:
+            return msg
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"result":"something went wrong","status":"false"}
+        return output
+
+
+@app.route('/allratingMaster', methods=['POST'])
+def allratingMaster():
+    try:
+        columns="id,name "
+        
+        data = databasefile.SelectQueryMaxId("ratingMaster",columns)
+       
+
+        if data:           
+            Data = {"status":"true","message":"","result":data["result"]}
+            return Data
+        else:
+            output = {"status":"false","message":"No Data Found","result":""}
+            return output
+
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"status":"false","message":"something went wrong","result":""}
+        return output
+
+
+
+
+
+
+
+
+@app.route('/addUserRating', methods=['POST'])
+def addUserRating():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        startlimit,endlimit="",""
+        keyarr = ['driverId',bookingId,ratingId]
+        commonfile.writeLog("addpaymentType",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        if msg=="1":
+            driverId = inputdata["driverId"]
+            bookingId=inputdata['bookingId']
+            ratingId=inputdata['ratingId']
+            
+           
+            column="driverId,bookingId,ratingId"
+            values="'"+str(driverId)+"' ,'"+str(bookingId)+"','"+str(ratingId)+"'"
+            insertdata=databasefile.InsertQuery("userRating",column,values)
+            
+
+            output= {"result":"User Added Successfully","message":"","status":"true"}
+            return output
+            
+        else:
+            return msg 
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"result":"something went wrong","status":"false"}
+        return output
+
+
+
+@app.route('/addDriverRating', methods=['POST'])
+def addDriverRating():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        startlimit,endlimit="",""
+        keyarr = ['userId',bookingId,ratingId]
+        commonfile.writeLog("addpaymentType",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        if msg=="1":
+            userId = inputdata["userId"]
+            bookingId=inputdata['bookingId']
+            ratingId=inputdata['ratingId']
+            
+           
+            column="userId,bookingId,ratingId"
+            values="'"+str(userId)+"' ,'"+str(bookingId)+"','"+str(ratingId)+"'"
+            insertdata=databasefile.InsertQuery("driverRating",column,values)
+            
+
+            output= {"result":"User Added Successfully","message":"","status":"true"}
+            return output
+            
+        else:
+            return msg 
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"result":"something went wrong","status":"false"}
+        return output
+
+
+
+
+
+
+
+
+
+
+
+
 
 if __name__ == "__main__":
     CORS(app, support_credentials=True)
