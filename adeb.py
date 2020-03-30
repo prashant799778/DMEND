@@ -1073,6 +1073,42 @@ def endRide():
         output = {"result":"something went wrong","status":"false"}
         return output
 
+
+@app.route('/cancelRide', methods=['POST'])
+def cancelRide():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        startlimit,endlimit="",""
+        keyarr = ["driverId","bookingId","userId"]
+        commonfile.writeLog("cancelRide",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        if msg == "1":
+            ambulanceId= inputdata["driverId"]
+            bookingId=inputdata['bookingId']
+            userId=inputdata['userId']
+            whereCondition=" driverId= '"+ str(driverId)+"' and bookingId='"+ str(bookingId)+"' and  canceledUserId='"+ str(userId)+"'"
+            column=" status=3"
+            bookRide=databasefile.UpdateQuery("bookDriver",column,whereCondition)
+            whereCondition222=  " driverId= '"+ str(driverId)+"' "
+            columns= "onTrip=0 and onDuty=1"
+            bookRide1=databasefile.UpdateQuery("driverRideStatus",columns,whereCondition222)
+            if (bookRide!=0):   
+                bookRide["message"]="ride Cancelled Successfully"             
+                return bookRide
+            else:
+                
+                return bookRide
+        else:
+            return msg 
+    except KeyError as e:
+        print("Exception---->" +str(e))        
+        output = {"result":"Input Keys are not Found","status":"false"}
+        return output    
+    except Exception as e :
+        print("Exception---->" +str(e))           
+        output = {"result":"something went wrong","status":"false"}
+        return output
+
 #______________________________________________
 
 
