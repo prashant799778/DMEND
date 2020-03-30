@@ -945,6 +945,51 @@ def driverWallet():
         output = {"result":"something went wrong","status":"false"}
         return output
 
+@app.route('/notifyRide', methods=['POST'])
+def notifyRide():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        startlimit,endlimit="",""
+        keyarr = ["driverId","bookingId","userId"]
+        commonfile.writeLog("notifyRide",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        if msg == "1":
+            if "driverId" in inputdata:
+                if inputdata['driverId'] != "":
+                    ambulanceId =(inputdata["driverId"])
+            if "bookingId" in inputdata:
+                    if inputdata['bookingId'] != "":
+                        bookingId =str(inputdata["bookingId"])
+
+            if "userId" in inputdata:
+                if inputdata['userId'] != "":
+                    userId =str(inputdata["userId"])
+            
+            whereCondition=" driverId= '"+ str(driverId)+"' and bookingId='"+ str(bookingId)+"'"
+            column=" status=1 "
+            bookRide=databasefile.UpdateQuery("bookDriver",column,whereCondition)
+            whereCondition222=  " driverId= '"+ str(driverId)+"' "
+            columns= "onTrip=1 and onDuty=1"
+            bookRide1=databasefile.UpdateQuery("driverRideStatus",columns,whereCondition222)
+            if (bookRide!=0):   
+                bookRide["message"]="ride notified Successfully"             
+                topic=str(userId)+"/startRide"
+                client.publish(topic, str(bookingDetails)) 
+                return bookRide
+            else:
+                
+                return bookRide
+        else:
+            return msg 
+    except KeyError as e:
+        print("Exception---->" +str(e))        
+        output = {"result":"Input Keys are not Found","status":"false"}
+        return output    
+    except Exception as e :
+        print("Exception---->" +str(e))           
+        output = {"result":"something went wrong","status":"false"}
+        return output
+
 
 @app.route('/startRide', methods=['POST'])
 def startRide():
@@ -967,7 +1012,7 @@ def startRide():
                     userId =str(inputdata["userId"])
             
             whereCondition=" driverId= '"+ str(driverId)+"' and bookingId='"+ str(bookingId)+"'"
-            column=" status=1 "
+            column=" status=2 "
             bookRide=databasefile.UpdateQuery("bookDriver",column,whereCondition)
             whereCondition222=  " driverId= '"+ str(driverId)+"' "
             columns= "onTrip=1 and onDuty=1"
@@ -1006,11 +1051,11 @@ def endRide():
             ambulanceId= inputdata["driverId"]
             bookingId=inputdata['bookingId']
             whereCondition=" driverId= '"+ str(driverId)+"' and bookingId='"+ str(bookingId)+"'"
-            column=" status=2 "
+            column=" status=3 "
             bookRide=databasefile.UpdateQuery("bookDriver",column,whereCondition)
             whereCondition222=  " driverId= '"+ str(driverId)+"' "
             columns= "onTrip=0 and onDuty=1"
-            bookRide1=databasefile.UpdateQuery("ambulanceRideStatus",columns,whereCondition222)
+            bookRide1=databasefile.UpdateQuery("driverRideStatus",columns,whereCondition222)
             if (bookRide!=0):   
                 bookRide["message"]="ride Ended Successfully"             
                 return bookRide
