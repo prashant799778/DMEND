@@ -1565,7 +1565,7 @@ def getNearDriver():
             column=  "d.driverId,d.name, d.mobileNo, b.lat, b.lng,SQRT(POW(69.1 * (b.lat - "+str(startlat)+"), 2) +POW(69.1 * ("+str(startlng)+" - b.lng) * COS(b.lat / 57.3), 2)) AS distance "
             whereCondition= "and d.status=1 and b.onTrip=0 and b.onDuty=1 and b.driverId=a.driverId HAVING distance < 25 "
             orderby="  distance "
-            nearByDriver=databasefile.SelectQueryOrderbyAsc("driverMaster d,ambulanceRideStatus as b",column,whereCondition,"",orderby,"","")
+            nearByDriver=databasefile.SelectQueryOrderbyAsc("driverMaster d,driverRideStatus as b",column,whereCondition,"",orderby,"","")
             if (nearByDriver!=0):   
                         
                 return nearByDriver
