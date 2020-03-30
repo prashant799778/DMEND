@@ -973,7 +973,7 @@ def notifyRide():
             bookRide1=databasefile.UpdateQuery("driverRideStatus",columns,whereCondition222)
             if (bookRide!=0):   
                 bookRide["message"]="ride notified Successfully"             
-                topic=str(userId)+"/startRide"
+                topic=str(userId)+"/notifyRide"
                 client.publish(topic, str(bookingDetails)) 
                 return bookRide
             else:
