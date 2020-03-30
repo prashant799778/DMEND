@@ -1713,6 +1713,337 @@ def getNearDriver():
 
 
 
+@app.route('/bookRide', methods=['POST'])
+def bookRide():
+    try:
+        print('A')
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        startlimit,endlimit="",""
+        #inputdata={"ambulanceId":[1,2,3,4],"driverId":[13,14,15,16,17],'startLocationLat':28.583962,'startLocationLong':77.314345,"pickupLocationAddress":" Noida se 15",'dropLocationLat':28.535517,'dropLocationLong':77.391029,"dropLocationAddress":"fortis noida","userId":"8b0e338e522a11ea93d39ebd4d0189fc"}
+        # inputdata1={}
+        # inputdata1["pickupLocationAddress"]=inputdata["pickupLocationAddress"]
+        # inputdata1["dropLocationAddress"]=inputdata["dropLocationAddress"]
+        keyarr = ['startLocationLat','startLocationLong',"pickupLocationAddress",'dropLocationLat','dropLocationLong',"dropLocationAddress","userId"]
+        client = mqtt.Client()
+        client.connect("localhost",1883,60)
+
+        for i in inputdata["driverId"]:
+
+            #inputdata["driverId"]=str(i)
+            #print(inputdata)
+            
+            
+            topic=str(i)+"/booking"
+            print(topic)
+            print("1")
+            #print("=================",topic)
+            client.publish(topic, str(inputdata))
+            print("2")
+        client.disconnect()    
+             
+        return  {"result":"booking send","status":"True"}
+    except KeyError as e:
+        print("Exception---->" +str(e))        
+        output = {"result":"Input Keys are not Found","status":"false"}
+        return output    
+    except Exception as e :
+        print("Exception---->" +str(e))           
+        output = {"result":"something went wrong","status":"false"}
+        return output
+
+
+
+
+@app.route('/acceptRide', methods=['POST'])
+def acceptRide():
+    try:
+        print('A')
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        print(inputdata)
+        startlimit,endlimit="",""
+       
+        print("1111")
+        keyarr = ["driverId",'startLocationLat','startLocationLong',"pickupLocationAddress",'dropLocationLat','dropLocationLong',"dropLocationAddress","userId"]
+        
+        print("2")
+        
+        if "driverId" in inputdata:
+                if inputdata['driverId'] != "":
+                    driverId =str(inputdata["driverId"])
+                    print(driverId)
+        if "startLocationLat" in inputdata:
+                if inputdata['startLocationLat'] != "":
+                    startLocationLat =inputdata["startLocationLat"]
+        if "startLocationLong" in inputdata:
+                if inputdata['startLocationLong'] != "":
+                    startLocationLong =inputdata["startLocationLong"]
+        if "pickupLocationAddress" in inputdata:
+                if inputdata['pickupLocationAddress'] != "":
+                    pickupLocationAddress =str(inputdata["pickupLocationAddress"])
+        
+       
+        if "userId" in inputdata:
+            if inputdata['userId'] != "":
+                userId =str(inputdata["userId"])
+        bookingTypeId=inputdata['bookingTypeId']
+
+        print("3")
+        bookingId = (commonfile.CreateHashKey(driverId,userId)).hex
+
+
+        commonfile.writeLog("acceptRide",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        
+        if msg == "1":
+            print('B')
+            columns="mobileNo,name"
+            whereCondition22="  userId= '"+str(userId)+"' and userTypeId='2' "
+            data1= databasefile.SelectQuery("userMaster",columns,whereCondition22)
+            print(data1,'data1')
+            usermobile=data1['result']['mobileNo']
+            userName=data1['result']['name']
+
+
+            whereCondition222="  driverId= '"+str(driverId)+"' "
+            data11= databasefile.SelectQuery("driverMaster",columns,whereCondition222)
+            print(data11,'--data')
+            driverName=data11['result']['name']
+            drivermobile=data11['result']['mobileNo']
+           
+
+
+
+
+            #insertdata
+            columnqq='userMobile,driverMobile,pickup,pickupLatitude,pickupLongitude,ambulanceId,userId,driverId,bookingId,bookingTypeId'
+            values111 = " '"+ str(usermobile) +"','" + str(drivermobile)+"','" + str(pickupLocationAddress)+"','" + str(startLocationLat) +"','" + str(startLocationLong) 
+            values111=values111+"','" + str(ambulanceId)+"','" + str(userId) +"','" + str(driverId) + "','" + str(bookingId)+ "','" + str(bookingTypeId) + "'" 
+
+            data111=databasefile.InsertQuery('bookDriver',columnqq,values111)
+
+            if bookingTypeId ==1 or bookingTypeId =='1':
+                print('Daily Driver')
+                finalAmount=  520 + 35
+                if "pickUpTime" in inputdata:
+                    if inputdata['pickUpTime'] != "":
+                        pickUpTime =inputdata["pickUpTime"]
+                
+                column="bookingId,pickUpTime,finalAmount"
+                values= " '"+ str(bookingId) +"','" + str(pickUpTime)+"','" + str(finalAmount)+"'"  
+                insertdata=databasefile.insertdata('bookDailyDriver',column,values)
+
+                columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
+                columns=columns+",b.finalAmount,b.pickUpTime,b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalHours,bm.userMobile"
+                columns=columns+",bm.driverMobile"
+                whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId and bm.bookingId= '"+str(bookingId)+"'"
+                bookingDetails= databasefile.SelectQuery("bookResponder bm,bookDailyDriver b,driverRideStatus ar",columns,whereCondition22)
+                print(bookingDetails,"================")
+
+
+
+
+
+
+
+                
+
+            if bookingTypeId ==2 or bookingTypeId =='2':
+                print('Corporate')
+                #disscussion pending
+                
+                if "startdate" in inputdata:
+                    if inputdata['startdate'] != "":
+                        startdate =inputdata["startdate"]
+                if "enddate" in inputdata:
+                    if inputdata['enddate'] != "":
+                        enddate =inputdata["enddate"]
+
+                if "dropLocationLat" in inputdata:
+                    if inputdata['dropLocationLat'] != "":
+                        dropLocationLat =(inputdata["dropLocationLat"])
+                
+                if "dropLocationLong" in inputdata:
+                    if inputdata['dropLocationLong'] != "":
+                        dropLocationLong =(inputdata["dropLocationLong"])
+                
+                if "dropLocationAddress" in inputdata:
+                    if inputdata['dropLocationAddress'] != "":
+                        dropLocationAddress =str(inputdata["dropLocationAddress"])
+
+                if "morningTime" in inputdata:
+                    if inputdata['morningTime'] != "":
+                        morningTime =inputdata["morningTime"]
+                if "eveningTime" in inputdata:
+                    if inputdata['eveningTime'] != "":
+                        eveningTime =inputdata["eveningTime"]
+
+                column='bookingId,startdate,enddate,dropLocationLong,dropLocationLat,dropLocationAddress,morningTime,eveningTime'
+                values=" '"+ str(bookingId) +"','" + str(startdate)+"','" + str(enddate)
+                values=values+"','" + str(dropLocationLong) +"','" + str(dropLocationLat) +"','" + str(dropLocationAddress)
+
+                values=values+"','" + str(morningTime) +"','" + str(eveningTime) +"'"
+                insertdata=databasefile.insertdata('bookCorporateMaster',column,values)
+
+                columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
+                columns=columns+",b.finalAmount,b.morningTime,b,eveningTime,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalHours,bm.userMobile"
+                columns=columns+",bm.driverMobile"
+                whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId and bm.bookingId= '"+str(bookingId)+"'"
+                bookingDetails= databasefile.SelectQuery("bookResponder bm,bookCorporateMaster b,driverRideStatus ar",columns,whereCondition22)
+                print(bookingDetails,"================")
+
+
+
+
+                
+
+                
+            if bookingTypeId==3 or bookingTypeId =='3':
+                print('hourly')
+
+                if "totalHours" in inputdata:
+                    if inputdata['totalHours'] != "":
+                        totalHours =inputdata["totalHours"]
+
+                
+
+
+
+                finalAmount=  totalHours* 60 + 35
+                column="bookingId,finalAmount,totalHours"
+                values= " '"+ str(bookingId) +"','" + str(finalAmount)+"','" + str(totalHours)+"'"
+                insertdata=databasefile.insertdata('bookHourlyMaster',column,values)
+
+                columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
+                columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalHours,bm.userMobile,am.ambulanceNo "
+                columns=columns+",bm.driverMobile"
+                whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId and bm.bookingId= '"+str(bookingId)+"'"
+                bookingDetails= databasefile.SelectQuery("bookResponder bm,bookHourlyMaster b,driverRideStatus ar",columns,whereCondition22)
+                print(bookingDetails,"================")
+
+
+
+
+
+
+
+                
+            
+            if bookingTypeId ==4 or bookingTypeId=='4':
+                print('one')
+
+                if "dropLocationLat" in inputdata:
+                    if inputdata['dropLocationLat'] != "":
+                        dropLocationLat =(inputdata["dropLocationLat"])
+                if "dropLocationLong" in inputdata:
+                    if inputdata['dropLocationLong'] != "":
+                        dropLocationLong =(inputdata["dropLocationLong"])
+                if "dropLocationAddress" in inputdata:
+                    if inputdata['dropLocationAddress'] != "":
+                        dropLocationAddress =str(inputdata["dropLocationAddress"])
+
+
+                R = 6373.0
+                print(R,'R')
+                fromlongitude2= startLocationLong
+                print(fromlongitude2,'fromlong',type(fromlongitude2))
+                fromlatitude2 = startLocationLat
+                # print(fromlongitude2,'fromlong')
+                print('lat',fromlatitude2)
+                distanceLongitude = dropLocationLong - fromlongitude2
+                distanceLatitude = dropLocationLat - fromlatitude2
+                a = sin(distanceLatitude / 2)**2 + cos(fromlatitude2) * cos(dropLocationLat) * sin(distanceLongitude / 2)**2
+                c = 2 * atan2(sqrt(a), sqrt(1 - a))
+                distance = R * c
+                distance2=distance/100
+                Distance=distance2*1.85
+                d=round(Distance)
+                d2 =str(d) +' Km'
+
+
+                finalAmount= d * 2.5 + 35
+
+                print(finalAmount,'final')
+                column="bookingId,dropOff,dropLocationLat,,dropLocationLong,finalAmount,totalDistance"
+                values=  " '"+ str(bookingId) +"','" + str(dropOff)+"','" + str(dropLocationLat)
+                values=values+"','" + str(dropLocationLong) +"','" + str(finalAmount) +"','" + str(totalDistance)+"'"
+                insertdata=databasefile.insertdata('bookOneMaster',column,values)
+
+                columns="(dr.lat)driverLat,(dr.lng)driverLng, bm.ambulanceId,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
+                columns=columns+",bm.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile,am.ambulanceNo "
+                columns=columns+",bm.driverMobile"
+                whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId and bm.bookingId= '"+str(bookingId)+"'"
+                bookingDetails= databasefile.SelectQuery("bookResponder bm,bookOneMaster b,driverRideStatus dr",columns,whereCondition22)
+                print(bookingDetails,"================")
+
+
+
+                
+
+            if bookingTypeId ==5 or bookingTypeId=='5':
+                print('Round')
+
+
+                R = 6373.0
+                print(R,'R')
+                fromlongitude2= startLocationLong
+                print(fromlongitude2,'fromlong',type(fromlongitude2))
+                fromlatitude2 = startLocationLat
+                # print(fromlongitude2,'fromlong')
+                print('lat',fromlatitude2)
+                distanceLongitude = dropLocationLong - fromlongitude2
+                distanceLatitude = dropLocationLat - fromlatitude2
+                a = sin(distanceLatitude / 2)**2 + cos(fromlatitude2) * cos(dropLocationLat) * sin(distanceLongitude / 2)**2
+                c = 2 * atan2(sqrt(a), sqrt(1 - a))
+                distance = R * c
+                distance2=distance/100
+                Distance=distance2*1.85
+                d=round(Distance)
+                d2 =str(d) *2 +' Km'
+
+
+                
+                finalAmount= d * 2.5*2 + 35
+                print(finalAmount,'final')
+                column="bookingId,dropOff,dropLocationLat,,dropLocationLong,finalAmount,totalDistance"
+                values=  " '"+ str(bookingId) +"','" + str(dropOff)+"','" + str(dropLocationLat)
+                values=values++"','" + str(dropLocationLong) +"','" + str(finalAmount) +"','" + str(totalDistance)+"'"
+                insertdata=databasefile.insertdata('bookRoundMaster',column,values)
+
+
+                
+                columns="(dr.lat)driverLat,(dr.lng)driverLng, bm.ambulanceId,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
+                columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile,am.ambulanceNo "
+                columns=columns+",bm.driverMobile"
+                whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId and bm.bookingId= '"+str(bookingId)+"'"
+                bookingDetails= databasefile.SelectQuery("bookResponder bm,bookRoundMaster b,driverRideStatus dr",columns,whereCondition22)
+                print(bookingDetails,"================")
+
+            bookingDetails["result"]["driverName"]=driverName
+            bookingDetails['result']['userName']=userName
+            if (bookingDetails!='0'):  
+                print('Entered')
+                client = mqtt.Client()
+                client.connect("localhost",1883,60)
+                topic=str(userId)+"/booking"
+                client.publish(topic, str(bookingDetails)) 
+                #bookRide["message"]="ride booked Successfully" 
+                client.disconnect()
+                return bookingDetails
+            else:
+                data={"result":"","message":"No data Found","status":"false"}
+                
+                return data
+        else:
+            return msg 
+    except KeyError as e:
+        print("Exception---->" +str(e))        
+        output = {"result":"Input Keys are not Found","status":"false"}
+        return output    
+    except Exception as e :
+        print("Exception---->" +str(e))           
+        output = {"result":"something went wrong","status":"false"}
+        return output
+
 
 
 
