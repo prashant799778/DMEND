@@ -80,7 +80,7 @@ def userSignup():
 
            
 
-            UserId = (commonfile.CreateHashKey(mobileNo,userTypeId)).hex
+            UserId = (commonfile.CreateHashKey(mobileNo,usertypeId)).hex
             
             
             WhereCondition = " and mobileNo = '" + str(mobileNo) + "'"
@@ -178,6 +178,42 @@ def userverifyOtp():
         print("Exceptio`121QWAaUJIHUJG n---->" +str(e))    
         output = {"result":"somthing went wrong","status":"false"}
         return output
+
+
+
+#user Login
+@app.route('/userLogin', methods=['POST'])
+def userlogin():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        startlimit,endlimit="",""
+        keyarr = ['password','mobileNo']
+        commonfile.writeLog("userLogin",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        if msg == "1":
+            mobileNo = inputdata["mobileNo"]
+            password = inputdata["password"]
+            column=  "us.mobileNo,us.name,us.userId,um.name as userName"
+            whereCondition= "us.mobileNo = '" + str(mobileNo) + "' and us.password = '" + password + "' and us.userTypeId=um.id"
+            loginuser=databasefile.SelectQuery1("userMaster as us,usertypeMaster as um",column,whereCondition)
+            if (loginuser!=0):   
+                              
+                return loginuser
+            else:
+                data={"status":"false","message":"Please enter correct Password & Email","result":""}
+                return data
+
+        else:
+            return msg 
+    except KeyError as e:
+        print("Exception---->" +str(e))        
+        output = {"result":"Input Keys are not Found","status":"false"}
+        return output    
+    except Exception as e :
+        print("Exception---->" +str(e))           
+        output = {"result":"something went wrong","status":"false"}
+        return output
+
 
 
 @app.route('/updateuserProfile', methods=['POST'])
@@ -279,40 +315,6 @@ def userProfile():
         print("Exception---->" +str(e))           
         output = {"status":"false","message":"something went wrong","result":""}
         return output           
-
-
-#user Login
-@app.route('/userLogin', methods=['POST'])
-def userlogin():
-    try:
-        inputdata =  commonfile.DecodeInputdata(request.get_data())
-        startlimit,endlimit="",""
-        keyarr = ['password','mobileNo']
-        commonfile.writeLog("userLogin",inputdata,0)
-        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
-        if msg == "1":
-            mobileNo = inputdata["mobileNo"]
-            password = inputdata["password"]
-            column=  "us.mobileNo,us.name,us.userId,um.name as userName"
-            whereCondition= "us.mobileNo = '" + str(mobileNo) + "' and us.password = '" + password + "' and us.userTypeId=um.id"
-            loginuser=databasefile.SelectQuery1("userMaster as us,usertypeMaster as um",column,whereCondition)
-            if (loginuser!=0):   
-                              
-                return loginuser
-            else:
-                data={"status":"false","message":"Please enter correct Password & Email","result":""}
-                return data
-
-        else:
-            return msg 
-    except KeyError as e:
-        print("Exception---->" +str(e))        
-        output = {"result":"Input Keys are not Found","status":"false"}
-        return output    
-    except Exception as e :
-        print("Exception---->" +str(e))           
-        output = {"result":"something went wrong","status":"false"}
-        return output
 
 #user can see his wallet Balance         
 
