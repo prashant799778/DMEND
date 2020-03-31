@@ -299,7 +299,7 @@ def userProfile():
 
             
          
-            data11=databasefile.SelectQuery('userMaster',column,whereCondition)
+            data11=databasefile.SelectQuery1('userMaster',column,whereCondition)
          
 
             if data11['status'] != "false":
@@ -566,7 +566,7 @@ def paymentTypeMaster():
         if msg=="1":
             column="id ,paymentType"
             whereCondition=""
-            data=databasefile.SelectQuery("paymentTypeMaster",column,whereCondition)
+            data=databasefile.SelectQuery1("paymentTypeMaster",column,whereCondition)
         
             if (data!=0):           
                 
@@ -680,14 +680,14 @@ def driverSignup():
 
            
 
-            UserId = (commonfile.CreateHashKey(mobileNo,userTypeId)).hex
+            UserId = (commonfile.CreateHashKey(mobileNo,usertypeId)).hex
             
             
             WhereCondition = " and mobileNo = '" + str(mobileNo) + "'"
             count = databasefile.SelectCountQuery("userMaster",WhereCondition,"")
             
             if int(count) > 0:
-                WhereCondition = " mobileNo = '" + str(mobileNo) + "'"
+                WhereCondition = " and mobileNo = '" + str(mobileNo) + "'"
                 column = " otp = '" + str(otp)  + "'"
                 updateOtp = databasefile.UpdateQuery("userMaster",column,WhereCondition)
                 print(updateOtp,'updatedata')
@@ -730,7 +730,7 @@ def driverSignup():
                 if data != "0":
                     column = '*'
                     
-                    data = databasefile.SelectQuery1("userMaster",column,WhereCondition,"",startlimit,endlimit)
+                    data = databasefile.SelectQuery1("userMaster",column,WhereCondition)
                     print(data)
                     Data = {"status":"true","message":"","result":data["result"]}                  
                     return Data
