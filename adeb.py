@@ -2166,9 +2166,7 @@ def userBookings():
                 return Data
             else:
             	Data = {"result":"","status":"true","message":"No Rides"}
-
-                          
-                return Data
+            	return Data
                 
                 
         else:
