@@ -87,7 +87,7 @@ def userSignup():
             count = databasefile.SelectCountQuery("userMaster",WhereCondition,"")
             
             if int(count) > 0:
-                WhereCondition = " mobileNo = '" + str(mobileNo) + "'"
+                WhereCondition = " AND  mobileNo = '" + str(mobileNo) + "'"
                 column = " otp = '" + str(otp)  + "'"
                 updateOtp = databasefile.UpdateQuery("userMaster",column,WhereCondition)
                 print(updateOtp,'updatedata')
