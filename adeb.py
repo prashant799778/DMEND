@@ -130,7 +130,7 @@ def userSignup():
                 if data != "0":
                     column = '*'
                     
-                    data = databasefile.SelectQuery1("userMaster",column,WhereCondition,"",startlimit,endlimit)
+                    data = databasefile.SelectQuery1("userMaster",column,WhereCondition)
                     print(data)
                     Data = {"status":"true","message":"","result":data["result"]}                  
                     return Data
