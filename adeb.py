@@ -2137,16 +2137,14 @@ def userBookings():
                 columns=columns+",bm.driverMobile"
                 whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId "
                 bookingDetails= databasefile.SelectQuery("bookDriver bm,bookHourlyMaster b,driverRideStatus ar",columns,whereCondition22)
-                
-            	print('hourly')
+                print('hourly')
             if bookingTypeId ==4 or bookingTypeId =='4':
             	columns="(dr.lat)driverLat,(dr.lng)driverLng, bm.ambulanceId,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
                 columns=columns+",bm.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile,am.ambulanceNo "
                 columns=columns+",bm.driverMobile"
                 whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId "
                 bookingDetails= databasefile.SelectQuery("bookDriver bm,bookOneMaster b,driverRideStatus dr",columns,whereCondition22)
-            
-            	print('one')
+                print('one')
             if bookingTypeId ==5 or bookingTypeId=='5':
             	print('round') 
 
