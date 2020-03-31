@@ -2125,8 +2125,7 @@ def userBookings():
                 columns=columns+",bm.driverMobile"
                 whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId "
                 bookingDetails= databasefile.SelectQuery("bookDriver bm,bookDailyDriver b,driverRideStatus ar",columns,whereCondition22)
-              
-            	print('Dd')
+                print('Dd')
             if bookingTypeId ==2 or bookingTypeId=='2':
 
             	print('corp')
