@@ -68,6 +68,7 @@ def userSignup():
            
             
             mobileNo=inputdata["mobileNo"]
+            email=inputdata['email']
             deviceKey=inputdata["deviceKey"]
             usertypeId="1"
             
@@ -83,7 +84,7 @@ def userSignup():
             UserId = (commonfile.CreateHashKey(mobileNo,usertypeId)).hex
             
             
-            WhereCondition = " and mobileNo = '" + str(mobileNo) + "'"
+            WhereCondition = " and mobileNo = '" + str(mobileNo) + "' or email ='" + str(email) + "' "
             count = databasefile.SelectCountQuery("userMaster",WhereCondition,"")
             
             if int(count) > 0:
