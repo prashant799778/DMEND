@@ -85,7 +85,7 @@ def SelectQuery1(table,columns,whereCondition):
             data={"status":"true","result":data,"message":""}
             return data
         else:
-            data = {"status":"False","message":"No Data Found","result":""}
+            data = {"status":"false","message":"No Data Found","result":""}
 
         return data
 
