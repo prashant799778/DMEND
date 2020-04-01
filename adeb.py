@@ -167,7 +167,7 @@ def userverifyOtp():
                 return verifyOtp
             else:
             	data={"result":"","message":"Invalid Otp","status":"false"}
-                return data
+            	return data
         else:
             return msg         
  
