@@ -732,7 +732,7 @@ def driverSignup():
                     
                     data = databasefile.SelectQuery1("userMaster",column,WhereCondition)
                     print(data)
-                    Data = {"status":"true","message":"","result":data["result"]}                  
+                    Data = {"status":"true","message":"","result":data['result']}                  
                     return Data
                 else:
                     return commonfile.Errormessage()
@@ -806,7 +806,7 @@ def driverProfile():
 
             
          
-            data11=databasefile.SelectQuery('userMaster',column,whereCondition)
+            data11=databasefile.SelectQuery1('userMaster',column,whereCondition)
          
 
             if data11['status'] != "false":
@@ -1847,15 +1847,27 @@ def acceptRide():
             print(data11,'--data')
             driverName=data11['result']['name']
             drivermobile=data11['result']['mobileNo']
+
+            if "dropLocationLat" in inputdata:
+                if inputdata['dropLocationLat'] != "":
+                    dropLocationLat =(inputdata["dropLocationLat"])
+            
+            if "dropLocationLong" in inputdata:
+                if inputdata['dropLocationLong'] != "":
+                    dropLocationLong =(inputdata["dropLocationLong"])
+            
+            if "dropLocationAddress" in inputdata:
+                if inputdata['dropLocationAddress'] != "":
+                    dropLocationAddress =str(inputdata["dropLocationAddress"])	
            
 
 
 
 
             #insertdata
-            columnqq='userMobile,driverMobile,pickup,pickupLatitude,pickupLongitude,ambulanceId,userId,driverId,bookingId,bookingTypeId'
+            columnqq='userMobile,driverMobile,pickup,pickupLatitude,pickupLongitude,ambulanceId,userId,driverId,bookingId,bookingTypeId,dropOff,dropLocationLong,dropLocationLat'
             values111 = " '"+ str(usermobile) +"','" + str(drivermobile)+"','" + str(pickupLocationAddress)+"','" + str(startLocationLat) +"','" + str(startLocationLong) 
-            values111=values111+"','" + str(ambulanceId)+"','" + str(userId) +"','" + str(driverId) + "','" + str(bookingId)+ "','" + str(bookingTypeId) + "'" 
+            values111=values111+"','" + str(ambulanceId)+"','" + str(userId) +"','" + str(driverId) + "','" + str(bookingId)+ "','" + str(bookingTypeId) + "','" + str(dropLocationAddress) +"','" + str(dropLocationLong) +"','" + str(dropLocationLat) +"'" 
 
             data111=databasefile.InsertQuery('bookDriver',columnqq,values111)
 
@@ -2124,7 +2136,7 @@ def userBookings():
 
                 columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
                 columns=columns+",b.finalAmount,b.pickUpTime,b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalHours,bm.userMobile"
-                columns=columns+",bm.driverMobile"
+                columns=columns+",bm.driverMobile,b.status"
                 whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId "
                 bookingDetails= databasefile.SelectQuery("bookDriver bm,bookDailyDriver b,driverRideStatus ar",columns,whereCondition22)
                 print('Dd')
@@ -2135,14 +2147,14 @@ def userBookings():
 
                 columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
                 columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalHours,bm.userMobile,am.ambulanceNo "
-                columns=columns+",bm.driverMobile"
+                columns=columns+",bm.driverMobile,b.status"
                 whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId "
                 bookingDetails= databasefile.SelectQuery("bookDriver bm,bookHourlyMaster b,driverRideStatus ar",columns,whereCondition22)
                 print('hourly')
             if bookingTypeId ==4 or bookingTypeId =='4':
             	columns="(dr.lat)driverLat,(dr.lng)driverLng, bm.ambulanceId,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
             	columns=columns+",bm.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile,am.ambulanceNo "
-            	columns=columns+",bm.driverMobile"
+            	columns=columns+",bm.driverMobile,b.status"
             	whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId "
             	bookingDetails= databasefile.SelectQuery("bookDriver bm,bookOneMaster b,driverRideStatus dr",columns,whereCondition22)
             	print('one')
@@ -2151,7 +2163,7 @@ def userBookings():
             	print('round') 
             	columns="(dr.lat)driverLat,(dr.lng)driverLng, bm.ambulanceId,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
             	columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile,am.ambulanceNo "
-            	columns=columns+",bm.driverMobile"
+            	columns=columns+",bm.driverMobile,b.status"
             	whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId "
             	bookingDetails= databasefile.SelectQuery("bookDriver bm,bookRoundMaster b,driverRideStatus dr",columns,whereCondition22)
                         
@@ -2221,7 +2233,7 @@ def driverTrips():
             if bookingTypeId ==1 or bookingTypeId=='1':
             	print('Dd')
             	columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
-            	columns=columns+",b.finalAmount,b.pickUpTime,b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalHours,bm.userMobile"
+            	columns=columns+",b.finalAmount,b.pickUpTime,b.finalAmount,bm.pickup,b.status,bm.pickupLatitude,bm.pickupLongitude,b.totalHours,bm.userMobile"
             	columns=columns+",bm.driverMobile"
             	whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId"
             	bookingDetails= databasefile.SelectQuery("bookDriver bm,bookDailyDriver b,driverRideStatus ar",columns,whereCondition22)
@@ -2230,10 +2242,11 @@ def driverTrips():
             if bookingTypeId ==2 or bookingTypeId=='2':
             	print('corp')
 
+
             if bookingTypeId==3 or bookingTypeId=='3':
             	print('hourly')
             	columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
-            	columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalHours,bm.userMobile,am.ambulanceNo "
+            	columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b,status,b.totalHours,bm.userMobile,am.ambulanceNo "
             	columns=columns+",bm.driverMobile"
             	whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId "
             	bookingDetails= databasefile.SelectQuery("bookDriver bm,bookHourlyMaster b,driverRideStatus ar",columns,whereCondition22)
@@ -2242,7 +2255,7 @@ def driverTrips():
             if bookingTypeId ==4 or bookingTypeId =='4':
             	print('one')
             	columns="(dr.lat)driverLat,(dr.lng)driverLng, bm.ambulanceId,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
-            	columns=columns+",bm.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile,am.ambulanceNo"
+            	columns=columns+",bm.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile,am.ambulanceNo,b.status"
             	columns=columns+",bm.driverMobile"
             	whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId"
             	bookingDetails= databasefile.SelectQuery("bookDriver bm,bookOneMaster b,driverRideStatus dr",columns,whereCondition22)
@@ -2251,7 +2264,7 @@ def driverTrips():
             if bookingTypeId ==5 or bookingTypeId=='5':
             	print('round')
             	columns="(dr.lat)driverLat,(dr.lng)driverLng, bm.ambulanceId,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
-            	columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile,am.ambulanceNo "
+            	columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile,am.ambulanceNo,b.status "
             	columns=columns+",bm.driverMobile"
             	whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId "
             	bookingDetails= databasefile.SelectQuery("bookDriver bm,bookRoundMaster b,driverRideStatus dr",columns,whereCondition22)
