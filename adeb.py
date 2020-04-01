@@ -160,7 +160,7 @@ def userverifyOtp():
             mobileNo=str(inputdata['mobileNo'])
 
             column="mobileNo,otp,userId,userTypeId"
-            whereCondition= "  otp='" + otp+ "' and mobileNo='" + mobileNo+"'"
+            whereCondition= "and   otp='" + otp+ "' and mobileNo='" + mobileNo+"'"
             verifyOtp=databasefile.SelectQuery1(" userMaster ",column,whereCondition)
             print("verifyOtp======",verifyOtp)
             if  (verifyOtp["status"]!="false") or verifyOtp!=None: 
@@ -195,9 +195,9 @@ def userlogin():
             mobileNo = inputdata["mobileNo"]
             password = inputdata["password"]
             column=  "us.mobileNo,us.name,us.userId,um.name as userName"
-            whereCondition= "us.mobileNo = '" + str(mobileNo) + "' and us.password = '" + password + "' and us.userTypeId=um.id"
+            whereCondition= " and us.mobileNo = '" + str(mobileNo) + "' and us.password = '" + password + "' and us.userTypeId=um.id"
             loginuser=databasefile.SelectQuery1("userMaster as us,usertypeMaster as um",column,whereCondition)
-            if (loginuser!=0):   
+            if (loginuser['status']!='false'):   
                               
                 return loginuser
             else:
