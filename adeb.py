@@ -166,7 +166,8 @@ def userverifyOtp():
             if  (verifyOtp["status"]!="false") or verifyOtp!=None: 
                 return verifyOtp
             else:
-                return verifyOtp 
+            	data={"result":"","message":"Invalid Otp","status":"false"}
+                return data
         else:
             return msg         
  
