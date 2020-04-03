@@ -367,12 +367,13 @@ def addmoney():
             mobileNo = inputdata["mobileNo"]
             userId=inputdata['userId']
             money=inputdata['money']
+            
            
             column=  "us.walletBalance  as money"
             whereCondition= " and us.mobileNo = '" + str(mobileNo) + "'and us.userTypeId=um.id and us.userId='" + str(userId) + "'"
             loginuser=databasefile.SelectQuery1("userMaster as us,usertypeMaster as um",column,whereCondition)
             if (loginuser!=0):
-                money1=loginuser['money']
+                money1=loginuser['result']['money']
                 totalMoney=money1+money
                 columns="walletBalance='"+str(totalMoney)+"'"
                 whereCondition=  " and mobileNo = '" + str(mobileNo) + "' and userId='" + str(userId) + "' "
