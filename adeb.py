@@ -195,7 +195,7 @@ def userlogin():
         if msg == "1":
             mobileNo = inputdata["mobileNo"]
             password = inputdata["password"]
-            column=  "us.mobileNo,us.name,us.userId,um.name as userName"
+            column=  "us.mobileNo,us.name,us.userId,um.usertype as userTypeId"
             whereCondition= " and us.mobileNo = '" + str(mobileNo) + "' and us.password = '" + password + "' and us.userTypeId=um.id"
             loginuser=databasefile.SelectQuery1("userMaster as us,usertypeMaster as um",column,whereCondition)
             if (loginuser['status']!='false'):   
