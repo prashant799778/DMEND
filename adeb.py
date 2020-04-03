@@ -297,7 +297,7 @@ def userProfile():
                 
             
             whereCondition= " userId= '"+str(userId)+"' and userTypeId='2' "
-            column='userId,name,mobileNo,password,email'
+            column='userId,name,mobileNo,password,email,gender'
 
             
          
