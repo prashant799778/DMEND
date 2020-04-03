@@ -376,7 +376,7 @@ def addmoney():
             print(loginuser)
             if (loginuser!=0):
                 money1=loginuser['result']['money']
-                totalMoney=money1+int(money)
+                totalMoney=int(money1)+int(money)
                 print(totalMoney,"+++++++++++")
                 columns="walletBalance='"+str(totalMoney)+"'"
                 whereCondition=  " and mobileNo = '" + str(mobileNo) + "' and userId='" + str(userId) + "' "
