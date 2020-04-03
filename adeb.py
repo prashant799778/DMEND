@@ -16,8 +16,8 @@ import databasefile
 from config import Connection
 import commonfile
 import ConstantData
-# from sendgrid import SendGridAPIClient
-# from sendgrid.helpers.mail import Mail
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 import re
 #import razorpay
 
@@ -256,7 +256,7 @@ def updateDriverProfile():
                 userId=inputdata["userId"]    
                 
             
-            whereCondition= " userId= '"+str(userId)+"' and userTypeId='2' "
+            whereCondition= " and  userId= '"+str(userId)+"' and userTypeId='2' "
           
             data=databasefile.UpdateQuery("userMaster",column,whereCondition)
          
@@ -297,7 +297,7 @@ def userProfile():
                 userId=inputdata["userId"]    
                 
             
-            whereCondition= " userId= '"+str(userId)+"' and userTypeId='2' "
+            whereCondition= " and userId= '"+str(userId)+"' and userTypeId='2' "
             column='userId,name,mobileNo,password,email,gender'
 
             
@@ -368,20 +368,23 @@ def addmoney():
             mobileNo = inputdata["mobileNo"]
             userId=inputdata['userId']
             money=inputdata['money']
+            
            
             column=  "us.walletBalance  as money"
             whereCondition= " and us.mobileNo = '" + str(mobileNo) + "'and us.userTypeId=um.id and us.userId='" + str(userId) + "'"
             loginuser=databasefile.SelectQuery1("userMaster as us,usertypeMaster as um",column,whereCondition)
+            print(loginuser)
             if (loginuser!=0):
-                money1=loginuser['money']
-                totalMoney=money1+money
+                money1=loginuser['result']['money']
+                totalMoney=int(money1)+int(money)
+                print(totalMoney,"+++++++++++")
                 columns="walletBalance='"+str(totalMoney)+"'"
                 whereCondition=  " and mobileNo = '" + str(mobileNo) + "' and userId='" + str(userId) + "' "
                 addmoney=databasefile.UpdateQuery('userMaster',columns,whereCondition)
 
 
                                 
-                return loginuser
+                return addmoney
             else:
                 data={"status":"false","message":"Login Failed","result":"Login Failed"}
                 return data
@@ -762,10 +765,10 @@ def driververifyOtp():
             mobileNo=str(inputdata['mobileNo'])
 
             column="mobileNo,otp,userId,userTypeId"
-            whereCondition= "  otp='" + otp+ "' and mobileNo='" + mobileNo+"'"
+            whereCondition= "  and  otp=" + otp+ " and mobileNo= " + mobileNo+" "
             verifyOtp=databasefile.SelectQuery1(" userMaster ",column,whereCondition)
             print("verifyOtp======",verifyOtp)
-            if  (verifyOtp["status"]!="false") or verifyOtp!=None: 
+            if  (verifyOtp["status"]!="false"): 
                 return verifyOtp
             else:
                 return verifyOtp 
@@ -804,7 +807,7 @@ def driverProfile():
                 userId=inputdata["userId"]    
                 
             
-            whereCondition= " userId= '"+str(userId)+"' and userTypeId='3' "
+            whereCondition= " and userId= '"+str(userId)+"' and userTypeId='3' "
             column='userId,name,mobileNo,password,email'
 
             
@@ -862,8 +865,8 @@ def updateDriverProfile12():
                 driverId=inputdata["userId"]    
                 
             
-            whereCondition= " driverId= '"+str(driverId)+"' "
-            whereCondition2= " userId ='"+str(driverId)+"' "
+            whereCondition= " and  driverId= '"+str(driverId)+"' "
+            whereCondition2= " and  userId ='"+str(driverId)+"' "
           
             data=databasefile.UpdateQuery("driverMaster",column2,whereCondition)
             data11=databasefile.UpdateQuery('userMaster',column,whereCondition2)
