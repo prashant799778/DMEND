@@ -20,7 +20,7 @@ import ConstantData
 # from sendgrid.helpers.mail import Mail
 import re
 #import razorpay
-from flask import Mail
+
 
 
 
