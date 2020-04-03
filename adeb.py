@@ -899,7 +899,7 @@ def driverlogin():
             mobileNo = inputdata["mobileNo"]
             password = inputdata["password"]
             column=  "us.mobileNo,us.name,us.userId,um.name as userName"
-            whereCondition= " and us.mobileNo = '" + str(mobileNo) + "' and us.password = '" + password + "' and us.userTypeId=um.id"
+            whereCondition= " and us.mobileNo = '" + str(mobileNo) + "' and us.password = '" + str(password) + "' and us.userTypeId=um.id"
             loginuser=databasefile.SelectQuery1("userMaster as us,usertypeMaster as um",column,whereCondition)
             if (loginuser!=0):   
                               
