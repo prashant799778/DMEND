@@ -902,7 +902,7 @@ def driverlogin():
                               
                 return loginuser
             else:
-                data={"status":"false","message":"Please enter correct Password & Email","result":""}
+                data={"status":"false","message":"Please enter correct Password & mobileNo.","result":""}
                 return data
 
         else:
