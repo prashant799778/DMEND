@@ -256,7 +256,7 @@ def updateDriverProfile():
                 userId=inputdata["userId"]    
                 
             
-            whereCondition= " userId= '"+str(userId)+"' and userTypeId='2' "
+            whereCondition= " and  userId= '"+str(userId)+"' and userTypeId='2' "
           
             data=databasefile.UpdateQuery("userMaster",column,whereCondition)
          
@@ -865,8 +865,8 @@ def updateDriverProfile12():
                 driverId=inputdata["userId"]    
                 
             
-            whereCondition= " driverId= '"+str(driverId)+"' "
-            whereCondition2= " userId ='"+str(driverId)+"' "
+            whereCondition= " and  driverId= '"+str(driverId)+"' "
+            whereCondition2= " and  userId ='"+str(driverId)+"' "
           
             data=databasefile.UpdateQuery("driverMaster",column2,whereCondition)
             data11=databasefile.UpdateQuery('userMaster',column,whereCondition2)
