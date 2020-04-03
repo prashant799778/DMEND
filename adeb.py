@@ -1206,7 +1206,7 @@ def endRide():
             columns= "onTrip=0 and onDuty=1"
             bookRide1=databasefile.UpdateQuery("driverRideStatus",columns,whereCondition222)
             if (bookRide!=0):   
-               bookingDetails["message"]="ride started Successfully"             
+            	bookingDetails["message"]="ride started Successfully"             
                 topic=str(userId)+"/endRide"
                 client.publish(topic, str(bookingDetails)) 
                 return bookingDetails
