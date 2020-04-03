@@ -505,7 +505,7 @@ def verifyOtp1():
 
             column="email"
             whereCondition= " and otp='" + otp+ "' and email='" + email+ "'  "
-            data1=databasefile.SelectQuery1("userMaster",column,whereCondition,"",startlimit,endlimit)
+            data1=databasefile.SelectQuery1("userMaster",column,whereCondition)
             if  (data1["status"]!="false"):   
                 Data = {"status":"true","message":"","result":data1["result"]}                  
                 return Data
