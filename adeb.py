@@ -538,14 +538,14 @@ def updatepaymentType():
             paymentType = inputdata["paymentType"]
             id = inputdata["id"]
             column= " * "
-            whereCondition="id = '" + str(id)+ "'"
+            whereCondition=" and id = '" + str(id)+ "'"
             data1 = databasefile.SelectQuery1("paymentTypeMaster",column,whereCondition)
             print(data1,"data1")
             if data1 != 0:
                 column = ""
                 whereCondition = ""
                 column= " paymentType='" + str(paymentType) + "'"
-                whereCondition="id = '" + str(id)+ "'"
+                whereCondition=" and id = '" + str(id)+ "'"
                 data = databasefile.UpdateQuery("paymentTypeMaster",column,whereCondition)
                 print(data,'===')
                 output = {"result":"Updated Successfully","status":"true"}
@@ -571,7 +571,7 @@ def paymentTypeMaster():
         msg = "1"
         if msg=="1":
             column="id ,paymentType"
-            whereCondition=""
+            whereCondition=" "
             data=databasefile.SelectQuery1("paymentTypeMaster",column,whereCondition)
         
             if (data!=0):           
@@ -599,7 +599,7 @@ def addpaymentType():
         if msg=="1":
             paymentType = inputdata["paymentType"]
             column="*"
-            whereCondition= "paymentType='"+str(paymentType)+ "'"
+            whereCondition= " and paymentType='"+str(paymentType)+ "'"
             data=databasefile.SelectQuery1("paymentTypeMaster",column,whereCondition)
             print(data,'data')
             if data['status']=='false':
@@ -607,7 +607,7 @@ def addpaymentType():
                 values="'"+str(paymentType)+"' "
                 insertdata=databasefile.InsertQuery("paymentTypeMaster",column,values)
                 column="*"
-                whereCondition= " paymentType='"+str(paymentType)+ "'"
+                whereCondition= " and  paymentType='"+str(paymentType)+ "'"
                 data1=databasefile.SelectQuery1("paymentTypeMaster",column,whereCondition)
 
                 output= {"result":"User Added Successfully","ambulance Details":data1['result'],"status":"true"}
