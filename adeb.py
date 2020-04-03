@@ -333,7 +333,7 @@ def userWallet():
             userId=inputdata['userId']
            
             column=  "us.walletBalance  as money"
-            whereCondition= "us.mobileNo = '" + str(mobileNo) + "'and us.userTypeId=um.id and us.userId='" + str(userId) + "'"
+            whereCondition= " and us.mobileNo = '" + str(mobileNo) + "'and us.userTypeId=um.id and us.userId='" + str(userId) + "'"
             loginuser=databasefile.SelectQuery1("userMaster as us,usertypeMaster as um",column,whereCondition)
             if (loginuser!=0):
                 Data = {"result":loginuser,"status":"true"}                  
@@ -369,13 +369,13 @@ def addmoney():
             money=inputdata['money']
            
             column=  "us.walletBalance  as money"
-            whereCondition= "us.mobileNo = '" + str(mobileNo) + "'and us.userTypeId=um.id and us.userId='" + str(userId) + "'"
+            whereCondition= " and us.mobileNo = '" + str(mobileNo) + "'and us.userTypeId=um.id and us.userId='" + str(userId) + "'"
             loginuser=databasefile.SelectQuery1("userMaster as us,usertypeMaster as um",column,whereCondition)
             if (loginuser!=0):
                 money1=loginuser['money']
                 totalMoney=money1+money
                 columns="walletBalance='"+str(totalMoney)+"'"
-                whereCondition=  " mobileNo = '" + str(mobileNo) + "' and userId='" + str(userId) + "' "
+                whereCondition=  " and mobileNo = '" + str(mobileNo) + "' and userId='" + str(userId) + "' "
                 addmoney=databasefile.UpdateQuery('userMaster',columns,whereCondition)
 
 
