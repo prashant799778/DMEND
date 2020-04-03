@@ -372,7 +372,7 @@ def addmoney():
             whereCondition= "us.mobileNo = '" + str(mobileNo) + "'and us.userTypeId=um.id and us.userId='" + str(userId) + "'"
             loginuser=databasefile.SelectQuery1("userMaster as us,usertypeMaster as um",column,whereCondition)
             if (loginuser!=0):
-                money1=loginuser1['money']
+                money1=loginuser['money']
                 totalMoney=money1+money
                 columns="walletBalance='"+str(totalMoney)+"'"
                 whereCondition=  " mobileNo = '" + str(mobileNo) + "' and userId='" + str(userId) + "' "
