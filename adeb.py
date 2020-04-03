@@ -376,6 +376,7 @@ def addmoney():
             if (loginuser!=0):
                 money1=loginuser['result']['money']
                 totalMoney=money1+int(money)
+                print(totalMoney,"+++++++++++")
                 columns="walletBalance='"+str(totalMoney)+"'"
                 whereCondition=  " and mobileNo = '" + str(mobileNo) + "' and userId='" + str(userId) + "' "
                 addmoney=databasefile.UpdateQuery('userMaster',columns,whereCondition)
