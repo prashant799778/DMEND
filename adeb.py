@@ -806,7 +806,7 @@ def driverProfile():
                 userId=inputdata["userId"]    
                 
             
-            whereCondition= " userId= '"+str(userId)+"' and userTypeId='3' "
+            whereCondition= " and userId= '"+str(userId)+"' and userTypeId='3' "
             column='userId,name,mobileNo,password,email'
 
             
