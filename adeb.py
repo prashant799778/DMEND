@@ -1207,9 +1207,9 @@ def endRide():
             bookRide1=databasefile.UpdateQuery("driverRideStatus",columns,whereCondition222)
             if (bookRide!=0):   
             	bookingDetails["message"]="ride started Successfully"             
-                topic=str(userId)+"/endRide"
-                client.publish(topic, str(bookingDetails)) 
-                return bookingDetails
+            	topic=str(userId)+"/endRide"
+            	client.publish(topic, str(bookingDetails)) 
+            	return bookingDetails
             else:
                 
                 return bookRide
