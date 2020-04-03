@@ -1041,7 +1041,7 @@ def startRide():
             if bookingTypeId ==2 or bookingTypeId =='2':
                 print('cc')
             
-            if bookingTypeId ==3 or bookingTypeId s =='3':
+            if bookingTypeId ==3 or bookingTypeId =='3':
                 print('hourly')
 
                 column=" status=2 "
