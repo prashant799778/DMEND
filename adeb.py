@@ -375,7 +375,7 @@ def addmoney():
             loginuser=databasefile.SelectQuery1("userMaster as us,usertypeMaster as um",column,whereCondition)
             if (loginuser!=0):
                 money1=loginuser['result']['money']
-                totalMoney=money1+money
+                totalMoney=money1+int(money)
                 columns="walletBalance='"+str(totalMoney)+"'"
                 whereCondition=  " and mobileNo = '" + str(mobileNo) + "' and userId='" + str(userId) + "' "
                 addmoney=databasefile.UpdateQuery('userMaster',columns,whereCondition)
