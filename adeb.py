@@ -1499,6 +1499,50 @@ def allaboutUs():
         return output
 
 
+@app.route('/allUserRating', methods=['POST'])
+def allaboutUs222():
+    try:
+        columns=" driverId,bookingId,ratingId"
+        
+        data = databasefile.SelectQueryMaxId("userRating",columns)
+       
+
+        if data:           
+            Data = {"status":"true","message":"","result":data["result"]}
+            return Data
+        else:
+            output = {"status":"false","message":"No Data Found","result":""}
+            return output
+
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"status":"false","message":"something went wrong","result":""}
+        return output
+
+
+@app.route('/allDriverRating', methods=['POST'])
+def allaboutUs99():
+    try:
+        columns="userId,ratingId,bookingId"
+        
+        data = databasefile.SelectQueryMaxId("driverRating",columns)
+       
+
+        if data:           
+            Data = {"status":"true","message":"","result":data["result"]}
+            return Data
+        else:
+            output = {"status":"false","message":"No Data Found","result":""}
+            return output
+
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"status":"false","message":"something went wrong","result":""}
+        return output
+
+
+
+
 
 @app.route('/allcorporateBookingType', methods=['POST'])
 def allcorporateBookingType():
@@ -1739,7 +1783,7 @@ def addUserRating():
             insertdata=databasefile.InsertQuery("userRating",column,values)
             
 
-            output= {"result":"User Added Successfully","message":"","status":"true"}
+            output= {"result":"Rated Successfully","message":"Rated Successfully","status":"true"}
             return output
             
         else:
