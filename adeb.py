@@ -572,7 +572,7 @@ def paymentTypeMaster():
         if msg=="1":
             column="id ,paymentType"
             whereCondition=" "
-            data=databasefile.SelectQuery1("paymentTypeMaster",column,whereCondition)
+            data=databasefile.SelectQueryMaxId("paymentTypeMaster",column,whereCondition)
         
             if (data!=0):           
                 
@@ -1940,7 +1940,7 @@ def getNearDriver():
         if msg == "1":
             startlat ,startlng,userId= inputdata["startLocationLat"],inputdata["startLocationLong"],""#,inputdata["userId"]
             column=  "d.driverId,d.name, d.mobileNo, b.lat, b.lng,SQRT(POW(69.1 * (b.lat - "+str(startlat)+"), 2) +POW(69.1 * ("+str(startlng)+" - b.lng) * COS(b.lat / 57.3), 2)) AS distance "
-            whereCondition= "and d.status=1 and b.onTrip=0 and b.onDuty=1 and b.driverId=a.driverId HAVING distance < 25 "
+            whereCondition= "and d.status=1 and b.onTrip=0 and b.onDuty=1 and b.driverId=b.driverId HAVING distance < 25 "
             orderby="  distance "
             nearByDriver=databasefile.SelectQueryOrderbyAsc("driverMaster d,driverRideStatus as b",column,whereCondition,"",orderby,"","")
             if (nearByDriver!=0):   
