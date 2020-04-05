@@ -1375,7 +1375,7 @@ def selectallUsers():
     try:
         columns=" us.usertype,um.name,um.walletBalance,um.email,um.status,um.password,um.mobileNo,um.gender,um.deviceKey  "
         whereCondition=" and um.usertypeId=us.id"
-        data = databasefile.SelectQuery4("userTypeMaster",columns)
+        data = databasefile.SelectQuery4("userTypeMaster",columns,whereCondition)
        
 
         if data:           
