@@ -1374,7 +1374,7 @@ def adminLogin():
 def selectallUsers():
     try:
         columns=" us.usertype,um.name,um.walletBalance,um.email,um.status,um.password,um.mobileNo,um.gender,um.deviceKey  "
-        whereCondition=" and um.usertypeId=us.id"
+        whereCondition=" and um.usertypeId=us.id and um.usertypeId='2' "
         data = databasefile.SelectQuery4("userMaster as um ,usertypeMaster as us",columns,whereCondition)
        
 
