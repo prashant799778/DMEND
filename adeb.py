@@ -1500,6 +1500,28 @@ def allaboutUs():
 
 
 
+@app.route('/allcorporateBookingType', methods=['POST'])
+def allcorporateBookingType():
+    try:
+        columns=" * "
+        
+        data = databasefile.SelectQueryMaxId("corporateBookingType",columns)
+       
+
+        if data:           
+            Data = {"status":"true","message":"","result":data["result"]}
+            return Data
+        else:
+            output = {"status":"false","message":"No Data Found","result":""}
+            return output
+
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"status":"false","message":"something went wrong","result":""}
+        return output
+
+
+
 @app.route('/allbookingTypeMaster', methods=['POST'])
 def allbookingTypeMaster():
     try:
