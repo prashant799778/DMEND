@@ -2861,6 +2861,7 @@ def acceptBooking():
                 whereCondition22=" and  dr.driverId=bm.driverId and bm.bookingId=b.bookingId and bm.bookingId= '"+str(bookingId)+"'"
                 bookingDetails= databasefile.SelectQuery1("bookDriver bm,bookHourlyMaster b,driverRideStatus dr",columns,whereCondition22)
                 print(bookingDetails,"================")
+                print('aaa')
 
 
 
