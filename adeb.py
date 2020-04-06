@@ -2101,6 +2101,7 @@ def acceptRide():
         if "userId" in inputdata:
             if inputdata['userId'] != "":
                 userId =str(inputdata["userId"])
+
         bookingTypeId=inputdata['bookingTypeId']
 
         print("3")
@@ -2143,9 +2144,9 @@ def acceptRide():
 
 
             #insertdata
-            columnqq='userMobile,driverMobile,pickup,pickupLatitude,pickupLongitude,ambulanceId,userId,driverId,bookingId,bookingTypeId,dropOff,dropLocationLong,dropLocationLat'
+            columnqq='userMobile,driverMobile,pickup,pickupLatitude,pickupLongitude,userId,driverId,bookingId,bookingTypeId,dropOff,dropLocationLong,dropLocationLat'
             values111 = " '"+ str(usermobile) +"','" + str(drivermobile)+"','" + str(pickupLocationAddress)+"','" + str(startLocationLat) +"','" + str(startLocationLong) 
-            values111=values111+"','" + str(ambulanceId)+"','" + str(userId) +"','" + str(driverId) + "','" + str(bookingId)+ "','" + str(bookingTypeId) + "','" + str(dropLocationAddress) +"','" + str(dropLocationLong) +"','" + str(dropLocationLat) +"'" 
+            values111=values111+"','" + str(userId) +"','" + str(driverId) + "','" + str(bookingId)+ "','" + str(bookingTypeId) + "','" + str(dropLocationAddress) +"','" + str(dropLocationLong) +"','" + str(dropLocationLat) +"'" 
 
             data111=databasefile.InsertQuery('bookDriver',columnqq,values111)
 
@@ -2164,7 +2165,7 @@ def acceptRide():
                 columns=columns+",b.finalAmount,b.pickUpTime,b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalHours,bm.userMobile"
                 columns=columns+",bm.driverMobile"
                 whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId and bm.bookingId= '"+str(bookingId)+"'"
-                bookingDetails= databasefile.SelectQuery("bookDriver bm,bookDailyDriver b,driverRideStatus ar",columns,whereCondition22)
+                bookingDetails= databasefile.SelectQuery("bookDriver bm,bookDailyDriver b,driverRideStatus dr",columns,whereCondition22)
                 print(bookingDetails,"================")
 
 
@@ -2205,7 +2206,7 @@ def acceptRide():
                     if inputdata['eveningTime'] != "":
                         eveningTime =inputdata["eveningTime"]
 
-                column='bookingId,startdate,enddate,dropLocationLong,dropLocationLat,dropLocationAddress,morningTime,eveningTime'
+                column='bookingId,startdate,enddate,dropLocationLong,dropLocationLat,dropOff,morningTime,eveningTime'
                 values=" '"+ str(bookingId) +"','" + str(startdate)+"','" + str(enddate)
                 values=values+"','" + str(dropLocationLong) +"','" + str(dropLocationLat) +"','" + str(dropLocationAddress)
 
@@ -2216,7 +2217,7 @@ def acceptRide():
                 columns=columns+",b.finalAmount,b.morningTime,b,eveningTime,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalHours,bm.userMobile"
                 columns=columns+",bm.driverMobile"
                 whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId and bm.bookingId= '"+str(bookingId)+"'"
-                bookingDetails= databasefile.SelectQuery("bookDriver bm,bookCorporateMaster b,driverRideStatus ar",columns,whereCondition22)
+                bookingDetails= databasefile.SelectQuery("bookDriver bm,bookCorporateMaster b,driverRideStatus dr",columns,whereCondition22)
                 print(bookingDetails,"================")
 
 
@@ -2245,7 +2246,7 @@ def acceptRide():
                 columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalHours,bm.userMobile "
                 columns=columns+",bm.driverMobile"
                 whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId and bm.bookingId= '"+str(bookingId)+"'"
-                bookingDetails= databasefile.SelectQuery("bookDriver bm,bookHourlyMaster b,driverRideStatus ar",columns,whereCondition22)
+                bookingDetails= databasefile.SelectQuery("bookDriver bm,bookHourlyMaster b,driverRideStatus dr",columns,whereCondition22)
                 print(bookingDetails,"================")
 
 
@@ -2292,8 +2293,8 @@ def acceptRide():
 
                 print(finalAmount,'final')
                 column="bookingId,dropOff,dropLocationLat,,dropLocationLong,finalAmount,totalDistance"
-                values=  " '"+ str(bookingId) +"','" + str(dropOff)+"','" + str(dropLocationLat)
-                values=values+"','" + str(dropLocationLong) +"','" + str(finalAmount) +"','" + str(totalDistance)+"'"
+                values=  " '"+ str(bookingId) +"','" + str(dropLocationAddress)+"','" + str(dropLocationLat)
+                values=values+"','" + str(dropLocationLong) +"','" + str(finalAmount) +"','" + str(d2)+"'"
                 insertdata=databasefile.insertdata('bookOneMaster',column,values)
 
                 columns="(dr.lat)driverLat,(dr.lng)driverLng, bm.ambulanceId,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
@@ -2333,21 +2334,23 @@ def acceptRide():
                 finalAmount= d * 2.5*2 + 35
                 print(finalAmount,'final')
                 column="bookingId,dropOff,dropLocationLat,,dropLocationLong,finalAmount,totalDistance"
-                values=  " '"+ str(bookingId) +"','" + str(dropOff)+"','" + str(dropLocationLat)
-                values=values++"','" + str(dropLocationLong) +"','" + str(finalAmount) +"','" + str(totalDistance)+"'"
+                values=  " '"+ str(bookingId) +"','" + str(dropLocationAddress)+"','" + str(dropLocationLat)
+                values=values++"','" + str(dropLocationLong) +"','" + str(finalAmount) +"','" + str(d2)+"'"
                 insertdata=databasefile.insertdata('bookRoundMaster',column,values)
 
 
                 
-                columns="(dr.lat)driverLat,(dr.lng)driverLng, bm.ambulanceId,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
+                columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
                 columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile "
                 columns=columns+",bm.driverMobile"
                 whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId and bm.bookingId= '"+str(bookingId)+"'"
                 bookingDetails= databasefile.SelectQuery("bookDriver bm,bookRoundMaster b,driverRideStatus dr",columns,whereCondition22)
                 print(bookingDetails,"================")
+                print("11111111")
 
             bookingDetails["result"]["driverName"]=driverName
             bookingDetails['result']['userName']=userName
+
             if (bookingDetails!='0'):  
                 print('Entered')
                 client = mqtt.Client()
