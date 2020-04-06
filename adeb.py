@@ -2338,7 +2338,7 @@ def acceptRide():
 
 
                 
-                finalAmount= d * 2.5*2 + 35
+                finalAmount= (d * 2.5)*2 + 35
 
                 print(finalAmount,'final')
 
