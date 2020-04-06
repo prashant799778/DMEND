@@ -1050,7 +1050,12 @@ def startRide():
             if bookingTypeId ==2 or bookingTypeId =='2':
 
                 if   corporateBookingType ==1 or corporateBookingType =='1':
-                    print("book")
+                    select bookingId,morningTime,status=2 from bookCorporateMaster then insert into bookMorningCorporate(do this) 
+                else:
+                    select bookingId,morningTime,status=2 from bookCorporateMaster then insert into bookEveningCorporate(do this) 
+
+
+                    
 
                 
 
@@ -1155,6 +1160,7 @@ def endRide():
             if "userId" in inputdata:
                 if inputdata['userId'] != "":
                     userId =str(inputdata["userId"])
+            corporateBookingType=inputdata['corporateBookingType']
 
             whereCondition=" driverId= '"+ str(driverId)+"' and bookingId='"+ str(bookingId)+"'"
             column=" bookingTypeId"
@@ -1178,6 +1184,11 @@ def endRide():
                 
             if bookingTypeId ==2 or bookingTypeId =='2':
                 print('cc')
+                if   corporateBookingType ==1 or corporateBookingType =='1':
+                    select bookingId,morningTime,status=3,endTime(using pytz) from bookCorporateMaster then update into bookMorningCorporate(do this) 
+                else:
+                    select bookingId,morningTime,status=3,endTime(using pytz) from bookCorporateMaster then update into bookEveningCorporate(do this) 
+
             
             if bookingTypeId ==3 or bookingTypeId =='3':
                 print('hourly')
@@ -2163,14 +2174,14 @@ def acceptRide():
             if bookingTypeId ==1 or bookingTypeId =='1':
                 print('Daily Driver')
                 finalAmount=  520 + 35
-                
+
                 if "pickUpTime" in inputdata:
                     if inputdata['pickUpTime'] != "":
                         pickUpTime =inputdata["pickUpTime"]
                 
                 column="bookingId,dropOff,dropOffLatitude,dropOffLongitude,pickUpTime,finalAmount"
                 values= " '"+ str(bookingId)+"','" + str(dropLocationAddress)+"','" + str(dropLocationLat)+"','" + str(dropLocationLong) +"','" + str(pickUpTime)+"','" + str(finalAmount)+"'"  
-                insertdata=databasefile.insertdata('bookDailyDriver',column,values)
+                insertdata=databasefile.InsertQuery('bookDailyDriver',column,values)
 
                 columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
                 columns=columns+",b.finalAmount,b.pickUpTime,b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalHours,bm.userMobile"
