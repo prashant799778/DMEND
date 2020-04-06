@@ -2455,7 +2455,7 @@ def userBookings():
                 bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookHourlyMaster b,driverRideStatus dr",columns,whereCondition22,"",startlimit,endlimit,orderby)
                 print('hourly')
             if bookingTypeId ==4 or bookingTypeId =='4':
-            	columns="(dr.lat)driverLat,(dr.lng)driverLng, bm.ambulanceId,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
+            	columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
             	columns=columns+",bm.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile "
             	columns=columns+",bm.driverMobile,b.status"
             	whereCondition22=" and dr.driverId=bm.driverId and bm.bookingId=b.bookingId "
@@ -2464,7 +2464,7 @@ def userBookings():
             
             if bookingTypeId ==5 or bookingTypeId=='5':
             	print('round') 
-            	columns="(dr.lat)driverLat,(dr.lng)driverLng, bm.ambulanceId,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
+            	columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
             	columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile "
             	columns=columns+",bm.driverMobile,b.status"
             	whereCondition22="  and dr.driverId=bm.driverId and bm.bookingId=b.bookingId "
@@ -2543,6 +2543,7 @@ def driverTrips():
                 print('Dd')
             if bookingTypeId ==2 or bookingTypeId=='2':
             	print('corp')
+                
             
             if bookingTypeId==3 or bookingTypeId=='3':
 
@@ -2553,7 +2554,7 @@ def driverTrips():
                 bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookHourlyMaster b,driverRideStatus dr",columns,whereCondition22,"",startlimit,endlimit,orderby)
                 print('hourly')
             if bookingTypeId ==4 or bookingTypeId =='4':
-            	columns="(dr.lat)driverLat,(dr.lng)driverLng, bm.ambulanceId,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
+            	columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
             	columns=columns+",bm.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile "
             	columns=columns+",bm.driverMobile,b.status"
             	whereCondition22=" and  dr.driverId=bm.driverId and bm.bookingId=b.bookingId "
@@ -2562,7 +2563,7 @@ def driverTrips():
             
             if bookingTypeId ==5 or bookingTypeId=='5':
             	print('round') 
-            	columns="(dr.lat)driverLat,(dr.lng)driverLng, bm.ambulanceId,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
+            	columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
             	columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile "
             	columns=columns+",bm.driverMobile,b.status"
             	whereCondition22=" and dr.driverId=bm.driverId and bm.bookingId=b.bookingId "
