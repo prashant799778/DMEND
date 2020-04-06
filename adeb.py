@@ -2290,6 +2290,7 @@ def acceptRide():
                 Distance=distance2*1.85
                 d=round(Distance)
                 d2 =str(d) +' Km'
+                print(d2)
 
 
                 finalAmount= d * 2.5 + 35
