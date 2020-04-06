@@ -2435,6 +2435,7 @@ def userBookings():
 
             orderby="bm.id" 
             if bookingTypeId ==1 or bookingTypeId=='1':
+                print('11')
 
                 columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
                 columns=columns+",b.finalAmount,b.pickUpTime,b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.userMobile"
