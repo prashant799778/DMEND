@@ -2331,11 +2331,14 @@ def acceptRide():
                 distance2=distance/100
                 Distance=distance2*1.85
                 d=round(Distance)
-                d2 =str(d) *2 +' Km'
+                print(d)
+                d2 =str(d+d) +' Km'
+                print(d2)
 
 
                 
                 finalAmount= d * 2.5*2 + 35
+
                 print(finalAmount,'final')
                 column="bookingId,dropOff,dropOffLatitude,dropOffLongitude,finalAmount,totalDistance"
                 values=  " '"+ str(bookingId) +"','" + str(dropLocationAddress)+"','" + str(dropLocationLat)
