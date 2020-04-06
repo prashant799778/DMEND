@@ -2241,8 +2241,9 @@ def acceptRide():
 
 
                 finalAmount=  totalHours* 60 + 35
-                column="bookingId,finalAmount,totalHours"
-                values= " '"+ str(bookingId) +"','" + str(finalAmount)+"','" + str(totalHours)+"'"
+
+                column="bookingId,dropOff,dropOffLatitude,dropOffLongitude,finalAmount,totalHours"
+                values= " '"+ str(bookingId)+"','" + str(dropLocationAddress)+"','" + str(dropLocationLat)+"','" + str(dropLocationLong) +"','" + str(finalAmount)+"','" + str(totalHours)+"'"
                 insertdata=databasefile.InsertQuery('bookHourlyMaster',column,values)
 
                 columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
