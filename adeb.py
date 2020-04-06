@@ -1025,6 +1025,8 @@ def startRide():
             if "userId" in inputdata:
                 if inputdata['userId'] != "":
                     userId =str(inputdata["userId"])
+
+            corporateBookingType=inputdata['corporateBookingType']
             
             whereCondition=" driverId= '"+ str(driverId)+"' and bookingId='"+ str(bookingId)+"'"
             column=" bookingTypeId"
@@ -1046,7 +1048,12 @@ def startRide():
 
                 
             if bookingTypeId ==2 or bookingTypeId =='2':
-                print('cc')
+
+                if   corporateBookingType ==1 or corporateBookingType =='1':
+                    print("book")
+
+                
+
             
             if bookingTypeId ==3 or bookingTypeId =='3':
                 print('hourly')
@@ -2156,12 +2163,13 @@ def acceptRide():
             if bookingTypeId ==1 or bookingTypeId =='1':
                 print('Daily Driver')
                 finalAmount=  520 + 35
+                
                 if "pickUpTime" in inputdata:
                     if inputdata['pickUpTime'] != "":
                         pickUpTime =inputdata["pickUpTime"]
                 
-                column="bookingId,pickUpTime,finalAmount"
-                values= " '"+ str(bookingId) +"','" + str(pickUpTime)+"','" + str(finalAmount)+"'"  
+                column="bookingId,dropOff,dropOffLatitude,dropOffLongitude,pickUpTime,finalAmount"
+                values= " '"+ str(bookingId)+"','" + str(dropLocationAddress)+"','" + str(dropLocationLat)+"','" + str(dropLocationLong) +"','" + str(pickUpTime)+"','" + str(finalAmount)+"'"  
                 insertdata=databasefile.insertdata('bookDailyDriver',column,values)
 
                 columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
