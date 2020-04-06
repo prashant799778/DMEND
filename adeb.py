@@ -41,6 +41,7 @@ def selectUserTypeMaster():
         columns=" id, usertype "
         
         data = databasefile.SelectQueryMaxId("userTypeMaster",columns)
+        print(data)
        
 
         if data:           
