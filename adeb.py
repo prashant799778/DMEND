@@ -3116,10 +3116,10 @@ def CompletedBooking():
                 columns=columns+",bm.driverMobile,b.status"
                 whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId  and b.status='3' "
                 bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookDailyDriver b,driverRideStatus ar",columns,whereCondition22,"",startlimit,endlimit,orderby)
-                print('Daily driver')
+                print('Dd')
 
             if bookingTypeId ==2 or bookingTypeId=='2':
-                print('corporate')
+                print('corp')
             
             if bookingTypeId==3 or bookingTypeId=='3':
 
