@@ -2213,7 +2213,7 @@ def acceptRide():
                 values=values+"','" + str(dropLocationLong) +"','" + str(dropLocationLat) +"','" + str(dropLocationAddress)
 
                 values=values+"','" + str(morningTime) +"','" + str(eveningTime) +"'"
-                insertdata=databasefile.insertdata('bookCorporateMaster',column,values)
+                insertdata=databasefile.InsertQuery('bookCorporateMaster',column,values)
 
                 columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
                 columns=columns+",b.finalAmount,b.morningTime,b,eveningTime,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalHours,bm.userMobile"
@@ -2242,7 +2242,7 @@ def acceptRide():
                 finalAmount=  totalHours* 60 + 35
                 column="bookingId,finalAmount,totalHours"
                 values= " '"+ str(bookingId) +"','" + str(finalAmount)+"','" + str(totalHours)+"'"
-                insertdata=databasefile.insertdata('bookHourlyMaster',column,values)
+                insertdata=databasefile.InsertQuery('bookHourlyMaster',column,values)
 
                 columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
                 columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalHours,bm.userMobile "
@@ -2297,7 +2297,7 @@ def acceptRide():
                 column="bookingId,dropOff,dropOffLatitude,dropOffLongitude,finalAmount,totalDistance"
                 values=  " '"+ str(bookingId) +"','" + str(dropLocationAddress)+"','" + str(dropLocationLat)
                 values=values+"','" + str(dropLocationLong) +"','" + str(finalAmount) +"','" + str(d2)+"'"
-                insertdata=databasefile.insertdata('bookOneMaster',column,values)
+                insertdata=databasefile.InsertQuery('bookOneMaster',column,values)
 
                 columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
                 columns=columns+",bm.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile "
@@ -2338,7 +2338,7 @@ def acceptRide():
                 column="bookingId,dropOff,dropOffLatitude,dropOffLongitude,finalAmount,totalDistance"
                 values=  " '"+ str(bookingId) +"','" + str(dropLocationAddress)+"','" + str(dropLocationLat)
                 values=values++"','" + str(dropLocationLong) +"','" + str(finalAmount) +"','" + str(d2)+"'"
-                insertdata=databasefile.insertdata('bookRoundMaster',column,values)
+                insertdata=databasefile.InsertQuery('bookRoundMaster',column,values)
 
 
                 
