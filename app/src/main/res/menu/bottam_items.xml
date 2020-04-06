@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/book_driver"
+        android:checked="true"
+        android:icon="@drawable/ic_taxi_driverline"
+        android:title="@string/Book"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/my_bookings"
+        android:checked="false"
+        android:icon="@drawable/ic_my_bookings"
+        android:title="@string/MyBookings"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/payment_methods"
+        android:checked="false"
+        android:icon="@drawable/ic_pay"
+        android:title="@string/PaymentMethod"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/profile"
+        android:checked="false"
+        android:icon="@drawable/ic_me"
+        android:title="@string/Me"
+        app:showAsAction="ifRoom" />
+</menu>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activitys.LoginActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_mask_group_7" />
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_centerVertical="true"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/ic_group_3818">
+
+        </ImageView>
+
+        <LinearLayout
+            android:layout_below="@id/logo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp">
+
+            <com.example.adeb.Widget.Segow_UI_EditText
+                android:id="@+id/phone"
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:background="@drawable/edit_text_boarder"
+                android:hint="@string/MobileNo"
+                android:inputType="number"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:maxLength="10"
+                android:drawablePadding="10dp"
+                style="@style/TextStyle"
+                android:drawableLeft="@drawable/ic_phone"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimary"
+                android:textSize="14dp">
+
+            </com.example.adeb.Widget.Segow_UI_EditText>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/t_password"
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:layout_marginTop="20dp"
+                app:boxBackgroundColor="@color/transparent"
+                app:boxBackgroundMode="none"
+                app:errorEnabled="true"
+                android:drawablePadding="10dp"
+                app:hintEnabled="false"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/colorPrimary">
+
+                <com.example.adeb.Widget.Segow_UI_EditText
+                    android:id="@+id/pswd"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/edit_text_boarder"
+                    android:hint="@string/Password"
+                    android:inputType="textPassword"
+                    style="@style/TextStyle"
+                    android:paddingLeft="10dp"
+                    android:singleLine="true"
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/ic_password"
+                    android:textColor="@color/colorPrimary"
+                    android:textColorHint="@color/colorPrimary"
+                    android:textCursorDrawable="@drawable/curcos"
+                    android:textSize="14dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.example.adeb.Widget.Segow_UI_Font
+                android:id="@+id/forgot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/forgot"
+                android:gravity="right"
+                android:paddingTop="20dp"
+                android:paddingBottom="10dp"
+                android:text="@string/Forgot">
+            </com.example.adeb.Widget.Segow_UI_Font>
+
+            <Button
+                android:id="@+id/login"
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:layout_marginTop="17dp"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                style="@style/TextStyle"
+                android:background="@drawable/button_background"
+                android:text="@string/Login">
+
+            </Button>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="15dp"
+                android:padding="10dp"
+                android:orientation="horizontal">
+
+                <com.example.adeb.Widget.Segow_UI_Font
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/forgot"
+                    android:gravity="center"
+                    android:textSize="16dp"
+                    android:text="@string/NewUser">
+                </com.example.adeb.Widget.Segow_UI_Font>
+
+                <com.example.adeb.Widget.Segow_UI_Font
+                    android:id="@+id/signUp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/SolidBlack"
+                    android:paddingLeft="10dp"
+                    android:gravity="center"
+                    android:textSize="16dp"
+                    android:text="@string/Signup">
+                </com.example.adeb.Widget.Segow_UI_Font>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+
+
+
+</ScrollView>
+    <RelativeLayout
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@color/white">
+
+        <com.victor.loading.rotate.RotateLoading
+            android:id="@+id/rotateloading"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerInParent="true"
+            app:loading_color="@color/colorPrimary"
+            app:loading_speed="11"
+            app:loading_width="2dp" />
+    </RelativeLayout>
+
+</RelativeLayout>

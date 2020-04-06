@@ -1,0 +1,550 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.BookDriverFragment">
+
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/game_layout"
+                android:visibility="gone"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/close_game_layout"
+                    android:layout_width="50dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentRight="true"
+                    android:padding="17dp"
+                    android:visibility="gone"
+                    android:src="@drawable/ic_close">
+
+                </ImageView>
+
+                <ImageView
+                    android:id="@+id/logo_game_layout"
+                    android:layout_width="100dp"
+                    android:layout_centerInParent="true"
+                    android:layout_height="100dp"
+                    android:src="@drawable/ic_group_3817"/>
+
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/tool_rel"
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:paddingTop="10dp">
+
+                <ImageView
+                    android:id="@+id/game"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:visibility="visible"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="17dp"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_group_3817" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_toRightOf="@id/game"
+                    android:orientation="horizontal">
+
+                    <com.example.adeb.Widget.Segow_UI_Font
+                        android:id="@+id/day_driver"
+                        android:layout_width="@dimen/driverType"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:text="@string/DayDriver"
+                        android:textColor="@color/colorPrimary" />
+
+                    <LinearLayout
+                        android:id="@+id/lay_day_driver"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/top_tab_view"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:visibility="gone">
+
+                        <com.example.adeb.Widget.Segow_UI_Font
+                            android:id="@+id/day_driver2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="@string/DayDriver"
+                            android:textColor="@color/white"
+                            android:textSize="12dp" />
+                    </LinearLayout>
+
+                    <com.example.adeb.Widget.Segow_UI_Font
+                        android:id="@+id/corporate"
+                        android:layout_width="@dimen/driverType"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="11dp"
+                        android:layout_toRightOf="@id/day_driver"
+                        android:gravity="center"
+                        android:text="@string/Corporate"
+                        android:textColor="@color/colorPrimary" />
+
+                    <LinearLayout
+                        android:id="@+id/lay_corporate"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginRight="6dp"
+                        android:layout_toRightOf="@id/day_driver"
+                        android:background="@drawable/top_tab_view"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:visibility="gone">
+
+                        <com.example.adeb.Widget.Segow_UI_Font
+                            android:id="@+id/corporate2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/Corporate"
+                            android:textColor="@color/white"
+                            android:textSize="12dp" />
+                    </LinearLayout>
+
+                    <com.example.adeb.Widget.Segow_UI_Font
+                        android:id="@+id/hourly"
+                        android:layout_width="@dimen/driverType"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="11dp"
+                        android:layout_toRightOf="@id/corporate"
+                        android:gravity="center"
+                        android:text="@string/Hourly"
+
+                        android:textColor="@color/colorPrimary" />
+
+                    <LinearLayout
+                        android:id="@+id/lay_hourly"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="6dp"
+                        android:layout_toRightOf="@id/corporate"
+                        android:background="@drawable/top_tab_view"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:visibility="gone">
+
+                        <com.example.adeb.Widget.Segow_UI_Font
+                            android:id="@+id/hourly2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/Hourly"
+                            android:textColor="@color/white"
+                            android:textSize="12dp" />
+                    </LinearLayout>
+
+                    <com.example.adeb.Widget.Segow_UI_Font
+                        android:id="@+id/oneRound"
+                        android:layout_width="@dimen/driverType"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="11dp"
+                        android:layout_toRightOf="@id/hourly"
+                        android:gravity="center"
+                        android:text="@string/OneRound"
+                        android:textColor="@color/colorPrimary" />
+
+                    <LinearLayout
+                        android:id="@+id/lay_one_round"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/hourly"
+                        android:background="@drawable/top_tab_view"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:visibility="gone">
+
+                        <com.example.adeb.Widget.Segow_UI_Font
+                            android:id="@+id/round2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/OneRound"
+                            android:textColor="@color/white"
+                            android:textSize="12dp" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <fragment
+                    android:id="@+id/map_fargment"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="19dp"
+                    android:layout_marginTop="28dp"
+                    android:layout_marginRight="19dp"
+                    android:background="@drawable/address_fill_background"
+                    android:padding="14dp">
+
+
+                    <RelativeLayout
+                        android:id="@+id/l123"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:background="@null">
+
+                        <com.example.adeb.Widget.Segow_UI_EditText
+                            android:id="@+id/pickUpAdress"
+                            android:layout_width="315dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentBottom="true"
+                            android:background="@null"
+                            android:drawableStart="@drawable/ic_home_run"
+                            android:drawablePadding="6dp"
+                            android:ems="10"
+                            android:paddingRight="16dp"
+                            android:singleLine="true"
+                            android:textColor="@color/address"
+                            android:textColorHint="@color/address"
+                            android:textSize="12dp">
+
+                            <requestFocus />
+                        </com.example.adeb.Widget.Segow_UI_EditText>
+
+                        <ImageView
+                            android:id="@+id/cross"
+                            android:layout_width="30dp"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:padding="10dp"
+                            android:src="@drawable/ic_close" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_below="@id/l123"
+                        android:layout_marginTop="10dp"
+                        android:background="@null">
+
+
+                        <com.example.adeb.Widget.Segow_UI_EditText
+                            android:id="@+id/distination_address"
+                            android:layout_width="315dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentBottom="true"
+                            android:background="@null"
+                            android:drawableStart="@drawable/ic_cursor"
+                            android:drawablePadding="6dp"
+                            android:ems="10"
+                            android:hint="Home Address"
+                            android:paddingRight="16dp"
+                            android:singleLine="true"
+                            android:textColor="@color/destination"
+                            android:textColorHint="@color/destination"
+                            android:textSize="12dp">
+
+                            <requestFocus />
+                        </com.example.adeb.Widget.Segow_UI_EditText>
+
+                        <ImageView
+                            android:id="@+id/cross2"
+                            android:layout_width="30dp"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:padding="10dp"
+                            android:src="@drawable/ic_close" />
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layout1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="60dp"
+                    android:background="@drawable/car_type_background"
+                    android:visibility="gone">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/expand"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:padding="12dp"
+                            android:src="@drawable/ic_up_arrow" />
+
+                        <ImageView
+                            android:id="@+id/close_layout"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:padding="12dp"
+                            android:src="@drawable/ic_down_arrow"
+                            android:visibility="gone" />
+
+                        <com.example.adeb.Widget.Segow_UI_Bold_Font
+                            android:id="@+id/txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="@string/GearType"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="14dp" />
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/layout2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp"
+                        android:background="@color/white"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:orientation="vertical">
+
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/line" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:paddingTop="15dp">
+
+                                <LinearLayout
+                                    android:id="@+id/l1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+
+                                    android:orientation="vertical">
+                                    <ImageView
+                                        android:layout_width="50dp"
+                                        android:layout_height="wrap_content"
+                                        android:src="@drawable/ic_car_1"/>
+
+                                    <com.example.adeb.Widget.Segow_UI_Semi_Font
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/Small"
+                                        android:layout_gravity="center_horizontal"
+                                        android:layout_marginTop="5dp"
+                                        android:textSize="12dp"
+                                        android:gravity="center"
+                                        android:textColor="@color/txt2"/>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/l2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="50dp"
+                                    android:layout_toRightOf="@+id/l1"
+                                    android:orientation="vertical">
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:src="@drawable/ic_surface_1"/>
+
+                                    <com.example.adeb.Widget.Segow_UI_Semi_Font
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/Medium"
+                                        android:gravity="center_horizontal"
+                                        android:textSize="12dp"
+                                        android:layout_gravity="center_horizontal"
+                                        android:layout_marginTop="5dp"
+                                        android:textColor="@color/txt2"/>
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:id="@+id/l3"
+                                    android:layout_toRightOf="@id/l2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="50dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:orientation="vertical">
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:src="@drawable/ic_race_car"/>
+
+                                    <com.example.adeb.Widget.Segow_UI_Semi_Font
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="12dp"
+                                        android:layout_gravity="center_horizontal"
+                                        android:text="@string/Large"
+                                        android:layout_marginTop="5dp"
+                                        android:textColor="@color/txt2"/>
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:id="@+id/l4"
+                                    android:layout_toRightOf="@+id/l3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="50dp"
+                                    android:orientation="vertical">
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:src="@drawable/ic_car_2"/>
+
+                                    <com.example.adeb.Widget.Segow_UI_Semi_Font
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/Luxury"
+                                        android:textSize="12dp"
+                                        android:layout_marginTop="5dp"
+                                        android:layout_gravity="center_horizontal"
+                                        android:textColor="@color/txt2"/>
+                                </LinearLayout>
+
+                            </RelativeLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginLeft="24dp"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginRight="24dp"
+                                android:background="@color/line" />
+
+                            <LinearLayout
+                                android:paddingTop="14dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="140dp"
+                                    android:layout_height="35dp"
+                                    android:background="@color/colorPrimary"
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/ic_05_transmission"/>
+                                    <com.example.adeb.Widget.Segow_UI_Semi_Font
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/Manual"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_gravity="center_vertical"
+                                        android:textColor="@color/white"/>
+                                </LinearLayout>
+                                <View
+                                    android:layout_width="2dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="30dp"
+                                    android:background="@color/line"/>
+                                <LinearLayout
+                                    android:layout_width="140dp"
+                                    android:layout_height="35dp"
+                                    android:layout_gravity="right"
+                                    android:background="@drawable/gear_box_background"
+                                    android:gravity="center"
+                                    android:layout_marginLeft="30dp"
+                                    android:orientation="horizontal">
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/ic_return"/>
+                                    <com.example.adeb.Widget.Segow_UI_Semi_Font
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/Automatic"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_gravity="center_vertical"
+                                        android:textColor="@color/gearBox"/>
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:padding="18dp"
+                                android:orientation="horizontal">
+
+                                <Button
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:background="@drawable/button_background"
+                                    android:text="@string/Continue"
+                                    android:textAllCaps="false"
+                                    android:textColor="@color/white"
+                                    android:layout_centerVertical="true"/>
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+</RelativeLayout>

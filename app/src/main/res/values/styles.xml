@@ -1,0 +1,36 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="statusBarBackground">@color/white</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.splash">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="background">@null</item>
+    </style>
+
+    <style name="TextStyle">
+        <item name="android:textSize">13sp</item>
+        <item name="android:lineSpacingExtra">2sp</item>
+        <item name="android:textColor">#005c97</item>
+    </style>
+
+    <style name="custom_dialog" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="colorBackgroundFloating">@color/white</item>
+        <item name="panelBackground">@color/white</item>
+        <item name="dialogCornerRadius">25dp</item>
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">20dp</item>
+    </style>
+</resources>

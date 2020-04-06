@@ -1,0 +1,58 @@
+<resources>
+    <string name="app_name">ADEB</string>
+    <string name="MobileNo">Mobile No.</string>
+    <string name="Password">Password</string>
+    <string name="Forgot">Forgot password?</string>
+    <string name="Login">Log In</string>
+    <string name="NewUser">Are you a New User ?</string>
+    <string name="Signup">"Sign up "</string>
+    <string name="Name">Name</string>
+    <string name="Email">Email ID</string>
+    <string name="byclick">By clicking here, you agree to the</string>
+    <string name="Terms">Terms and Conditions</string>
+    <string name="AlreadyLogin">Already a User?</string>
+    <string name="title_activity_main_dashboard">Map</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="LogOut">Logout</string>
+    <string name="Choosedriver">Choose the driver</string>
+    <string name="Favorite">"Favorite "</string>
+    <string name="Automatically">"Automatically "</string>
+    <string name="FavoriteDrivers">Favorite Drivers</string>
+    <string name="BookNow">Book Now</string>
+    <string name="DayDriver">Day Driver</string>
+    <string name="Corporate">Corporate</string>
+    <string name="Hourly">Hourly</string>
+    <string name="OneRound">One Round</string>
+    <string name="Verification">Verification</string>
+    <string name="verifyText">Please check your message
+and enter the verification code we just sent you.</string>
+    <string name="verifyText2">You have successfully submitted all the details.</string>
+    <string name="Verify">Verify</string>
+    <string name="Verify2">Verified</string>
+    <string name="Start">Start Now</string>
+    <string name="GearType">Choose your Car and Gear Type</string>
+    <string name="Small">Small</string>
+    <string name="Medium">Medium</string>
+    <string name="Large">Large</string>
+    <string name="Luxury">Luxury</string>
+    <string name="Continue">Continue</string>
+    <string name="Manual">Manual</string>
+    <string name="Automatic">Automatic</string>
+    <string name="DailyDrive">Daily Drive</string>\
+    <string name="Continue2"> Press login  to continue </string>
+    <string name="otp">"Enter your registered Email ID to reset password "</string>
+    <string name="ResetPassword">Reset Password</string>
+    <string name="EnterOTP">Enter OTP</string>
+    <string name="ChangePassword">Change Password</string>
+    <string name="NewPassword">Enter your  New Password</string>
+    <string name="Congrats">" Congrats !!!"</string>
+    <string name="PasswordChanged">Your Password has been Upadated successfully</string>
+    <string name="Book">Book</string>
+    <string name="MyBookings">My Bookings</string>
+    <string name="PaymentMethod">Payment Methods</string>
+    <string name="profile">Profile</string>
+    <string name="Me">Me</string>
+
+</resources>
