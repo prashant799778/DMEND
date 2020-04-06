@@ -2296,6 +2296,7 @@ def acceptRide():
                 finalAmount= d * 2.5 + 35
 
                 print(finalAmount,'final')
+
                 column="bookingId,dropOff,dropOffLatitude,dropOffLongitude,finalAmount,totalDistance"
                 values=  " '"+ str(bookingId) +"','" + str(dropLocationAddress)+"','" + str(dropLocationLat)
                 values=values+"','" + str(dropLocationLong) +"','" + str(finalAmount) +"','" + str(d2)+"'"
@@ -2340,9 +2341,10 @@ def acceptRide():
                 finalAmount= d * 2.5*2 + 35
 
                 print(finalAmount,'final')
+
                 column="bookingId,dropOff,dropOffLatitude,dropOffLongitude,finalAmount,totalDistance"
                 values=  " '"+ str(bookingId) +"','" + str(dropLocationAddress)+"','" + str(dropLocationLat)
-                values=values++"','" + str(dropLocationLong) +"','" + str(finalAmount) +"','" + str(d2)+"'"
+                values=values+"','" + str(dropLocationLong) +"','" + str(finalAmount) +"','" + str(d2)+"'"
                 insertdata=databasefile.InsertQuery('bookRoundMaster',column,values)
 
 
@@ -2355,6 +2357,7 @@ def acceptRide():
                 print(bookingDetails,"================")
                 print("11111111")
 
+            
             bookingDetails["result"]["driverName"]=driverName
             bookingDetails['result']['userName']=userName
 
