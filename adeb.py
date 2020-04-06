@@ -18,6 +18,8 @@ import commonfile
 import ConstantData
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
+from math import sin,cos,sqrt,atan2,radians
+from decimal import Decimal
 import re
 #import razorpay
 
@@ -2144,7 +2146,7 @@ def acceptRide():
 
 
             #insertdata
-            columnqq='userMobile,driverMobile,pickup,pickupLatitude,pickupLongitude,userId,driverId,bookingId,bookingTypeId,dropOff,dropLocationLong,dropLocationLat'
+            columnqq='userMobile,driverMobile,pickup,pickupLatitude,pickupLongitude,userId,driverId,bookingId,bookingTypeId,dropOff,dropOffLatitude,dropOffLongitude'
             values111 = " '"+ str(usermobile) +"','" + str(drivermobile)+"','" + str(pickupLocationAddress)+"','" + str(startLocationLat) +"','" + str(startLocationLong) 
             values111=values111+"','" + str(userId) +"','" + str(driverId) + "','" + str(bookingId)+ "','" + str(bookingTypeId) + "','" + str(dropLocationAddress) +"','" + str(dropLocationLong) +"','" + str(dropLocationLat) +"'" 
 
@@ -2292,12 +2294,12 @@ def acceptRide():
                 finalAmount= d * 2.5 + 35
 
                 print(finalAmount,'final')
-                column="bookingId,dropOff,dropLocationLat,,dropLocationLong,finalAmount,totalDistance"
+                column="bookingId,dropOff,dropOffLatitude,dropOffLongitude,finalAmount,totalDistance"
                 values=  " '"+ str(bookingId) +"','" + str(dropLocationAddress)+"','" + str(dropLocationLat)
                 values=values+"','" + str(dropLocationLong) +"','" + str(finalAmount) +"','" + str(d2)+"'"
                 insertdata=databasefile.insertdata('bookOneMaster',column,values)
 
-                columns="(dr.lat)driverLat,(dr.lng)driverLng, bm.ambulanceId,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
+                columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
                 columns=columns+",bm.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile "
                 columns=columns+",bm.driverMobile"
                 whereCondition22="  and dr.driverId=bm.driverId and bm.bookingId=b.bookingId and bm.bookingId= '"+str(bookingId)+"'"
@@ -2333,7 +2335,7 @@ def acceptRide():
                 
                 finalAmount= d * 2.5*2 + 35
                 print(finalAmount,'final')
-                column="bookingId,dropOff,dropLocationLat,,dropLocationLong,finalAmount,totalDistance"
+                column="bookingId,dropOff,dropOffLatitude,dropOffLongitude,finalAmount,totalDistance"
                 values=  " '"+ str(bookingId) +"','" + str(dropLocationAddress)+"','" + str(dropLocationLat)
                 values=values++"','" + str(dropLocationLong) +"','" + str(finalAmount) +"','" + str(d2)+"'"
                 insertdata=databasefile.insertdata('bookRoundMaster',column,values)
