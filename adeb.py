@@ -1048,18 +1048,8 @@ def startRide():
 
                 
             if bookingTypeId ==2 or bookingTypeId =='2':
+                print('1')
 
-                # if   corporateBookingType ==1 or corporateBookingType =='1':
-                #     select bookingId,morningTime,status=2 from bookCorporateMaster then insert into bookMorningCorporate(do this) 
-                # else:
-                #     select bookingId,morningTime,status=2 from bookCorporateMaster then insert into bookEveningCorporate(do this) 
-
-
-                    
-
-                
-
-            
             if bookingTypeId ==3 or bookingTypeId =='3':
                 print('hourly')
 
