@@ -1049,10 +1049,10 @@ def startRide():
                 
             if bookingTypeId ==2 or bookingTypeId =='2':
 
-                if   corporateBookingType ==1 or corporateBookingType =='1':
-                    select bookingId,morningTime,status=2 from bookCorporateMaster then insert into bookMorningCorporate(do this) 
-                else:
-                    select bookingId,morningTime,status=2 from bookCorporateMaster then insert into bookEveningCorporate(do this) 
+                # if   corporateBookingType ==1 or corporateBookingType =='1':
+                #     select bookingId,morningTime,status=2 from bookCorporateMaster then insert into bookMorningCorporate(do this) 
+                # else:
+                #     select bookingId,morningTime,status=2 from bookCorporateMaster then insert into bookEveningCorporate(do this) 
 
 
                     
@@ -1184,10 +1184,11 @@ def endRide():
                 
             if bookingTypeId ==2 or bookingTypeId =='2':
                 print('cc')
-                if   corporateBookingType ==1 or corporateBookingType =='1':
-                    select bookingId,morningTime,status=3,endTime(using pytz) from bookCorporateMaster then update into bookMorningCorporate(do this) 
-                else:
-                    select bookingId,morningTime,status=3,endTime(using pytz) from bookCorporateMaster then update into bookEveningCorporate(do this) 
+                # if   corporateBookingType ==1 or corporateBookingType =='1':
+                #     print('1')
+                #     select bookingId,morningTime,status=3,endTime(using pytz) from bookCorporateMaster then update into bookMorningCorporate(do this) 
+                # else:
+                #     select bookingId,morningTime,status=3,endTime(using pytz) from bookCorporateMaster then update into bookEveningCorporate(do this) 
 
             
             if bookingTypeId ==3 or bookingTypeId =='3':
