@@ -2172,13 +2172,13 @@ def acceptRide():
                 
                 column="bookingId,dropOff,dropOffLatitude,dropOffLongitude,pickUpTime,finalAmount"
                 values= " '"+ str(bookingId)+"','" + str(dropLocationAddress)+"','" + str(dropLocationLat)+"','" + str(dropLocationLong) +"','" + str(pickUpTime)+"','" + str(finalAmount)+"'"  
-                insertdata=databasefile.InsertQuery('bookDailyDriver',column,values)
+                insertdata=databasefile.InsertQuery('bookDaliyDriver',column,values)
 
                 columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
                 columns=columns+",b.finalAmount,b.pickUpTime,b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalHours,bm.userMobile"
                 columns=columns+",bm.driverMobile"
                 whereCondition22=" and  dr.driverId=bm.driverId and bm.bookingId=b.bookingId and bm.bookingId= '"+str(bookingId)+"'"
-                bookingDetails= databasefile.SelectQuery1("bookDriver bm,bookDailyDriver b,driverRideStatus dr",columns,whereCondition22)
+                bookingDetails= databasefile.SelectQuery1("bookDriver bm,bookDaliyDriver  b,driverRideStatus dr",columns,whereCondition22)
                 print(bookingDetails,"================")
 
 
