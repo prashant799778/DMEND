@@ -2302,7 +2302,7 @@ def acceptRide():
                 insertdata=databasefile.InsertQuery('bookOneMaster',column,values)
 
                 columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
-                columns=columns+",bm.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile "
+                columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalDistance,bm.userMobile "
                 columns=columns+",bm.driverMobile"
                 whereCondition22="  and dr.driverId=bm.driverId and bm.bookingId=b.bookingId and bm.bookingId= '"+str(bookingId)+"'"
                 bookingDetails= databasefile.SelectQuery1("bookDriver bm,bookOneMaster b,driverRideStatus dr",columns,whereCondition22)
