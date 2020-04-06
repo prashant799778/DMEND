@@ -41,7 +41,6 @@ def selectUserTypeMaster():
         columns=" id, usertype "
         
         data = databasefile.SelectQueryMaxId("userTypeMaster",columns)
-        print(data)
        
 
         if data:           
@@ -2862,7 +2861,6 @@ def acceptBooking():
                 whereCondition22=" and  dr.driverId=bm.driverId and bm.bookingId=b.bookingId and bm.bookingId= '"+str(bookingId)+"'"
                 bookingDetails= databasefile.SelectQuery1("bookDriver bm,bookHourlyMaster b,driverRideStatus dr",columns,whereCondition22)
                 print(bookingDetails,"================")
-                print('aaa')
 
 
 
@@ -2895,7 +2893,7 @@ def acceptBooking():
                 print('lat',fromlatitude2)
                 distanceLongitude = dropLocationLong - fromlongitude2
                 distanceLatitude = dropLocationLat - fromlatitude2
-                #a = sin(distanceLatitude / 2)**2 + cos(fromlatitude2) * cos(dropLocationLat) * sin(distanceLongitude / 2)**2
+                a = sin(distanceLatitude / 2)**2 + cos(fromlatitude2) *  cos(dropLocationLat) * sin(distanceLongitude / 2)**2
                 c = 2 * atan2(sqrt(a), sqrt(1 - a))
                 distance = R * c
                 distance2=distance/100
