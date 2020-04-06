@@ -1,0 +1,187 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.adeb"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="26"
+8-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="29" />
+9-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml
+10    <!--
+11         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+12         Google Maps Android API v2, but you must specify either coarse or fine
+13         location permissions for the 'MyLocation' functionality.
+14    -->
+15    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+15-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:9:5-79
+15-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:9:22-76
+16    <uses-permission android:name="android.permission.INTERNET" />
+16-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:10:5-67
+16-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:10:22-64
+17    <uses-permission android:name="android.permission.WAKE_LOCK" />
+17-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:11:5-68
+17-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:11:22-65
+18    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+18-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:12:5-81
+18-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:12:22-78
+19    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+19-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:13:5-79
+19-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:13:22-76
+20    <uses-permission android:name="android.permission.CALL_PHONE" />
+20-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:14:5-69
+20-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:14:22-66
+21    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+21-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:15:5-75
+21-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:15:22-72
+22    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+22-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:13:5-79
+22-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:13:22-76
+23    <uses-permission android:name="android.permission.VIBRATE" />
+23-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:17:5-66
+23-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:17:22-63
+24    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+24-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:9:5-79
+24-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:9:22-76
+25
+26    <uses-feature
+26-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\Mohit\.gradle\caches\transforms-2\files-2.1\edb03ed300512ae8da7c146a103a6c79\jetified-play-services-maps-17.0.0\AndroidManifest.xml:26:5-28:35
+27        android:glEsVersion="0x00020000"
+27-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\Mohit\.gradle\caches\transforms-2\files-2.1\edb03ed300512ae8da7c146a103a6c79\jetified-play-services-maps-17.0.0\AndroidManifest.xml:27:9-41
+28        android:required="true" />
+28-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\Mohit\.gradle\caches\transforms-2\files-2.1\edb03ed300512ae8da7c146a103a6c79\jetified-play-services-maps-17.0.0\AndroidManifest.xml:28:9-32
+29
+30    <application
+30-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:20:5-67:19
+31        android:allowBackup="true"
+31-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:21:9-35
+32        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+32-->[androidx.core:core:1.1.0] C:\Users\Mohit\.gradle\caches\transforms-2\files-2.1\1cd7eff88f5e86d0249af2958bf465f0\core-1.1.0\AndroidManifest.xml:24:18-86
+33        android:debuggable="true"
+34        android:extractNativeLibs="false"
+35        android:icon="@mipmap/ic_main_logo_round"
+35-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:22:9-50
+36        android:label="@string/app_name"
+36-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:23:9-41
+37        android:networkSecurityConfig="@xml/network_security_config"
+37-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:24:9-69
+38        android:roundIcon="@mipmap/ic_launcher_round"
+38-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:25:9-54
+39        android:supportsRtl="true"
+39-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:26:9-35
+40        android:testOnly="true"
+41        android:theme="@style/AppTheme" >
+41-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:27:9-40
+42        <activity android:name="com.example.adeb.Activitys.BottomTabDashBoardActivity" />
+42-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:28:9-83
+42-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:28:19-71
+43        <activity android:name="com.example.adeb.Activitys.ChangePassword_Activity" />
+43-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:29:9-71
+43-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:29:19-68
+44        <activity android:name="com.example.adeb.Activitys.OTP_Activity" />
+44-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:30:9-60
+44-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:30:19-57
+45        <activity android:name="com.example.adeb.Activitys.Verify_OTP_Activity" />
+45-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:31:9-67
+45-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:31:19-64
+46        <activity android:name="com.example.adeb.Activitys.FavoriteDriverActivity" />
+46-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:32:9-70
+46-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:32:19-67
+47        <activity android:name="com.example.adeb.Activitys.HelpActivity" />
+47-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:33:9-60
+47-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:33:19-57
+48        <activity android:name="com.example.adeb.Activitys.AboutActivity" />
+48-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:34:9-61
+48-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:34:19-58
+49        <!--
+50             The API key for Google Maps-based APIs is defined as a string resource.
+51             (See the file "res/values/google_maps_api.xml").
+52             Note that the API key is linked to the encryption key used to sign the APK.
+53             You need a different API key for each encryption key, including the release key that is used to
+54             sign the APK for publishing.
+55             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+56        -->
+57        <meta-data
+57-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:43:9-45:55
+58            android:name="com.google.android.geo.API_KEY"
+58-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:44:13-58
+59            android:value="@string/google_maps_key" />
+59-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:45:13-52
+60
+61        <activity
+61-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:47:9-49:69
+62            android:name="com.example.adeb.Activitys.MainDashboardActivity"
+62-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:48:13-60
+63            android:label="@string/title_activity_main_dashboard" />
+63-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:49:13-66
+64        <activity android:name="com.example.adeb.Activitys.ForgotPasswordActivity" />
+64-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:50:9-70
+64-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:50:19-67
+65        <activity android:name="com.example.adeb.Activitys.TermsConditionActivity" />
+65-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:51:9-70
+65-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:51:19-67
+66        <activity
+66-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:52:9-54:54
+67            android:name="com.example.adeb.Activitys.SignUPActivity"
+67-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:53:13-53
+68            android:theme="@style/AppTheme.splash" />
+68-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:54:13-51
+69        <activity
+69-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:55:9-57:54
+70            android:name="com.example.adeb.Activitys.LoginActivity"
+70-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:56:13-52
+71            android:theme="@style/AppTheme.splash" />
+71-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:57:13-51
+72        <activity
+72-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:58:9-66:20
+73            android:name="com.example.adeb.Activitys.SplashScreen"
+73-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:59:13-51
+74            android:theme="@style/AppTheme.splash" >
+74-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:60:13-51
+75            <intent-filter>
+75-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:61:13-65:29
+76                <action android:name="android.intent.action.MAIN" />
+76-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:62:17-69
+76-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:62:25-66
+77
+78                <category android:name="android.intent.category.LAUNCHER" />
+78-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:64:17-77
+78-->D:\Android Projects\ADEB2\app\src\main\AndroidManifest.xml:64:27-74
+79            </intent-filter>
+80        </activity>
+81        <!-- Needs to be explicitly declared on P+ -->
+82        <uses-library
+82-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\Mohit\.gradle\caches\transforms-2\files-2.1\edb03ed300512ae8da7c146a103a6c79\jetified-play-services-maps-17.0.0\AndroidManifest.xml:33:9-35:40
+83            android:name="org.apache.http.legacy"
+83-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\Mohit\.gradle\caches\transforms-2\files-2.1\edb03ed300512ae8da7c146a103a6c79\jetified-play-services-maps-17.0.0\AndroidManifest.xml:34:13-50
+84            android:required="false" />
+84-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\Mohit\.gradle\caches\transforms-2\files-2.1\edb03ed300512ae8da7c146a103a6c79\jetified-play-services-maps-17.0.0\AndroidManifest.xml:35:13-37
+85
+86        <provider
+86-->[com.squareup.picasso:picasso:2.71828] C:\Users\Mohit\.gradle\caches\transforms-2\files-2.1\b1430b2009c87f7fd199f6201c1d42c1\jetified-picasso-2.71828\AndroidManifest.xml:8:9-11:40
+87            android:name="com.squareup.picasso.PicassoProvider"
+87-->[com.squareup.picasso:picasso:2.71828] C:\Users\Mohit\.gradle\caches\transforms-2\files-2.1\b1430b2009c87f7fd199f6201c1d42c1\jetified-picasso-2.71828\AndroidManifest.xml:9:13-64
+88            android:authorities="com.example.adeb.com.squareup.picasso"
+88-->[com.squareup.picasso:picasso:2.71828] C:\Users\Mohit\.gradle\caches\transforms-2\files-2.1\b1430b2009c87f7fd199f6201c1d42c1\jetified-picasso-2.71828\AndroidManifest.xml:10:13-72
+89            android:exported="false" />
+89-->[com.squareup.picasso:picasso:2.71828] C:\Users\Mohit\.gradle\caches\transforms-2\files-2.1\b1430b2009c87f7fd199f6201c1d42c1\jetified-picasso-2.71828\AndroidManifest.xml:11:13-37
+90
+91        <activity
+91-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\Mohit\.gradle\caches\transforms-2\files-2.1\6fb3f6cd2b75dfe7dd10f87d94351f9e\jetified-play-services-base-17.0.0\AndroidManifest.xml:23:9-26:75
+92            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+92-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\Mohit\.gradle\caches\transforms-2\files-2.1\6fb3f6cd2b75dfe7dd10f87d94351f9e\jetified-play-services-base-17.0.0\AndroidManifest.xml:24:13-79
+93            android:exported="false"
+93-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\Mohit\.gradle\caches\transforms-2\files-2.1\6fb3f6cd2b75dfe7dd10f87d94351f9e\jetified-play-services-base-17.0.0\AndroidManifest.xml:25:13-37
+94            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+94-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\Mohit\.gradle\caches\transforms-2\files-2.1\6fb3f6cd2b75dfe7dd10f87d94351f9e\jetified-play-services-base-17.0.0\AndroidManifest.xml:26:13-72
+95
+96        <meta-data
+96-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\Mohit\.gradle\caches\transforms-2\files-2.1\c39f27975e2128f358c90a3c3f9b8fee\jetified-play-services-basement-17.0.0\AndroidManifest.xml:23:9-25:69
+97            android:name="com.google.android.gms.version"
+97-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\Mohit\.gradle\caches\transforms-2\files-2.1\c39f27975e2128f358c90a3c3f9b8fee\jetified-play-services-basement-17.0.0\AndroidManifest.xml:24:13-58
+98            android:value="@integer/google_play_services_version" />
+98-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\Mohit\.gradle\caches\transforms-2\files-2.1\c39f27975e2128f358c90a3c3f9b8fee\jetified-play-services-basement-17.0.0\AndroidManifest.xml:25:13-66
+99    </application>
+100
+101</manifest>
