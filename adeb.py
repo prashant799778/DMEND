@@ -2439,7 +2439,7 @@ def userBookings():
                 columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
                 columns=columns+",b.finalAmount,b.pickUpTime,b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.userMobile"
                 columns=columns+",bm.driverMobile,b.status"
-                whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId "
+                whereCondition22=" and dr.driverId=bm.driverId and bm.bookingId=b.bookingId "
                 bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookDailyDriver b,driverRideStatus ar",columns,whereCondition22,"",startlimit,endlimit,orderby)
                 print('Dd')
             if bookingTypeId ==2 or bookingTypeId=='2':
