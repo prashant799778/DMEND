@@ -2474,7 +2474,7 @@ def userBookings():
 
 
 
-            if (data['status']!='false'): 
+            if (bookingDetails['status']!='false'): 
                 Data = {"result":bookingDetails['result'],"status":"true","message":""}
 
                           
