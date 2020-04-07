@@ -16,8 +16,8 @@ import databasefile
 from config import Connection
 import commonfile
 import ConstantData
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
+# from sendgrid import SendGridAPIClient
+# from sendgrid.helpers.mail import Mail
 from math import sin,cos,sqrt,atan2,radians
 import paho.mqtt.client as mqtt
 from decimal import Decimal
