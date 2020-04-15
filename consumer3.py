@@ -72,7 +72,7 @@ def on_message(client, userdata, msg):
 
 
       column1=" lat,lng "
-      whereCondition1=" and  rideId='"+str(ambulanceRideId["result"][0]["bookingId"])+"'"
+      whereCondition1=" and  rideId='"+str(driverRideId["result"][0]["bookingId"])+"'"
       orderby=" id "
       driverLatLong = databasefile.SelectQueryOrderby("driverRideTracking",column1,whereCondition1,"","0","1",orderby)
 
