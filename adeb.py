@@ -3166,6 +3166,95 @@ def cancelledBooking():
         output = {"result":"something went wrong","status":"false"}
         return output 
 
+
+@app.route('/support', methods=['POST'])
+def support():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        startlimit,endlimit="",""
+        whereCondition2=""
+       
+        commonfile.writeLog("support",inputdata,0)
+        msg="1"
+        if msg == "1":
+            if "startLimit" in inputdata:
+                if inputdata['startLimit'] != "":
+                    startlimit =str(inputdata["startLimit"])
+                
+            if "endLimit" in inputdata:
+                if inputdata['endLimit'] != "":
+                    endlimit =str(inputdata["endLimit"])
+
+                 
+            if "userId" in inputdata:
+                if inputdata['userId'] != "":
+                    userId =str(inputdata["userId"])
+
+            if "bookingId" in inputdata:
+                if inputdata['bookingId'] != "":
+                    bookingId =str(inputdata["bookingId"])
+                    whereCondition2=" and bm.bookingId= '"+ str(bookingId)+"'"
+
+            orderby="bm.id"                
+
+                    
+
+
+
+            whereCondition=" and bm.ambulanceId=am.ambulanceId  and am.ambulanceModeId=aM.Id and   cq.id=bm.questionId and  am.ambulanceTypeId=atm.id  and  bm.userId=um.userId and bm.driverId=dm.driverId and bm.status='3' and um.userId='"+str(userId)+"' "+whereCondition2
+
+            column="bm.id,bm.userMobile,bm.drivermobile,bm.userId,bm.driverId,bm.bookingId,cq.questions,atm.ambulanceType as ambulanceTypeId ,aM.ambulanceType as ambulanceModeId,bm.pickup as tripFrom,bm.dropOff as tripTo,date_format(bm.ateCreate,'%Y-%m-%d %H:%i:%s')startTime,dm.name as driverName,um.name as userName,bm.status,bm.finalAmount,bm.totalDistance,bm.canceledUserId"
+            data=databasefile.SelectQueryOrderby("bookAmbulance as bm,userMaster as um,driverMaster as dm,ambulanceMaster as am,ambulanceTypeMaster as atm,ambulanceMode as aM, cancelquestions  as cq",column,whereCondition,"",startlimit,endlimit,orderby)
+            print(data,"--------------------------------------------------")
+            # countdata=databasefile.SelectQuery4("bookAmbulance as bm,userMaster as um,driverMaster as dm",column,whereCondition)
+
+            whereCondition3=" and bm.ambulanceId= am.ambulanceId and cq.id=bm.questionId and  am.ambulanceModeId=aM.Id and bm.status='3' and   bm.userId=um.userId and bm.driverId=dm.driverId and um.userId='"+str(userId)+"' "+whereCondition2
+
+            column2="distinct(bm.id),bm.userMobile,bm.drivermobile,bm.bookingId,bm.userId,bm.driverId,cq.questions,aM.ambulanceType as ambulanceModeId,bm.pickup as tripFrom,bm.dropOff as tripTo,date_format(bm.dateCreate,'%Y-%m-%d %H:%i:%s')startTime,dm.name as driverName,um.name as userName,bm.status,bm.finalAmount,bm.totalDistance,bm.canceledUserId"
+            data2=databasefile.SelectQueryOrderby("bookResponder as bm,userMaster as um,driverMaster as dm,ambulanceMaster as am,ambulanceTypeMaster as atm,ambulanceMode as aM, cancelquestions  as cq",column2,whereCondition3,"",startlimit,endlimit,orderby)
+            print(data2,"--------------------------------------------------")
+            # countdata2=databasefile.SelectQuery4("bookResponder as bm,userMaster as um,driverMaster as dm,ambulanceMaster as am,ambulanceMode as aM",column2,whereCondition3)
+            
+            if (data2['status']=='false'):
+                data2['result']=[]
+            if (data2['status']!='false'):
+                for i in data2['result']:
+                    if i['canceledUserId'] == i['userId']:
+                        i['canceledBy']=i['userName']
+                    if i['canceledUserId'] == i['driverId']:
+                        i['canceledBy']=i['driverName'] 
+
+            if (data['status']=='false'):
+                data['result']=[]
+                
+           
+            if (data['status']!='false'): 
+                for i in data['result']:
+                    if i['canceledUserId'] == i['userId']:
+                        i['canceledBy']=i['userName']
+                    if i['canceledUserId'] == i['driverId']:
+                        i['canceledBy']=i['driverName']
+
+                Data = {"result":{"driver":data['result'],"responder":data2['result']},"status":"true","message":""}
+
+                          
+                return Data
+            else:
+
+                data = {"result":{"driver":data['result'],"responder":data2['result']},"status":"true","message":""}
+
+                
+                return data
+        else:
+            return msg 
+    except KeyError as e:
+        print("Exception---->" +str(e))        
+        output = {"result":"Input Keys are not Found","status":"false"}
+        return output    
+    except Exception as e :
+        print("Exception---->" +str(e))           
+        output = {"result":"something went wrong","status":"false"}
+        return output         
 if __name__ == "__main__":
     CORS(app, support_credentials=True)
     app.run(host='0.0.0.0',port=5034,debug=True)
