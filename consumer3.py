@@ -24,7 +24,7 @@ def on_message(client, userdata, msg):
   y=msg.topic
 
   #topic=str(msg.topic)#+"/ambulanceLiveLocation"
-  topic=data["driverId"]+"/ambulanceLiveLocation"
+  topic=data["driverId"]+"/liveLocation"
   
   print(topic,"topic==================")
   data1 = json.dumps(data)
@@ -37,8 +37,7 @@ def on_message(client, userdata, msg):
 
 
 
-  topic1=data["userId"]+"/ambulanceLiveLocation"
-  
+  topic1=data["userId"]+"/liveLocation"
   print(topic1,"topic==================")
   data1 = json.dumps(data)
   print("11111111111111")
@@ -53,44 +52,43 @@ def on_message(client, userdata, msg):
   try:
     
     #print(data)
-    ambulanceId=data["ambulanceId"]
+   
     driverId=data["driverId"]
     lat=data["lat"]
     lng=data["lng"]
 
-    column=" ambulanceId, onTrip,onDuty "
-    whereCondition=" ambulanceId='"+str(ambulanceId)+"'"
-    ambulanceTripDetails = databasefile.SelectQuery1("ambulanceRideStatus",column,whereCondition)
+    column=" driverId, onTrip,onDuty "
+    whereCondition=" driverId='"+str(driverId)+"'"
+    driverTripDetails = databasefile.SelectQuery1("driverRideStatus",column,whereCondition)
     
 
-    #if ambulanceRideId!=0:
-    if (ambulanceTripDetails[0]["onTrip"]==1) and (ambulanceTripDetails[0]["onDuty"]==1):
+    
+    if (driverTripDetails[0]["onTrip"]==1) and (driverTripDetails[0]["onDuty"]==1):
 
       column1=" id,bookingId "
-      whereCondition1=" and  ambulanceId='"+str(ambulanceId)+"'"
+      whereCondition1=" and  driverId='"+str(driverId)+"'"
       orderby=" id "
-      ambulanceRideId = databasefile.SelectQueryOrderby("bookAmbulance",column1,whereCondition1,"","0","1",orderby)
+      driverRideId = databasefile.SelectQueryOrderby("bookDriver",column1,whereCondition1,"","0","1",orderby)
 
 
       column1=" lat,lng "
       whereCondition1=" and  rideId='"+str(ambulanceRideId["result"][0]["bookingId"])+"'"
       orderby=" id "
-      ambulanceLatLong = databasefile.SelectQueryOrderby("ambulanceRideTracking",column1,whereCondition1,"","0","1",orderby)
+      driverLatLong = databasefile.SelectQueryOrderby("driverRideTracking",column1,whereCondition1,"","0","1",orderby)
 
-      #print(ambulanceLatLong,"ambulanceLatLong==================")
-      if (lat!=ambulanceLatLong["result"][0]["lat"]) or lng!=ambulanceLatLong["result"][0]["lng"]:
-        column=" rideId,ambulanceId,driverId,lat,lng "
-        values="'"+str(ambulanceRideId["result"][0]["bookingId"])+"','"+str(ambulanceId)+"','"+str(driverId)+"','"+str(lat)+"','"+str(lng)+"'"
+      if (lat!=driverLatLong["result"][0]["lat"]) or lng!=driverLatLong["result"][0]["lng"]:
+        column=" rideId,driverId,lat,lng "
+        values="'"+str(driverRideId["result"][0]["bookingId"])+"','"+str(driverId)+"','"+str(lat)+"','"+str(lng)+"'"
         insertdata=databasefile.InsertQuery("ambulanceRideTracking",column,values)
       
       else:
         pass
     
-    elif  (ambulanceTripDetails[0]["onTrip"]==0) and (ambulanceTripDetails[0]["onDuty"]==1):
+    elif  (driverTripDetails[0]["onTrip"]==0) and (driverTripDetails[0]["onDuty"]==1):
       print("2222222222222222222")
       column= " lat='" + str(lat) +"',lng='"+ str(lng) + "'"
       
-      data = databasefile.UpdateQuery("ambulanceRideStatus",column,whereCondition)
+      data = databasefile.UpdateQuery("driverRideStatus",column,whereCondition)
 
     
   except Exception as e :

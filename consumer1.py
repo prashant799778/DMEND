@@ -17,59 +17,62 @@ def on_message(client, userdata, msg):
   
   
   try:
-    ambulanceId=data["ambulanceId"]
+    
 
     lat=data["lat"]
     lng=data["lng"]
     userId=data['driverId']
     R = 6373.0
     bookingId=data['bookingId']
-    columns="(ar.lat)driverLat,(ar.lng)driverLng, bm.ambulanceId,bm.bookingId,bm.driverId,bm.dropOff,bm.dropOffLatitude,bm.dropOffLongitude"
+    columns=" bm.bookingTypeId,bm.bookingId,bm.driverId,bm.dropOff,bm.dropOffLatitude,bm.dropOffLongitude"
     columns=columns+",bm.finalAmount,bm.pickup,bm.status,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile,am.ambulanceNo "
     columns=columns+",bm.driverMobile"
-    whereCondition22=" am.ambulanceId=bm.ambulanceId  and bm. endingStatus='1' and bookingId= '"+str(bookingId)+"' "
-    bookingDetails= databasefile.SelectQuery("bookAmbulance bm,ambulanceMaster am,ambulanceRideStatus ar",columns,whereCondition22)
+    whereCondition22=" d.driverId=bm.driverId  and bm.arrivingStatus='1' and bookingId= '"+str(bookingId)+"' "
+    bookingDetails= databasefile.SelectQuery("bookAmbulance bm,driverMaster am",columns,whereCondition22)
     print(bookingDetails,"================")
-    bookingDetails1=databasefile.SelectQuery("bookResponder bm,ambulanceMaster am,ambulanceRideStatus ar",columns,whereCondition22)
-    if bookingDetails1['status'] !='false':
-     
-      userLat=bookingDetails1['result']['pickupLatitude']
+    if bookingDetails['status']=='false':
+      bookingTypeId=bookingDetails['result']['bookingTypeId']
+      if bookingTypeId ==1 or bookingTypeId=='1':
+        print('11')
+        columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
+        columns=columns+",b.finalAmount,b.pickUpTime,b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.userMobile"
+        columns=columns+",bm.driverMobile,b.status"
+        whereCondition22=" and dr.driverId=bm.driverId and bm.bookingId=b.bookingId and  bm.bookingId= '"+str(bookingId)+"' "
+        bookingDetails1= databasefile.SelectQueryOrderby("bookDriver bm,bookDaliyDriver  b,driverRideStatus dr",columns,whereCondition22,"",startlimit,endlimit,orderby)
+        print('Dd')
+      if bookingTypeId ==2 or bookingTypeId=='2':
+        print('corp')
+
       
-      userLng=bookingDetails1['result']['pickupLongitude']
+      if bookingTypeId==3 or bookingTypeId=='3':
+        columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
+        columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalHours,bm.userMobile "
+        columns=columns+",bm.driverMobile,b.status"
+        whereCondition22="  and dr.driverId=bm.driverId and bm.bookingId=b.bookingId and  bm.bookingId= '"+str(bookingId)+"'  "
+        bookingDetails1= databasefile.SelectQueryOrderby("bookDriver bm,bookHourlyMaster b,driverRideStatus dr",columns,whereCondition22,"",startlimit,endlimit,orderby)
+        print('hourly')
+      
+      if bookingTypeId ==4 or bookingTypeId =='4':
+        columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
+        columns=columns+",bm.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile "
+        columns=columns+",bm.driverMobile,b.status"
+        whereCondition22=" and dr.driverId=bm.driverId and bm.bookingId=b.bookingId and  bm.bookingId= '"+str(bookingId)+"'  "
+        bookingDetails1= databasefile.SelectQueryOrderby("bookDriver bm,bookOneMaster b,driverRideStatus dr",columns,whereCondition22,"",startlimit,endlimit,orderby)
+        print('one')
+      
+      if bookingTypeId ==5 or bookingTypeId=='5':
+        print('round') 
+        columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
+        columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile "
+        columns=columns+",bm.driverMobile,b.status"
+        whereCondition22="  and dr.driverId=bm.driverId and bm.bookingId=b.bookingId and  bm.bookingId= '"+str(bookingId)+"'  "
+        bookingDetails1= databasefile.SelectQueryOrderby("bookDriver bm,bookRoundMaster b,driverRideStatus dr",columns,whereCondition22,"",startlimit,endlimit,orderby)
+                      
 
-      fromlongitude2= lng
-      print(fromlongitude2,'fromlong',type(fromlongitude2))
-      fromlatitude2 = lat
-      print('lat',fromlatitude2)
-      distanceLongitude = userLng- fromlongitude2
-      distanceLatitude = userLat - fromlatitude2
-      a = sin(distanceLatitude / 2)**2 + cos(fromlatitude2) * cos(userLat) * sin(distanceLongitude / 2)**2
-      c = 2 * atan2(sqrt(a), sqrt(1 - a))
-      distance = R * c
-      distance2=distance/100
-      Distance=distance2*1.85
-      if Distance < 100:
-          bookingDetails1["message"]="driver Reached to desired Location"  
-          if (bookingDetails1['status']!='false'):
-
-              column="  endingStatus  = '0' "
-              whereCondition=" bookingId ='"+str(bookingId)+"'"
-     
+                    
 
 
-              a=databasefile.UpdateQuery('bookResponder',column,whereCondition)
-              topic=str(userId)+"/endstatus"
-              print(topic,"+++++++++++++++++++=")
-              #print(topic,"topic==================")
-              data1 = json.dumps(data)
-              #print("11111111111111")
-              #print(data)
-              client = mqtt.Client()
-              client.connect("localhost",1883,60)
-              client.publish(topic, data1)
-              client.disconnect()
-              return bookingDetails1
-
+   
     
     
    
@@ -87,13 +90,13 @@ def on_message(client, userdata, msg):
     distance2=distance/100
     Distance=distance2*1.85
     if Distance < 100:
-        bookingDetails["message"]="driver Reached to desired Location"  
+        bookingDetails["message"]="driver Arrived"  
         if (bookingDetails['status']!='false'):
 
-            column="  endingStatus  = '0' "
+            column="  arrivingstatus  = '0' "
             whereCondition=" bookingId ='"+str(bookingId)+"'"
             a=databasefile.UpdateQuery('bookDriver',column,whereCondition)
-            topic=str(userId)+"/endstatus"
+            topic=str(userId)+"/arrivingstatus"
             print(topic,"+++++++++++++++++++=")
             #print(topic,"topic==================")
             data1 = json.dumps(data)
@@ -101,9 +104,9 @@ def on_message(client, userdata, msg):
             #print(data)        
             client = mqtt.Client()
             client.connect("localhost",1883,60)
-            client.publish(topic, data1)
+            client.publish(topic,bookingDetails1)
             client.disconnect()
-            return bookingDetails
+            return bookingDetails1
         else:
             data={"result":"","message":"Already Reached to driver","status":"false"}
             return data
