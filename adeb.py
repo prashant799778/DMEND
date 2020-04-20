@@ -16,8 +16,8 @@ import databasefile
 from config import Connection
 import commonfile
 import ConstantData
-# from sendgrid import SendGridAPIClient
-# from sendgrid.helpers.mail import Mail
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 from math import sin,cos,sqrt,atan2,radians
 import paho.mqtt.client as mqtt
 from decimal import Decimal
@@ -74,7 +74,7 @@ def userSignup():
             mobileNo=inputdata["mobileNo"]
             email=inputdata['email']
             deviceKey=inputdata["deviceKey"]
-            usertypeId="1"
+            usertypeId="2"
             
           
             
@@ -678,7 +678,7 @@ def driverSignup():
             
             mobileNo=inputdata["mobileNo"]
             deviceKey=inputdata["deviceKey"]
-            usertypeId="2"
+            usertypeId="3"
             
           
             
@@ -2996,6 +2996,91 @@ def acceptBooking():
         output = {"result":"something went wrong","status":"false"}
         return output
 
+
+@app.route('/cancelledBooking', methods=['POST'])
+def cancelledBooking():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        startlimit,endlimit="",""
+       
+        commonfile.writeLog("endRide",inputdata,0)
+        msg="1"
+        if msg == "1":
+            if "startLimit" in inputdata:
+                if inputdata['startLimit'] != "":
+                    startlimit =str(inputdata["startLimit"])
+                
+            if "endLimit" in inputdata:
+                if inputdata['endLimit'] != "":
+                    endlimit =str(inputdata["endLimit"])
+
+            if "bookingId" in inputdata:
+                if inputdata['bookingId'] != "":
+                    bookingId =str(inputdata["bookingId"])
+                    whereCondition2=" and bm.bookingId= '"+ str(bookingId)+"'"
+
+            if "bookingTypeId" in inputdata:
+                if inputdata['bookingTypeId'] != "":
+                    bookingTypeId =str(inputdata["bookingTypeId"])
+                    whereCondition2=whereCondition2+" and bm.bookingTypeId= '"+ str(bookingTypeId)+"'"
+
+
+            orderby="bm.id" 
+            if bookingTypeId ==1 or bookingTypeId=='1':
+
+                columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
+                columns=columns+",b.finalAmount,b.pickUpTime,b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalHours,bm.userMobile"
+                columns=columns+",bm.driverMobile,b.status"
+                whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId  and b.status='4' "
+                bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookDailyDriver b,driverRideStatus ar",columns,whereCondition22,"",startlimit,endlimit,orderby)
+                print('Dd')
+            if bookingTypeId ==2 or bookingTypeId=='2':
+                print('corp')
+            
+            if bookingTypeId==3 or bookingTypeId=='3':
+
+                columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
+                columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalHours,bm.userMobile "
+                columns=columns+",bm.driverMobile,b.status"
+                whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId and b.status='4' "
+                bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookHourlyMaster b,driverRideStatus ar",columns,whereCondition22,"",startlimit,endlimit,orderby)
+                print('hourly')
+            if bookingTypeId ==4 or bookingTypeId =='4':
+                columns="(dr.lat)driverLat,(dr.lng)driverLng, bm.ambulanceId,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
+                columns=columns+",bm.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile "
+                columns=columns+",bm.driverMobile,b.status"
+                whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId and b.status='4' "
+                bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookOneMaster b,driverRideStatus dr",columns,whereCondition22,"",startlimit,endlimit,orderby)
+                print('one')
+            
+            if bookingTypeId ==5 or bookingTypeId=='5':
+                print('round') 
+                columns="(dr.lat)driverLat,(dr.lng)driverLng, bm.ambulanceId,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
+                columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile "
+                columns=columns+",bm.driverMobile,b.status"
+                whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId and b.status='4' "
+                bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookRoundMaster b,driverRideStatus dr",columns,whereCondition22,"",startlimit,endlimit,orderby)
+                        
+
+           
+            if (data['status']!='false'): 
+                Data = {"result":bookingDetails['result'],"status":"true","message":""}
+                          
+                return Data
+            else:
+                
+                return data
+        else:
+            return msg 
+    except KeyError as e:
+        print("Exception---->" +str(e))        
+        output = {"result":"Input Keys are not Found","status":"false"}
+        return output    
+    except Exception as e :
+        print("Exception---->" +str(e))           
+        output = {"result":"something went wrong","status":"false"}
+        return output 
+
 @app.route('/CompletedBooking', methods=['POST'])
 def CompletedBooking():
     try:
@@ -3082,184 +3167,259 @@ def CompletedBooking():
         output = {"result":"something went wrong","status":"false"}
         return output
 
-@app.route('/cancelledBooking', methods=['POST'])
-def cancelledBooking():
+
+@app.route('/userProfile1', methods=['POST'])
+def userProfile1():
     try:
-        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        inputdata =  commonfile.DecodeInputdata(request.get_data()) 
         startlimit,endlimit="",""
+        keyarr = ['userId']
+        commonfile.writeLog("driverProfile",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
        
-        commonfile.writeLog("endRide",inputdata,0)
-        msg="1"
         if msg == "1":
-            if "startLimit" in inputdata:
-                if inputdata['startLimit'] != "":
-                    startlimit =str(inputdata["startLimit"])
+            
+        
+
+            
+            
+            if 'userId' in inputdata:
+                driverId=inputdata["userId"]    
                 
-            if "endLimit" in inputdata:
-                if inputdata['endLimit'] != "":
-                    endlimit =str(inputdata["endLimit"])
-
-            if "bookingId" in inputdata:
-                if inputdata['bookingId'] != "":
-                    bookingId =str(inputdata["bookingId"])
-                    whereCondition2=" and bm.bookingId= '"+ str(bookingId)+"'"
-
-            if "bookingTypeId" in inputdata:
-                if inputdata['bookingTypeId'] != "":
-                    bookingTypeId =str(inputdata["bookingTypeId"])
-                    whereCondition2=whereCondition2+" and bm.bookingTypeId= '"+ str(bookingTypeId)+"'"
-
-
-            orderby="bm.id" 
-            if bookingTypeId ==1 or bookingTypeId=='1':
-
-                columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
-                columns=columns+",b.finalAmount,b.pickUpTime,b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalHours,bm.userMobile"
-                columns=columns+",bm.driverMobile,b.status"
-                whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId  and b.status='4' "
-                bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookDailyDriver b,driverRideStatus ar",columns,whereCondition22,"",startlimit,endlimit,orderby)
-                print('Dd')
-            if bookingTypeId ==2 or bookingTypeId=='2':
-                print('corp')
             
-            if bookingTypeId==3 or bookingTypeId=='3':
+            whereCondition= " userId= '"+str(driverId)+"' and userTypeId='2' "
+            column='userId,name,mobileNo,password,email,profilePic'
 
-                columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
-                columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalHours,bm.userMobile "
-                columns=columns+",bm.driverMobile,b.status"
-                whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId and b.status='4' "
-                bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookHourlyMaster b,driverRideStatus ar",columns,whereCondition22,"",startlimit,endlimit,orderby)
-                print('hourly')
-            if bookingTypeId ==4 or bookingTypeId =='4':
-                columns="(dr.lat)driverLat,(dr.lng)driverLng, bm.ambulanceId,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
-                columns=columns+",bm.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile "
-                columns=columns+",bm.driverMobile,b.status"
-                whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId and b.status='4' "
-                bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookOneMaster b,driverRideStatus dr",columns,whereCondition22,"",startlimit,endlimit,orderby)
-                print('one')
             
-            if bookingTypeId ==5 or bookingTypeId=='5':
-                print('round') 
-                columns="(dr.lat)driverLat,(dr.lng)driverLng, bm.ambulanceId,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
-                columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile "
-                columns=columns+",bm.driverMobile,b.status"
-                whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId and b.status='4' "
-                bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookRoundMaster b,driverRideStatus dr",columns,whereCondition22,"",startlimit,endlimit,orderby)
-                        
+         
+            data11=databasefile.SelectQuery('userMaster',column,whereCondition)
+         
 
-           
-            if (data['status']!='false'): 
-                Data = {"result":bookingDetails['result'],"status":"true","message":""}
-                          
+            if data11['status'] != "false":
+                if data11["result"]["profilePic"]==None:
+                    data11["result"]["profilePic"]=str(ConstantData.GetBaseURL())+"/profilePic/profilePic.jpg"
+                else:
+                    data11["result"]["profilePic"]=str(ConstantData.GetBaseURL())+str(data11["result"]["profilePic"])
+                
+                Data = {"status":"true","message":"data Updated Successfully","result":data11['result']}                  
                 return Data
             else:
-                
+                data={"status":"false","result":"","message":"Invalid userID"}
                 return data
+                        
         else:
             return msg 
-    except KeyError as e:
-        print("Exception---->" +str(e))        
-        output = {"result":"Input Keys are not Found","status":"false"}
-        return output    
     except Exception as e :
         print("Exception---->" +str(e))           
-        output = {"result":"something went wrong","status":"false"}
+        output = {"status":"false","message":"something went wrong","result":""}
+        return output             
+
+@app.route('/updateUserProfile1', methods=['POST'])
+def updateDriverProfile11():
+    try:
+        inputdata = request.form.get('data') 
+        print("===========================",inputdata)      
+        inputdata = json.loads(inputdata)
+        startlimit,endlimit="",""
+        keyarr = ["name","email","password",'userId']
+        commonfile.writeLog("updateUserProfile1",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+       
+        if msg == "1":
+            name,email,password,userTypeId,mobileNo,gender="","","","","",""
+            filename,PicPath="",""
+            column,values="",""
+            columns2,values2="",""
+        
+
+            
+            if 'email' in inputdata:
+                email=inputdata["email"]
+                column=" email='"+str(email)+"' " 
+            if 'name' in inputdata:
+                name=inputdata["name"]
+                column=column+" ,name='"+str(name)+"' "  
+               
+            if 'password' in inputdata:
+                password=inputdata["password"]1`        
+                column=column+" ,password= '"+str(password)+"' "                
+            if 'mobileNo' in inputdata:
+                mobileNo=inputdata["mobileNo"]
+                column=column+" ,mobileNo='"+str(mobileNo)+"' "
+                
+
+            if 'userId' in inputdata:
+                userId=inputdata["userId"] 
+
+
+            if 'postImage' in request.files:  
+                print("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
+                file = request.files.get('postImage')        
+                filename = file.filename or ''  
+                print(filename)               
+                filename= str(userId)+".png"
+                #filename = filename.replace("'","") 
+
+                #folder path to save campaign image
+                FolderPath = ConstantData.GetProfilePicPath(filename)  
+
+                filepath = '/profilePic/' + filename    
+                print(filepath,"filepath================")
+                print(FolderPath,"FolderPathFolderPathFolderPathFolderPath")
+                file.save(FolderPath)
+                PicPath = filepath 
+                column= column +" ,profilePic= '" + str(PicPath) + "' "       
+                
+            
+            
+            whereCondition2= " userId ='"+str(userId)+"' "
+          
+            
+            data11=databasefile.UpdateQuery('userMaster',column,whereCondition2)
+         
+
+            if data != "0":
+                Data = {"status":"true","message":"data Updated Successfully","result":"data Updated Successfully"}                  
+                return Data
+            else:
+                return commonfile.Errormessage()
+                        
+        else:
+            return msg 
+    except Exception as e :
+        print("Exception---->" +str(e))           
+        output = {"status":"false","message":"something went wrong","result":""}
         return output 
 
 
-@app.route('/support', methods=['POST'])
-def support():
+@app.route('/driverProfile1', methods=['POST'])
+def DriverProfile1122():
     try:
-        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        inputdata =  commonfile.DecodeInputdata(request.get_data()) 
         startlimit,endlimit="",""
-        whereCondition2=""
+        keyarr = ['userId']
+        commonfile.writeLog("driverProfile",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
        
-        commonfile.writeLog("support",inputdata,0)
-        msg="1"
         if msg == "1":
-            if "startLimit" in inputdata:
-                if inputdata['startLimit'] != "":
-                    startlimit =str(inputdata["startLimit"])
-                
-            if "endLimit" in inputdata:
-                if inputdata['endLimit'] != "":
-                    endlimit =str(inputdata["endLimit"])
-
-                 
-            if "userId" in inputdata:
-                if inputdata['userId'] != "":
-                    userId =str(inputdata["userId"])
-
-            if "bookingId" in inputdata:
-                if inputdata['bookingId'] != "":
-                    bookingId =str(inputdata["bookingId"])
-                    whereCondition2=" and bm.bookingId= '"+ str(bookingId)+"'"
-
-            orderby="bm.id"                
-
-                    
-
-
-
-            whereCondition=" and bm.ambulanceId=am.ambulanceId  and am.ambulanceModeId=aM.Id and   cq.id=bm.questionId and  am.ambulanceTypeId=atm.id  and  bm.userId=um.userId and bm.driverId=dm.driverId and bm.status='3' and um.userId='"+str(userId)+"' "+whereCondition2
-
-            column="bm.id,bm.userMobile,bm.drivermobile,bm.userId,bm.driverId,bm.bookingId,cq.questions,atm.ambulanceType as ambulanceTypeId ,aM.ambulanceType as ambulanceModeId,bm.pickup as tripFrom,bm.dropOff as tripTo,date_format(bm.ateCreate,'%Y-%m-%d %H:%i:%s')startTime,dm.name as driverName,um.name as userName,bm.status,bm.finalAmount,bm.totalDistance,bm.canceledUserId"
-            data=databasefile.SelectQueryOrderby("bookAmbulance as bm,userMaster as um,driverMaster as dm,ambulanceMaster as am,ambulanceTypeMaster as atm,ambulanceMode as aM, cancelquestions  as cq",column,whereCondition,"",startlimit,endlimit,orderby)
-            print(data,"--------------------------------------------------")
-            # countdata=databasefile.SelectQuery4("bookAmbulance as bm,userMaster as um,driverMaster as dm",column,whereCondition)
-
-            whereCondition3=" and bm.ambulanceId= am.ambulanceId and cq.id=bm.questionId and  am.ambulanceModeId=aM.Id and bm.status='3' and   bm.userId=um.userId and bm.driverId=dm.driverId and um.userId='"+str(userId)+"' "+whereCondition2
-
-            column2="distinct(bm.id),bm.userMobile,bm.drivermobile,bm.bookingId,bm.userId,bm.driverId,cq.questions,aM.ambulanceType as ambulanceModeId,bm.pickup as tripFrom,bm.dropOff as tripTo,date_format(bm.dateCreate,'%Y-%m-%d %H:%i:%s')startTime,dm.name as driverName,um.name as userName,bm.status,bm.finalAmount,bm.totalDistance,bm.canceledUserId"
-            data2=databasefile.SelectQueryOrderby("bookResponder as bm,userMaster as um,driverMaster as dm,ambulanceMaster as am,ambulanceTypeMaster as atm,ambulanceMode as aM, cancelquestions  as cq",column2,whereCondition3,"",startlimit,endlimit,orderby)
-            print(data2,"--------------------------------------------------")
-            # countdata2=databasefile.SelectQuery4("bookResponder as bm,userMaster as um,driverMaster as dm,ambulanceMaster as am,ambulanceMode as aM",column2,whereCondition3)
             
-            if (data2['status']=='false'):
-                data2['result']=[]
-            if (data2['status']!='false'):
-                for i in data2['result']:
-                    if i['canceledUserId'] == i['userId']:
-                        i['canceledBy']=i['userName']
-                    if i['canceledUserId'] == i['driverId']:
-                        i['canceledBy']=i['driverName'] 
+        
 
-            if (data['status']=='false'):
-                data['result']=[]
+            
+            
+            if 'userId' in inputdata:
+                driverId=inputdata["userId"]    
                 
-           
-            if (data['status']!='false'): 
-                for i in data['result']:
-                    if i['canceledUserId'] == i['userId']:
-                        i['canceledBy']=i['userName']
-                    if i['canceledUserId'] == i['driverId']:
-                        i['canceledBy']=i['driverName']
+            
+            whereCondition= " userId= '"+str(driverId)+"' and userTypeId='3' "
+            column='userId,name,mobileNo,password,email,profilePic'
 
-                Data = {"result":{"driver":data['result'],"responder":data2['result']},"status":"true","message":""}
+            
+         
+            data11=databasefile.SelectQuery('userMaster',column,whereCondition)
+         
 
-                          
+            if data11['status'] != "false":
+                if data11["result"]["profilePic"]==None:
+                    data11["result"]["profilePic"]=str(ConstantData.GetBaseURL())+"/profilePic/profilePic.jpg"
+                else:
+                    data11["result"]["profilePic"]=str(ConstantData.GetBaseURL())+str(data11["result"]["profilePic"])
+                
+                Data = {"status":"true","message":"data Updated Successfully","result":data11['result']}                  
                 return Data
             else:
-
-                data = {"result":{"driver":data['result'],"responder":data2['result']},"status":"true","message":""}
-
-                
+                data={"status":"false","result":"","message":"Invalid userID"}
                 return data
+                        
         else:
             return msg 
-    except KeyError as e:
-        print("Exception---->" +str(e))        
-        output = {"result":"Input Keys are not Found","status":"false"}
-        return output    
     except Exception as e :
         print("Exception---->" +str(e))           
-        output = {"result":"something went wrong","status":"false"}
-        return output         
+        output = {"status":"false","message":"something went wrong","result":""}
+        return output             
+
+@app.route('/updateDriverProfile1', methods=['POST'])
+def updateDriverProfile212():
+    try:
+        inputdata = request.form.get('data') 
+        print("===========================",inputdata)      
+        inputdata = json.loads(inputdata)
+        startlimit,endlimit="",""
+        keyarr = ["name","email","password",'userId']
+        commonfile.writeLog("updateDriverProfile",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+       
+        if msg == "1":
+            name,email,password,userTypeId,mobileNo,gender="","","","","",""
+            filename,PicPath="",""
+            column,values="",""
+            columns2,values2="",""
+        
+
+            
+            if 'email' in inputdata:
+                email=inputdata["email"]
+                column=" email='"+str(email)+"' " 
+            if 'name' in inputdata:
+                name=inputdata["name"]
+                column=column+" ,name='"+str(name)+"' "  
+                column2= " name='"+str(name)+"' " 
+            if 'password' in inputdata:
+                password=inputdata["password"]1`        
+                column=column+" ,password= '"+str(password)+"' "                
+            if 'mobileNo' in inputdata:
+                mobileNo=inputdata["mobileNo"]
+                column=column+" ,mobileNo='"+str(mobileNo)+"' "
+                column2=column2+" ,mobileNo='"+str(mobileNo)+"' "  
+
+            if 'userId' in inputdata:
+                driverId=inputdata["userId"] 
+
+
+            if 'postImage' in request.files:  
+                print("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
+                file = request.files.get('postImage')        
+                filename = file.filename or ''  
+                print(filename)               
+                filename= str(driverId)+".png"
+                #filename = filename.replace("'","") 
+
+                #folder path to save campaign image
+                FolderPath = ConstantData.GetProfilePicPath(filename)  
+
+                filepath = '/profilePic/' + filename    
+                print(filepath,"filepath================")
+                print(FolderPath,"FolderPathFolderPathFolderPathFolderPath")
+                file.save(FolderPath)
+                PicPath = filepath 
+                column= column +" ,profilePic= '" + str(PicPath) + "' "       
+                
+            
+            whereCondition= " driverId= '"+str(driverId)+"' "
+            whereCondition2= " userId ='"+str(driverId)+"' "
+          
+            data=databasefile.UpdateQuery("driverMaster",column2,whereCondition)
+            data11=databasefile.UpdateQuery('userMaster',column,whereCondition2)
+         
+
+            if data != "0":
+                Data = {"status":"true","message":"data Updated Successfully","result":"data Updated Successfully"}                  
+                return Data
+            else:
+                return commonfile.Errormessage()
+                        
+        else:
+            return msg 
+    except Exception as e :
+        print("Exception---->" +str(e))           
+        output = {"status":"false","message":"something went wrong","result":""}
+        return output             
+
+
+
 if __name__ == "__main__":
     CORS(app, support_credentials=True)
     app.run(host='0.0.0.0',port=5034,debug=True)
-
-
 
 
 
