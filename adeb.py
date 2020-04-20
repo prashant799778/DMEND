@@ -3365,7 +3365,7 @@ def updateDriverProfile212():
                 column=column+" ,name='"+str(name)+"' "  
                 column2= " name='"+str(name)+"' " 
             if 'password' in inputdata:
-                password=inputdata["password"]1`        
+                password=inputdata["password"]       
                 column=column+" ,password= '"+str(password)+"' "                
             if 'mobileNo' in inputdata:
                 mobileNo=inputdata["mobileNo"]
