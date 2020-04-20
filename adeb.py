@@ -1865,7 +1865,7 @@ def addFavDriver():
     except Exception as e :
         print("Exception---->" + str(e))    
         output = {"result":"something went wrong","status":"false"}
-        return output  
+        return output
 
 
 #screendependency left
@@ -3241,7 +3241,7 @@ def updateDriverProfile11():
                 column=column+" ,name='"+str(name)+"' "  
                
             if 'password' in inputdata:
-                password=inputdata["password"]1`        
+                password=inputdata["password"]       
                 column=column+" ,password= '"+str(password)+"' "                
             if 'mobileNo' in inputdata:
                 mobileNo=inputdata["mobileNo"]
@@ -3414,6 +3414,41 @@ def updateDriverProfile212():
         print("Exception---->" +str(e))           
         output = {"status":"false","message":"something went wrong","result":""}
         return output             
+
+
+
+
+@app.route('/myFavDrivers', methods=['POST'])
+def myFavDrivers():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        startlimit,endlimit="",""
+        keyarr = ['userId']
+        commonfile.writeLog("myFavDriver",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        if msg=="1":
+            userId = inputdata["userId"]
+        
+           
+            
+           
+            column="dr.driverId,us.profilePic,us.userName,us.mobileNo"
+            whereCondition=" fv.userId='"+str(userId)+"' and fv.driverId=dr.driverId and dr.driverId-us.userId"
+            data=databasefile.SelectQuery4("favDriver as fv,driverMaster as dr,userMaster as us",column,whereCondition)
+            if data['status'] !='false':
+                output= {"result":data['result'],"message":"","status":"true"}
+                return output
+            else:
+                output= {"result":"","message":"No Fav Drivers Till Now","status":"false"}
+                return output
+            
+        else:
+            return msg 
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"result":"something went wrong","status":"false"}
+        return output  
+
 
 
 
