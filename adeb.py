@@ -3601,13 +3601,32 @@ def addDriverDocs():
                     AIPicPath = AIfilepath
                     print(AIPicPath)
 
+
+            if 'profilePic' in request.files:  
+                print("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
+                file = request.files.get('profilePic')        
+                filename = file.filename or ''  
+                print(filename)               
+                filename= str(driverId)+".png"
+                #filename = filename.replace("'","") 
+
+                #folder path to save campaign image
+                FolderPath = ConstantData.GetProfilePicPath(filename)  
+
+                filepath = '/profilePic/' + filename    
+                print(filepath,"filepath================")
+                print(FolderPath,"FolderPathFolderPathFolderPathFolderPath")
+                file.save(FolderPath)
+                PicPath = filepath 
+               
+
             if data['status']!='false':
                 
                 if data1['status'] == 'false':
                     print('11')
                     if key == 1:
                         columns = "name,mobileNo,dlNo,dlFrontFilename,dlFrontFilepath,dlBackFilename,dlBackFilepath,driverId"          
-                        values = " '" + str(name)+ "','"+str(mobileNo)  + "','" + str(DlNo) + "','" + str( dlFrontFilename) + "','" + str(DlFrontPicPath) + "','" + str(dlBackFilename) + "', "            
+                        values = " '" + str(name)+ "','"+str(mobileNo)  + "','" + str(DlNo) + "','" + str( dlFrontFilename) + "','" + str(DlFrontPicPath) + "','" + str(dlBackFilename)  + "','" + str(PicPath) +  "' "            
                         values = values + " '" + str(DlBackPicPath) + "','" + str(driverId) + "'"
                         data = databasefile.InsertQuery("driverMaster",columns,values)
                         if data != "0":
@@ -3624,7 +3643,7 @@ def addDriverDocs():
 
                     if (key == 2) or (key =='2'):
                         
-                        columns = " name,mobileNo,pIDType,pIDNo,pIDFrontFilename,pIDFrontFilepath,pIDBackFilename,pIDBackFilepath,driverId,DOB"          
+                        columns = " name,mobileNo,pIDType,pIDNo,pIDFrontFilename,pIDFrontFilepath,pIDBackFilename,pIDBackFilepath,driverId,DOB,profilePic"          
                         values = " '" + str(name) + "','" + str(mobileNo) + "','" + str(PIDType) + "','" + str(PIDNo) + "','" + str(PIDFrontFilename) + "','" + str(PIDFrontPicPath) + "','" + str(PIDBackFilename) + "', "            
                         values = values + " '" + str(PIDBackPicPath)+ "','" + str(driverId) + "','" + str(DOB) + "'"
                         data = databasefile.InsertQuery("driverMaster",columns,values)
@@ -3715,15 +3734,20 @@ def addDriverDocs():
                                     data11.update(y)
                                 
                             else:
-                                columns='ambulanceNo'
+                                columns='HealthReport'
                                 whereCondition=" driverId='"+str(driverId)+"'"
-                                data1111=databasefile.SelectQuery1('ambulanceMaster',columns,whereCondition)
+                                data1111=databasefile.SelectQuery1('driverMaster',columns,whereCondition)
                                 if data1111['status']=='false':
+
                                     y={'documentStatus':"false"}
                                     data11.update(y)
                                 else:
-                                    y={'documentStatus':"true"}
-                                    data11.update(y)
+                                    if data111['result']['HealthReport'] == None:
+                                        y={'documentStatus':"false"}
+                                        data11.update(y)
+                                    else:
+                                        y={'documentStatus':"true"}
+                                        data11.update(y)
 
                             return data11
                         else:
@@ -3736,7 +3760,7 @@ def addDriverDocs():
                         WhereCondition = " mobileNo = '" + str(mobileNo) + "'"
                         data19 = databasefile.SelectQuery1("driverMaster",columns,WhereCondition)
                         if data19['result']['pIDType'] == None:
-                            column = "name='" + str(name) + "', pIDType = '" + str(PIDType) + "',pIDNo = '" + str(PIDNo) + "',pIDFrontFilename = '" + str(PIDFrontFilename) + "',pIDFrontFilepath = '" + str(PIDFrontPicPath) + "',pIDBackFilename = '" + str(PIDBackFilename) + "',pIDBackFilepath = '" + str(PIDBackPicPath) + "',DOB='" + str(DOB) + "'"
+                            column = "name='" + str(name) + "', pIDType = '" + str(PIDType) + "',pIDNo = '" + str(PIDNo) + "',pIDFrontFilename = '" + str(PIDFrontFilename) + "',pIDFrontFilepath = '" + str(PIDFrontPicPath) + "',pIDBackFilename = '" + str(PIDBackFilename) + "',pIDBackFilepath = '" + str(PIDBackPicPath) + "',DOB='" + str(DOB) + "',profilePic='" + str(PicPath) + "'"
                             print(column,'column')
                             data = databasefile.UpdateQuery("driverMaster",column,WhereCondition)
                             print(data,'updatedata')
@@ -3749,16 +3773,20 @@ def addDriverDocs():
                                 data11.update(y)
 
                             else:
-                                columns='ambulanceNo'
-                                whereCondition=" driverId= '"+str(driverId)+"'"
-                                data1111=databasefile.SelectQuery1('ambulanceMaster',columns,whereCondition)
+                                columns='HealthReport'
+                                whereCondition=" driverId='"+str(driverId)+"'"
+                                data1111=databasefile.SelectQuery1('driverMaster',columns,whereCondition)
                                 if data1111['status']=='false':
+
                                     y={'documentStatus':"false"}
                                     data11.update(y)
                                 else:
-                                    y={'documentStatus':"true"}
-                                    data11.update(y)
-
+                                    if data1111['result']['HealthReport'] == None:
+                                        y={'documentStatus':"false"}
+                                        data11.update(y)
+                                    else:
+                                        y={'documentStatus':"true"}
+                                        data11.update(y)
                             
                             return data11
                         
