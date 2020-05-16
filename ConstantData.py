@@ -1,27 +1,27 @@
 
 def GetBaseURL():
  
-    path = "http://134.209.153.34:5031"
+    path = "http://134.209.153.34:5034"
     return path
 
   
 def GetProfilePicPath(filename):
 
-    path = "/var/www/medambulance/backend/med_ambulance/profilePic/"+filename
+    path = "/var/www/adeb/backend/adeb/profilePic/"+filename
     return path
 
 def GetdlImagePath(filename):
 
-    path = "/var/www/medambulance/backend/med_ambulance/DLImage/"+filename
+    path = "/var/www/adeb/backend/adeb/DLImage/"+filename
     return path
 def GetPIDImagePath(filename):
 
-    path = "/var/www/medambulance/backend/med_ambulance/PIDImage/"+filename
+    path = "/var/www/adeb/backend/adeb/PIDImage/"+filename
     return path
 
 def GetHealthReport(filename):
 
-    path = "/var/www/medambulance/backend/med_ambulance/HealthReport/"+filename
+    path = "/var/www/adeb/backend/adeb/HealthReport/"+filename
     return path    
 
 def getwebBaseurl():
