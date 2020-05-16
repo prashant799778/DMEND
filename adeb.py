@@ -3489,7 +3489,7 @@ def addDriverDocs():
             key = inputdata["key"]
             column = " * "
             whereCondition= " mobileNo='"+str(mobileNo)+ "' and usertypeId='3' "
-            data= databasefile.SelectQuery4("userMaster",column,whereCondition)
+            data= databasefile.SelectQuery1("userMaster",column,whereCondition)
             name=data['result'][0]['name']
 
             column11="id,driverId"
@@ -3501,7 +3501,7 @@ def addDriverDocs():
 
            
             mobileNo= inputdata["mobileNo"]
-            driverId=data['result'][0]['userId']
+            driverId=data['result']['userId']
             
             DlNo,dlFrontFilename,DlFrontPicPath,dlBackFilename,DlBackPicPath,PIDType,PIDNo,PIDFrontFilename,PIDFrontPicPath,PIDBackFilename,PIDBackPicPath,TransportType,TransportModel,Color,AmbulanceRegistrationFuel,TypeNo,AIFilename,AIPicPath,AmbulanceModeId,AmbulanceId="","","","","","","","","","","","","","","","","","","0","0"
 
@@ -3669,11 +3669,6 @@ def addDriverDocs():
                         data99=databasefile.SelectQuery1('driverMaster',columns222,whereCondition2222)
                         data111=data99[-1]
                         driverid=data111["driverId"]
-
-                        # columns2= "ambulanceNo,transportType,transportModel,color,ambulanceRegistrationFuel,typeNo,ambulanceFilename,ambulanceFilepath,ambulanceModeId,ambulanceTypeId,driverId,driverTypeId"
-                        # values2="'" + str(AmbulanceNo) + "','" + str( TransportType)  + "','" + str(TransportModel) + "','" + str(Color) + "','" + str(AmbulanceRegistrationFuel) + "','" + str(TypeNo) + "','" + str(AIFilename) + "','" + str(AIPicPath) + "','" + str(AmbulanceModeId) + "', "            
-                        # values2 = values2 + " '" + str(AmbulanceId) + "','" + str(driverid) + "','" + str(driverTypeId) + "'"
-                        # data122=databasefile.InsertQuery("ambulanceMaster",columns2,values2)
                         data122="1"
                         
                         
@@ -3799,7 +3794,7 @@ def addDriverDocs():
                     if (key == 3) or (key =='3'):
                         driver_Id=data1['result']['driverId']
                         columns="HealthReport,bloodGroup"
-                        WhereCondition = " driverId = '" + str(driver_Id) + "'"
+                        WhereCondition = " driverId = '" + str(driverId) + "'"
                         data111=databasefile.SelectQuery1('driverMaster',columns,WhereCondition)
                         if data111['status'] == 'false':
                             if data111['result']['bloodGroup'] == None:
@@ -3813,7 +3808,7 @@ def addDriverDocs():
                             
                                 column = '*'
                                 WhereCondition = " mobileNo = '" + str(mobileNo) +  "'"
-                                whereCondition="   driverId='" + str(driver_Id) +  "' "
+                                whereCondition="   driverId='" + str(driverId) +  "' "
                                 columns22="*"
                                 data11 = databasefile.SelectQuery1("driverMaster",column,WhereCondition)
 
