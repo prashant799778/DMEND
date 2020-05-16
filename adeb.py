@@ -3459,7 +3459,7 @@ def addDriverDocs():
         print('Hello')
         inputdata=request.form.get('data')
         print(inputdata,'inputdata')
-        keyarr = ['mobileNo','key','name','userTypeId']
+        keyarr = ['mobileNo','key','name']
         inputdata=json.loads(inputdata)
         # inputdata =  commonfile.DecodeInputdata(request.get_data()) 
         startlimit,endlimit="",""
@@ -3478,7 +3478,7 @@ def addDriverDocs():
 
             column11="id,driverId"
 
-            whereCondition1= " mobileNo='"+str(mobileNo)+ "' and driverTypeId='"+str(driverTypeId)+ "'"
+            whereCondition1= " mobileNo='"+str(mobileNo)+ "'"
             data1= databasefile.SelectQuery4("driverMaster",column11,whereCondition1)
 
             print(data1,'data--------------------------')
@@ -3594,7 +3594,6 @@ def addDriverDocs():
                         values = " '" + str(name)+ "','"+str(mobileNo)  + "','" + str(DlNo) + "','" + str( dlFrontFilename) + "','" + str(DlFrontPicPath) + "','" + str(dlBackFilename) + "', "            
                         values = values + " '" + str(DlBackPicPath) + "','" + str(driverId) + "'"
                         data = databasefile.InsertQuery("driverMaster",columns,values)
-                        data = databasefile.InsertQuery("driverMaster",columns,values)
                         if data != "0":
                             column = '*'
                             WhereCondition = " mobileNo = '" + str(mobileNo) +  "'"
@@ -3625,8 +3624,8 @@ def addDriverDocs():
                     
                     if (key == 3) or (key =='3'):
 
-                        columns = " name,mobileNo,driverId,driverTypeId"          
-                        values = " '" + str(name) + "','" + str(mobileNo) + "','" + str(driverId) + "','" + str(driverTypeId) + "'"
+                        columns = " name,mobileNo,driverId,bloodGroup,Surgery,HealthReport"          
+                        values = " '" + str(name) + "','" + str(mobileNo) + "','" + str(driverId) + "','" + str(bloodGroup) + "','" + str(Surgery) + "','" + str(HealthReport)  + "'"
                         
                         data = databasefile.InsertQuery("driverMaster",columns,values)
 
@@ -3649,22 +3648,22 @@ def addDriverDocs():
                             column = '*'
                             WhereCondition = " mobileNo = '" + str(mobileNo) +  "'"
                             whereCondition="   driverId='" + str(driverid) +  "' "
-                            columns22="ambulanceId,transportType,transportModel,color,ambulanceRegistrationFuel,typeNo,ambulanceFilename,ambulanceFilepath,ambulanceModeId,ambulanceTypeId,ambulanceNo,driverTypeId"
+                            columns22="name,mobileNo,driverid,bloodGroup,Surgery,HealthReport"
                             
                             data11 = databasefile.SelectQuery1("driverMaster",column,WhereCondition)
                             print(data11['result'],"______--")
                             print(data11['result']['dlNo'],"+++++++++")
 
 
-                            data12=databasefile.SelectQuery("ambulanceMaster",columns22,whereCondition)
+                            data12=databasefile.SelectQuery1("driverMaster",columns22,whereCondition)
 
-                            ambulanceId=data12['result']['ambulanceId']
-                            columns23='ambulanceId,lat,lng'
-                            values23 = " '" + str(ambulanceId) + "','" + str(lat) + "','" + str(lng) + "'"
-                            data122=databasefile.InsertQuery('ambulanceRideStatus',columns23,values23)
+                            driverId=data12['result']['driverId']
+                            columns23='driverId,lat,lng'
+                            values23 = " '" + str(driverId) + "','" + str(lat) + "','" + str(lng) + "'"
+                            data122=databasefile.InsertQuery('driverRideStatus',columns23,values23)
                             whereCondition222= " ambulanceId=  '" + str(ambulanceId) +  "' "
                             columns239="lat,lng,onDuty,onTrip"
-                            data12333=databasefile.SelectQuery1('ambulanceRideStatus',columns239,whereCondition222)
+                            data12333=databasefile.SelectQuery1('driverRideStatus',columns239,whereCondition222)
 
 
 
@@ -3755,38 +3754,34 @@ def addDriverDocs():
 
                     if (key == 3) or (key =='3'):
                         driver_Id=data1['result']['driverId']
-                        columns="ambulanceId"
+                        columns="HealthReport,bloodGroup"
                         WhereCondition = " driverId = '" + str(driver_Id) + "'"
                         data111=databasefile.SelectQuery1('ambulanceMaster',columns,WhereCondition)
                         if data111['status'] == 'false':
-                            
-                            columns2= "ambulanceNo,transportType,transportModel,color,ambulanceRegistrationFuel,typeNo,ambulanceFilename,ambulanceFilepath,ambulanceModeId,ambulanceTypeId,driverId,driverTypeId"
-
-                            values2="'" + str(AmbulanceNo) + "','" + str( TransportType) + "','" + str(TransportModel) + "','" + str(Color) + "','" + str(AmbulanceRegistrationFuel) + "','" + str(TypeNo) + "','" + str(AIFilename) + "','" + str(AIPicPath) + "','" + str(AmbulanceModeId) + "', "            
-                            values2 = values2 + " '" + str(AmbulanceId) + "','" + str(driver_Id) + "','" + str(driverTypeId) + "'"
-                            data122=databasefile.InsertQuery("ambulanceMaster",columns2,values2)
-                            print(data122,'+++++++++++++++++++')
-                            
+                            if data111['result']['bloodGroup'] == None:
+                            column = "name='" + str(name) + "', bloodGroup = '" + str(bloodGroup) + "',Surgery = '" + str(Surgery) + "',HealthReport = '" + str(HealthReport) + "'"
+                            print(column,'column')
+                            data = databasefile.UpdateQuery("driverMaster",column,WhereCondition)
+                            print(data,'updatedata')
                             
 
                             if data122 != "0":
                                 column = '*'
                                 WhereCondition = " mobileNo = '" + str(mobileNo) +  "'"
                                 whereCondition="   driverId='" + str(driver_Id) +  "' "
-                                columns22="ambulanceId,transportType,transportModel,color,ambulanceRegistrationFuel,typeNo,ambulanceFilename,ambulanceFilepath,ambulanceModeId,ambulanceTypeId,ambulanceNo"
-                                
+                                columns22="*"
                                 data11 = databasefile.SelectQuery1("driverMaster",column,WhereCondition)
 
 
-                                data12=databasefile.SelectQuery1("ambulanceMaster",columns22,whereCondition)
+                                data12=databasefile.SelectQuery1("driverMaster",columns22,whereCondition)
 
-                                ambulanceId=data12['result']['ambulanceId']
-                                columns23='ambulanceId,lat,lng'
-                                values23 = " '" + str(ambulanceId) + "','" + str(lat) + "','" + str(lng) + "'"
-                                data122=databasefile.InsertQuery('ambulanceRideStatus',columns23,values23)
-                                whereCondition222= " ambulanceId=  '" + str(ambulanceId) +  "' "
+                                driverId=data12['result']['driverId']
+                                columns23='driverId,lat,lng'
+                                values23 = " '" + str(driverId) + "','" + str(lat) + "','" + str(lng) + "'"
+                                data122=databasefile.InsertQuery('driverRideStatus',columns23,values23)
+                                whereCondition222= " driverId=  '" + str(ambulanceId) +  "' "
                                 columns239="lat,lng,onDuty,onTrip"
-                                data12333=databasefile.SelectQuery1('ambulanceRideStatus',columns239,whereCondition222)
+                                data12333=databasefile.SelectQuery1('driverRideStatus',columns239,whereCondition222)
 
 
 
