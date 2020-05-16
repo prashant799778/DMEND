@@ -3595,7 +3595,7 @@ def addDriverDocs():
                     print(filename)               
                     AIFilename=  str(str(data['result']["userId"])+".png")
                    
-                    AIFolderPath = ConstantData.GetAmbulanceImagePath(AIFilename)
+                    AIFolderPath = ConstantData.GetHealthReport(AIFilename)
                     AIfilepath = '/HealthReport/' + AIFilename 
                     file.save(AIFolderPath)
                     AIPicPath = AIfilepath

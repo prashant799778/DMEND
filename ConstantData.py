@@ -4,6 +4,26 @@ def GetBaseURL():
     path = "http://134.209.153.34:5031"
     return path
 
+  
+def GetProfilePicPath(filename):
+
+    path = "/var/www/medambulance/backend/med_ambulance/profilePic/"+filename
+    return path
+
+def GetdlImagePath(filename):
+
+    path = "/var/www/medambulance/backend/med_ambulance/DLImage/"+filename
+    return path
+def GetPIDImagePath(filename):
+
+    path = "/var/www/medambulance/backend/med_ambulance/PIDImage/"+filename
+    return path
+
+def GetHealthReport(filename):
+
+    path = "/var/www/medambulance/backend/med_ambulance/HealthReport/"+filename
+    return path    
+
 def getwebBaseurl():
  
     path = "http://134.209.153.34:4200"
