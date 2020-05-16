@@ -3624,7 +3624,7 @@ def addDriverDocs():
                 
                 if data1['status'] == 'false':
                     print('11')
-                    if key == 1:
+                    if key == 1 or (key =="1"):
                         columns = "name,mobileNo,dlNo,dlFrontFilename,dlFrontFilepath,dlBackFilename,dlBackFilepath,driverId"          
                         values = " '" + str(name)+ "','"+str(mobileNo)  + "','" + str(DlNo) + "','" + str( dlFrontFilename) + "','" + str(DlFrontPicPath) + "','" + str(dlBackFilename)  + "','" + str(PicPath) +  "' "            
                         values = values + " '" + str(DlBackPicPath) + "','" + str(driverId) + "'"
@@ -3641,7 +3641,7 @@ def addDriverDocs():
                                    
                             return data11
 
-                    if (key == 2) or (key =='2'):
+                    if (key == 2) or (key =="2"):
                         
                         columns = " name,mobileNo,pIDType,pIDNo,pIDFrontFilename,pIDFrontFilepath,pIDBackFilename,pIDBackFilepath,driverId,DOB,profilePic"          
                         values = " '" + str(name) + "','" + str(mobileNo) + "','" + str(PIDType) + "','" + str(PIDNo) + "','" + str(PIDFrontFilename) + "','" + str(PIDFrontPicPath) + "','" + str(PIDBackFilename) + "', "            
@@ -3657,7 +3657,7 @@ def addDriverDocs():
                                    
                             return data11
                     
-                    if (key == 3) or (key =='3'):
+                    if (key == 3) or (key =="3"):
 
                         columns = " name,mobileNo,driverId,bloodGroup,Surgery,HealthReport"          
                         values = " '" + str(name) + "','" + str(mobileNo) + "','" + str(driverId) + "','" + str(bloodGroup) + "','" + str(Surgery) + "','" + str(HealthReport)  + "'"
@@ -3707,7 +3707,7 @@ def addDriverDocs():
                 
                 
                 else:
-                    if (key == 1) or (key =='1'):
+                    if (key == 1) or (key =="1"):
                         print('A')
                         columns="dlNo"
                         WhereCondition = " mobileNo = '" + str(mobileNo) + "'"
@@ -3749,7 +3749,7 @@ def addDriverDocs():
                             data={"result":"","message":"Already Uploaded","status":"false"}
                             return data
 
-                    if (key == 2) or (key =='2'):
+                    if (key == 2) or (key =="2"):
                         print('B')
                         columns='pIDType,pIDNo'
                         WhereCondition = " mobileNo = '" + str(mobileNo) + "'"
@@ -3791,7 +3791,7 @@ def addDriverDocs():
 
 
 
-                    if (key == 3) or (key =='3'):
+                    if (key == 3) or (key =="3"):
                         driver_Id=data1['result']['driverId']
                         columns="HealthReport,bloodGroup"
                         WhereCondition = " driverId = '" + str(driverId) + "'"
