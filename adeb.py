@@ -202,9 +202,16 @@ def userlogin():
             column=  "us.mobileNo,us.name,us.userId,um.usertype as userTypeId"
             whereCondition= " and us.mobileNo = '" + str(mobileNo) + "' and us.password = '" + password + "' and us.userTypeId=um.id"
             loginuser=databasefile.SelectQuery1("userMaster as us,usertypeMaster as um",column,whereCondition)
-            if (loginuser['status']!='false'):   
+            if (loginuser['status']!='false'):
+                if loginuser['result']['userTypeId'] =="2" or loginuser['result']['userTypeId'] ==2 :
+                    return loginuser
+                else:
+                    data={"status":"false","message":"You are user,Not a driver","result":""}
+                    return data
+
+
                               
-                return loginuser
+        
             else:
                 data={"status":"false","message":"Please enter correct Password & Email","result":""}
                 return data
@@ -903,11 +910,15 @@ def driverlogin():
             mobileNo = inputdata["mobileNo"]
             password = inputdata["password"]
             column=  "us.mobileNo,us.name,us.userId,um.usertype,um.id as userTypeId"
-            whereCondition= " and us.mobileNo = '" + str(mobileNo) + "' and us.password = '" + str(password) + "' and us.userTypeId=um.id"
+            whereCondition= " and us.mobileNo = '" + str(mobileNo) + "' and us.password = '" + str(password) + "' and us.userTypeId=um.id  "
             loginuser=databasefile.SelectQuery1("userMaster as us,usertypeMaster as um",column,whereCondition)
-            if (loginuser['status']!='false'):   
-                              
-                return loginuser
+            if (loginuser['status']!='false'): 
+                if loginuser['result']['userTypeId'] =="3" or loginuser['result']['userTypeId'] ==3 :
+                    return loginuser
+                else:
+                    data={"status":"false","message":"You are user,Not a driver","result":""}
+                    return data
+
             else:
                 data={"status":"false","message":"Please enter correct Password & mobileNo.","result":""}
                 return data
