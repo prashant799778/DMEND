@@ -678,6 +678,7 @@ def driverSignup():
             
             mobileNo=inputdata["mobileNo"]
             deviceKey=inputdata["deviceKey"]
+            email=inputdata["email"]
             usertypeId="3"
             
           
@@ -692,7 +693,7 @@ def driverSignup():
             UserId = (commonfile.CreateHashKey(mobileNo,usertypeId)).hex
             
             
-            WhereCondition = " and mobileNo = '" + str(mobileNo) + "'"
+            WhereCondition = " and mobileNo = '" + str(mobileNo) + "' or email='"+str(email)+"'"
             count = databasefile.SelectCountQuery("userMaster",WhereCondition,"")
             
             if int(count) > 0:
@@ -3559,11 +3560,11 @@ def addDriverDocs():
             if 'DOB' in inputdata:
                 DOB=inputdata["DOB"]
 
-            if 'AmbulanceNo' in inputdata:
-                AmbulanceNo=inputdata["AmbulanceNo"]
+            if 'bloodGroup' in inputdata:
+                bloodGroup=inputdata["bloodGroup"]
 
-            if 'AmbulanceTypeId' in inputdata:
-                AmbulanceId=inputdata["AmbulanceTypeId"]
+            if 'Surgery' in inputdata:
+                Surgery=inputdata["Surgery"]
 
             if 'lat' in inputdata:
                 lat=inputdata["lat"]
