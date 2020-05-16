@@ -88,21 +88,24 @@ def userSignup():
             UserId = (commonfile.CreateHashKey(mobileNo,usertypeId)).hex
             
             
-            WhereCondition = " and mobileNo = '" + str(mobileNo) + "' or email ='" + str(email) + "' "
-            count = databasefile.SelectCountQuery("userMaster",WhereCondition,"")
+            column22='userTypeId'
             
-            if int(count) > 0:
-                WhereCondition = " AND  mobileNo = '" + str(mobileNo) + "'"
-                column = " otp = '" + str(otp)  + "'"
-                updateOtp = databasefile.UpdateQuery("userMaster",column,WhereCondition)
-                print(updateOtp,'updatedata')
-                if updateOtp != "0":
-                    column = '*'
-                    data = databasefile.SelectQuery1("userMaster",column,WhereCondition)                  
-                    print(data,"===================")
+            WhereCondition = "  mobileNo = '" + str(mobileNo) + "' or email= '" + str(email) + "' "
+            count = databasefile.SelectQuery("userMaster",column22,WhereCondition)
+            
+            if count['status']!='false':
+                if (count['result']['userTypeId'] == '2') or (count['result']['userTypeId'] == 2):
+                    data={"result":"","status":"false","message":"You already Registed through same mobileNo and email"}
+                    print(data)
                     return data
-                else:
-                    return commonfile.Errormessage()
+                
+                
+                if (count['result']['userTypeId'] == '3') or (count['result']['userTypeId'] == 3):
+                   
+                    data={"result":"","status":"false","message":"You already signedUp as a driver"}
+                    print(data)
+                    return data
+                
                 
             else:
                
@@ -698,23 +701,24 @@ def driverSignup():
            
 
             UserId = (commonfile.CreateHashKey(mobileNo,usertypeId)).hex
+            column22='userTypeId'
             
+            WhereCondition = "  mobileNo = '" + str(mobileNo) + "' or email= '" + str(email) + "' "
+            count = databasefile.SelectQuery("userMaster",column22,WhereCondition)
             
-            WhereCondition = " and mobileNo = '" + str(mobileNo) + "' or email='"+str(email)+"'"
-            count = databasefile.SelectCountQuery("userMaster",WhereCondition,"")
-            
-            if int(count) > 0:
-                WhereCondition = " and mobileNo = '" + str(mobileNo) + "'"
-                column = " otp = '" + str(otp)  + "'"
-                updateOtp = databasefile.UpdateQuery("userMaster",column,WhereCondition)
-                print(updateOtp,'updatedata')
-                if updateOtp != "0":
-                    column = '*'
-                    data = databasefile.SelectQuery1("userMaster",column,WhereCondition)                  
-                    print(data,"===================")
+            if count['status']!='false':
+                if (count['result']['userTypeId'] == '3') or (count['result']['userTypeId'] == 3):
+                    data={"result":"","status":"false","message":"You already Registed through same mobileNo and email"}
+                    print(data)
                     return data
-                else:
-                    return commonfile.Errormessage()
+                
+                
+                if (count['result']['userTypeId'] == '2') or (count['result']['userTypeId'] == 2):
+                   
+                    data={"result":"","status":"false","message":"You already signedUp as a user"}
+                    print(data)
+                    return data
+                
                 
             else:
                
