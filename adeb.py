@@ -3756,16 +3756,17 @@ def addDriverDocs():
                         driver_Id=data1['result']['driverId']
                         columns="HealthReport,bloodGroup"
                         WhereCondition = " driverId = '" + str(driver_Id) + "'"
-                        data111=databasefile.SelectQuery1('ambulanceMaster',columns,WhereCondition)
+                        data111=databasefile.SelectQuery1('driverMaster',columns,WhereCondition)
                         if data111['status'] == 'false':
                             if data111['result']['bloodGroup'] == None:
-                            column = "name='" + str(name) + "', bloodGroup = '" + str(bloodGroup) + "',Surgery = '" + str(Surgery) + "',HealthReport = '" + str(HealthReport) + "'"
-                            print(column,'column')
-                            data = databasefile.UpdateQuery("driverMaster",column,WhereCondition)
-                            print(data,'updatedata')
+                                column = "name='" + str(name) + "', bloodGroup = '" + str(bloodGroup) + "',Surgery = '" + str(Surgery) + "',HealthReport = '" + str(HealthReport) + "'"
+                                print(column,'column')
+                                data = databasefile.UpdateQuery("driverMaster",column,WhereCondition)
+                                print(data,'updatedata')
+
                             
 
-                            if data122 != "0":
+                            
                                 column = '*'
                                 WhereCondition = " mobileNo = '" + str(mobileNo) +  "'"
                                 whereCondition="   driverId='" + str(driver_Id) +  "' "
@@ -3806,6 +3807,11 @@ def addDriverDocs():
 
 
                                 return data11
+                            else:
+                                data11={"result":"","message":"Already Uploaded","status":"false"}
+                                return data11
+
+
 
                             print('q')
                         else:
