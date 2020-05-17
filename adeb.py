@@ -3587,6 +3587,10 @@ def addDriverDocs():
             if 'lng' in inputdata:
                 lng=inputdata["lng"]
 
+            
+            if 'gearType' in inputdata:
+                gearType=inputdata["gearType"]    
+
 
             if 'HealthReport' in request.files:
                     print("immmmmmmmmmmmmmmmm")
@@ -3625,9 +3629,9 @@ def addDriverDocs():
                 if data1['status'] == 'false':
                     print('11')
                     if key == 1 or (key =="1"):
-                        columns = "name,mobileNo,dlNo,dlFrontFilename,dlFrontFilepath,dlBackFilename,dlBackFilepath,driverId"          
+                        columns = "name,mobileNo,dlNo,dlFrontFilename,dlFrontFilepath,dlBackFilename,dlBackFilepath,driverId,gearType"          
                         values = " '" + str(name)+ "','"+str(mobileNo)  + "','" + str(DlNo) + "','" + str( dlFrontFilename) + "','" + str(DlFrontPicPath) + "','" + str(dlBackFilename)  + "','" + str(PicPath) +  "' "            
-                        values = values + " '" + str(DlBackPicPath) + "','" + str(driverId) + "'"
+                        values = values + " '" + str(DlBackPicPath) + "','" + str(driverId) + "','" + str(gearType)  + "'"
                         data = databasefile.InsertQuery("driverMaster",columns,values)
                         if data != "0":
                             column = '*'
@@ -3714,7 +3718,7 @@ def addDriverDocs():
                         data19 = databasefile.SelectQuery1("driverMaster",columns,WhereCondition)
                         if data19['result']['dlNo'] == None:
 
-                            column = " name='" + str(name) + "' ,dlNo = '" + str(DlNo) + "',dlFrontFilename = '" + str(dlFrontFilename) + "',dlFrontFilepath = '" + str(DlFrontPicPath) + "',dlBackFilename = '" + str(dlBackFilename) + "',dlBackFilepath = '" + str(DlBackPicPath) + "'"
+                            column = " name='" + str(name) + "' ,gearType='" + str(gearType) + "',dlNo = '" + str(DlNo) + "',dlFrontFilename = '" + str(dlFrontFilename) + "',dlFrontFilepath = '" + str(DlFrontPicPath) + "',dlBackFilename = '" + str(dlBackFilename) + "',dlBackFilepath = '" + str(DlBackPicPath) + "'"
                             print(column,'column')
                             data = databasefile.UpdateQuery("driverMaster",column,WhereCondition)
                             print(data,'updatedata')
