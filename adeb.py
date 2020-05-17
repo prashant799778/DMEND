@@ -744,7 +744,7 @@ def driverSignup():
                 column="mobileNo,userId,otp,userTypeId,deviceKey"+column
                 
                 
-                values=  "'"+str(mobileNo)+"','"+str(UserId)+"','"+str(otp)+"','"+str('2')+"','"+str(deviceKey)+values+ "'"
+                values=  "'"+str(mobileNo)+"','"+str(UserId)+"','"+str(otp)+"','"+str('3')+"','"+str(deviceKey)+values+ "'"
                 data=databasefile.InsertQuery("userMaster",column,values)
              
 
