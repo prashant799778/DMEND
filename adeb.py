@@ -918,6 +918,19 @@ def driverlogin():
             loginuser=databasefile.SelectQuery1("userMaster as us,usertypeMaster as um",column,whereCondition)
             if (loginuser['status']!='false'): 
                 if loginuser['result']['userTypeId'] =="3" or loginuser['result']['userTypeId'] ==3 :
+                    driverId=loginuser['result']['userId']
+                    column="documentstatus"
+                    whereCondition=" and driverId='"+str(driverId)+"'"
+                    data1=databasefile.SelectQuery1('driverMaster',column,whereCondition)
+                    if data1['status']!="false":
+                        y=data1['result']
+
+
+                        loginuser['result'].update(y)
+                    else:
+                        y={"documentstatus":"No"}
+                        loginuser['result'].update(y)
+
                     return loginuser
                 else:
                     data={"status":"false","message":"You are user,Not a driver","result":""}
