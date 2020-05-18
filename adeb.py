@@ -3488,7 +3488,7 @@ def addDriverDocs():
         print('Hello')
         inputdata=request.form.get('data')
         print(inputdata,'inputdata')
-        keyarr = ['mobileNo','key','name']
+        keyarr = ['mobileNo','key']
         inputdata=json.loads(inputdata)
         # inputdata =  commonfile.DecodeInputdata(request.get_data()) 
         startlimit,endlimit="",""
