@@ -3637,9 +3637,9 @@ def addDriverDocs():
                 PicPath = filepath 
                
 
-            if data['status']!='false':
+            if data['status']!='False':
                 
-                if data1['status'] == 'false':
+                if data1['status'] == 'False':
                     print('11')
                     if key == 1 or (key =="1"):
                         columns = "name,mobileNo,dlNo,dlFrontFilename,dlFrontFilepath,dlBackFilename,dlBackFilepath,driverId,gearType"          
