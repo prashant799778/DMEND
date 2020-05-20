@@ -3501,13 +3501,13 @@ def addDriverDocs():
             mobileNo=inputdata['mobileNo']
             key = inputdata["key"]
             column = " * "
-            whereCondition= "  and mobileNo="+str(mobileNo)+ "  "
+            whereCondition= "  and mobileNo=  "+str(mobileNo)+ "  "
             data= databasefile.SelectQuery1("userMaster",column,whereCondition)
-            name=data['result'][0]['name']
+            name=data['result']['name']
 
             column11="id,driverId"
 
-            whereCondition1= "  and mobileNo="+str(mobileNo)+ ""
+            whereCondition1= "  and mobileNo= "+str(mobileNo)+ ""
             data1= databasefile.SelectQuery4("driverMaster",column11,whereCondition1)
 
             print(data1,'data--------------------------')
