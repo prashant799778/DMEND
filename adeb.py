@@ -3501,7 +3501,7 @@ def addDriverDocs():
             mobileNo=inputdata['mobileNo']
             key = inputdata["key"]
             column = " * "
-            whereCondition= "  and mobileNo="+str(mobileNo)+ " and usertypeId='3' "
+            whereCondition= "  and mobileNo="+str(mobileNo)+ " and usertypeId=3 "
             data= databasefile.SelectQuery1("userMaster",column,whereCondition)
             name=data['result'][0]['name']
 
