@@ -3640,7 +3640,7 @@ def addDriverDocs():
 
             if data['status']!='False':
                 
-                if data1['result'] =="":
+                if data1['status'] =="False":
                     print('11')
                     if key == 1:
                         print("111111111111")
