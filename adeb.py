@@ -3516,7 +3516,7 @@ def addDriverDocs():
             mobileNo= inputdata["mobileNo"]
             driverId=data['result']['userId']
             
-            DlNo,dlFrontFilename,DlFrontPicPath,dlBackFilename,DlBackPicPath,PIDType,PIDNo,PIDFrontFilename,PIDFrontPicPath,PIDBackFilename,PIDBackPicPath,TransportType,TransportModel,Color,AmbulanceRegistrationFuel,TypeNo,AIFilename,AIPicPath,AmbulanceModeId,AmbulanceId="","","","","","","","","","","","","","","","","","","0","0"
+            DlNo,dlFrontFilename,DlFrontPicPath,dlBackFilename,DlBackPicPath,PIDType,PIDNo,PIDFrontFilename,PIDFrontPicPath,PIDBackFilename,PIDBackPicPath,TransportType,TransportModel,Color,AmbulanceRegistrationFuel,TypeNo,AIFilename,AIPicPath,AmbulanceModeId,AmbulanceId,PicPath="","","","","","","","","","","","","","","","","","","0","0"
 
             if 'DlNo' in inputdata:
                 DlNo=inputdata["DlNo"]
@@ -3642,6 +3642,7 @@ def addDriverDocs():
                 if data1['status'] == 'False':
                     print('11')
                     if key == 1 or (key =="1"):
+                        print("111111111111")
                         columns = "name,mobileNo,dlNo,dlFrontFilename,dlFrontFilepath,dlBackFilename,dlBackFilepath,driverId,gearType"          
                         values = " '" + str(name)+ "','"+str(mobileNo)  + "','" + str(DlNo) + "','" + str( dlFrontFilename) + "','" + str(DlFrontPicPath) + "','" + str(dlBackFilename)  + "','" + str(PicPath) +  "' "            
                         values = values + " '" + str(DlBackPicPath) + "','" + str(driverId) + "','" + str(gearType)  + "'"
@@ -3662,7 +3663,7 @@ def addDriverDocs():
                         
                         columns = " name,mobileNo,pIDType,pIDNo,pIDFrontFilename,pIDFrontFilepath,pIDBackFilename,pIDBackFilepath,driverId,DOB,profilePic"          
                         values = " '" + str(name) + "','" + str(mobileNo) + "','" + str(PIDType) + "','" + str(PIDNo) + "','" + str(PIDFrontFilename) + "','" + str(PIDFrontPicPath) + "','" + str(PIDBackFilename) + "', "            
-                        values = values + " '" + str(PIDBackPicPath)+ "','" + str(driverId) + "','" + str(DOB) + "'"
+                        values = values + " '" + str(PIDBackPicPath)+ "','" + str(driverId) + "','" + str(DOB)  + "','" + str(PicPath)+ "'"
                         data = databasefile.InsertQuery("driverMaster",columns,values)
                         if data != "0":
                             column = '*'
