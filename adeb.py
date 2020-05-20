@@ -3515,6 +3515,7 @@ def addDriverDocs():
            
             mobileNo= inputdata["mobileNo"]
             driverId=data['result']['userId']
+            print(driverId,"++++++++++++=")
             
             DlNo,dlFrontFilename,DlFrontPicPath,dlBackFilename,DlBackPicPath,PIDType,PIDNo,PIDFrontFilename,PIDFrontPicPath,PIDBackFilename,PIDBackPicPath,TransportType,TransportModel,Color,AmbulanceRegistrationFuel,TypeNo,AIFilename,AIPicPath,AmbulanceModeId,AmbulanceId,PicPath="","","","","","","","","","","","","","","","","","","0","0"
 
