@@ -3814,9 +3814,9 @@ def addDriverDocs():
                     if (key == 3) or (key =="3"):
                         print('rr')
                         driver_Id=data1['result']['driverId']
-                        print(driver_Id,"+++++++++")
+                        print(driverId,"+++++++++")
                         columns="HealthReport,bloodGroup"
-                        WhereCondition = "  and driverId = '" + str(driverId) + "'"
+                        WhereCondition = "  and mobileNo = '" + str(mobileNo) + "'"
                         data111=databasefile.SelectQuery1('driverMaster',columns,WhereCondition)
                         print('6666666666644444444444444',data111)
                         # if data111['status'] != 'False':
