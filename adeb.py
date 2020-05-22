@@ -3687,8 +3687,8 @@ def addDriverDocs():
                         columns222="driverId"
                         whereCondition2222="  and mobileNo = '" + str(mobileNo) +  "' "
                         data99=databasefile.SelectQuery1('driverMaster',columns222,whereCondition2222)
-                        data111=data99[-1]
-                        driverid=data111["driverId"]
+                        # data111=data99[-1]
+                        # driverid=data111["driverId"]
                         data122="1"
                         
                         
@@ -3696,8 +3696,8 @@ def addDriverDocs():
                         if data122 != "0":
 
                             column = '*'
-                            WhereCondition = " and  mobileNo = '" + str(mobileNo) +  "'"
-                            whereCondition="  and  driverId='" + str(driverid) +  "' "
+                            WhereCondition = " and  mobileNo = " + str(mobileNo) +  " "
+                            whereCondition="  and  driverId='" + str(driverId) +  "' "
                             columns22="name,mobileNo,driverId,bloodGroup,Surgery,HealthReport"
                             
                             data11 = databasefile.SelectQuery1("driverMaster",column,WhereCondition)
