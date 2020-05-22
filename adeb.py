@@ -3617,7 +3617,7 @@ def addDriverDocs():
                     AIFolderPath = ConstantData.GetHealthReport(AIFilename)
                     AIfilepath = '/HealthReport/' + AIFilename 
                     file.save(AIFolderPath)
-                    AIPicPath = AIfilepath
+                    HealthReport = AIfilepath
                     print(AIPicPath)
 
 
