@@ -3834,7 +3834,7 @@ def addDriverDocs():
                             
                                 column = '*'
                                 WhereCondition = " and mobileNo = '" + str(mobileNo) +  "'"
-                                whereCondition="   driverId='" + str(driverId) +  "' "
+                                whereCondition="  and   driverId='" + str(driverId) +  "' "
                                 columns22="*"
                                 data11 = databasefile.SelectQuery1("driverMaster",column,WhereCondition)
 
