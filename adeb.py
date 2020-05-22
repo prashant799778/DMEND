@@ -3811,13 +3811,15 @@ def addDriverDocs():
 
 
                     if (key == 3) or (key =="3"):
+                        print('rr')
                         driver_Id=data1['result']['driverId']
                         columns="HealthReport,bloodGroup"
-                        WhereCondition = "  and driverId = '" + str(driverId) + "'"
+                        WhereCondition = "  and driverId = '" + str(driver_Id) + "'"
                         data111=databasefile.SelectQuery1('driverMaster',columns,WhereCondition)
+                        print('66666666666',data111)
                         if data111['status'] != 'false':
                             if data111['result']['bloodGroup'] == None:
-                                column = "name='" + str(name) + "', bloodGroup = '" + str(bloodGroup) + "',Surgery = '" + str(Surgery) + "',HealthReport = '" + str(HealthReport) + "'"
+                                column = "bloodGroup = '" + str(bloodGroup) + "',Surgery = '" + str(Surgery) + "',HealthReport = '" + str(HealthReport) + "'"
                                 print(column,'column')
                                 data = databasefile.UpdateQuery("driverMaster",column,WhereCondition)
                                 print(data,'updatedata')
