@@ -3518,6 +3518,7 @@ def addDriverDocs():
             print(driverId,"++++++++++++=")
             
             DlNo,dlFrontFilename,DlFrontPicPath,dlBackFilename,DlBackPicPath,PIDType,PIDNo,PIDFrontFilename,PIDFrontPicPath,PIDBackFilename,PIDBackPicPath,TransportType,TransportModel,Color,AmbulanceRegistrationFuel,TypeNo,AIFilename,AIPicPath,AmbulanceModeId,AmbulanceId,PicPath="","","","","","","","","","","","","","","","","","","0","0",""
+            lat,lng="",""
 
             if 'DlNo' in inputdata:
                 DlNo=inputdata["DlNo"]
@@ -3814,9 +3815,9 @@ def addDriverDocs():
                         print('rr')
                         driver_Id=data1['result']['driverId']
                         columns="HealthReport,bloodGroup"
-                        WhereCondition = "  and driverId = '" + str(driver_Id) + "'"
+                        WhereCondition = "  and driverId = '" + str(driverId) + "'"
                         data111=databasefile.SelectQuery1('driverMaster',columns,WhereCondition)
-                        print('66666666666',data111)
+                        print('6666666666644444444444444',data111)
                         if data111['status'] != 'false':
                             if data111['result']['bloodGroup'] == None:
                                 column = "bloodGroup = '" + str(bloodGroup) + "',Surgery = '" + str(Surgery) + "',HealthReport = '" + str(HealthReport) + "'"
