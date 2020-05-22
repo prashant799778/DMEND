@@ -3822,66 +3822,66 @@ def addDriverDocs():
                         WhereCondition = "  and mobileNo = '" + str(mobileNo) + "'"
                         data111=databasefile.SelectQuery1('driverMaster',columns,WhereCondition)
                         print('6666666666644444444444444',data111)
-                        # if data111['status'] != 'False':
-                        #     if data111['result']['bloodGroup'] == None:
-                        #         column = "bloodGroup = '" + str(bloodGroup) + "',Surgery = '" + str(Surgery) + "',HealthReport = '" + str(HealthReport) + "'"
-                        #         print(column,'column')
-                        #         data = databasefile.UpdateQuery("driverMaster",column,WhereCondition)
-                        #         print(data,'updatedata')
+                        if data111['status'] != 'False':
+                            if data111['result']['bloodGroup'] == None:
+                                column = "bloodGroup = '" + str(bloodGroup) + "',Surgery = '" + str(Surgery) + "',HealthReport = '" + str(HealthReport) + "'"
+                                print(column,'column')
+                                data = databasefile.UpdateQuery("driverMaster",column,WhereCondition)
+                                print(data,'updatedata')
 
                             
 
                             
-                        #         column = '*'
-                        #         WhereCondition = " and mobileNo = '" + str(mobileNo) +  "'"
-                        #         whereCondition="   driverId='" + str(driverId) +  "' "
-                        #         columns22="*"
-                        #         data11 = databasefile.SelectQuery1("driverMaster",column,WhereCondition)
+                                column = '*'
+                                WhereCondition = " and mobileNo = '" + str(mobileNo) +  "'"
+                                whereCondition="   driverId='" + str(driverId) +  "' "
+                                columns22="*"
+                                data11 = databasefile.SelectQuery1("driverMaster",column,WhereCondition)
 
 
-                        #         data12=databasefile.SelectQuery1("driverMaster",columns22,whereCondition)
+                                data12=databasefile.SelectQuery1("driverMaster",columns22,whereCondition)
 
-                        #         driverId=data12['result']['driverId']
-                        #         columns23='driverId,lat,lng'
-                        #         values23 = " '" + str(driverId) + "','" + str(lat) + "','" + str(lng) + "'"
-                        #         data122=databasefile.InsertQuery('driverRideStatus',columns23,values23)
-                        #         whereCondition222= "  and driverId=  '" + str(ambulanceId) +  "' "
-                        #         columns239="lat,lng,onDuty,onTrip"
-                        #         data12333=databasefile.SelectQuery1('driverRideStatus',columns239,whereCondition222)
+                                driverId=data12['result']['driverId']
+                                columns23='driverId,lat,lng'
+                                values23 = " '" + str(driverId) + "','" + str(lat) + "','" + str(lng) + "'"
+                                data122=databasefile.InsertQuery('driverRideStatus',columns23,values23)
+                                whereCondition222= "  and driverId=  '" + str(ambulanceId) +  "' "
+                                columns239="lat,lng,onDuty,onTrip"
+                                data12333=databasefile.SelectQuery1('driverRideStatus',columns239,whereCondition222)
 
 
 
-                        #         data11['result'].update(data12['result'])
-                        #         data11['result'].update(data12333['result'])
+                                data11['result'].update(data12['result'])
+                                data11['result'].update(data12333['result'])
                                 
-                        #         if data11['result']['dlNo'] == None:
-                        #             y={'documentStatus':"false"}
-                        #             data11.update(y)
+                                if data11['result']['dlNo'] == None:
+                                    y={'documentStatus':"false"}
+                                    data11.update(y)
                                    
 
                                 
-                        #         if data11['result']['pIDNo'] == None:
-                        #             y={'documentStatus':"false"}
-                        #             data11.update(y)
+                                if data11['result']['pIDNo'] == None:
+                                    y={'documentStatus':"false"}
+                                    data11.update(y)
                                 
-                        #         if (data11['result']['dlNo'] != None) and (data11['result']['pIDNo'] != None) :
-                        #             y={'documentStatus':"true"}
-                        #             data11.update(y)
+                                if (data11['result']['dlNo'] != None) and (data11['result']['pIDNo'] != None) :
+                                    y={'documentStatus':"true"}
+                                    data11.update(y)
 
                                         
 
 
-                        #         return data11
-                        #     else:
-                        #         data11={"result":"","message":"Already Uploaded","status":"false"}
-                        #         return data11
+                                return data11
+                            else:
+                                data11={"result":"","message":"Already Uploaded","status":"false"}
+                                return data11
 
 
 
-                        #     print('q')
-                        # else:
-                        #     data11={"result":"","message":"Already Uploaded","status":"false"}
-                        #     return data11
+                            print('q')
+                        else:
+                            data11={"result":"","message":"Already Uploaded","status":"false"}
+                            return data11
 
             else:
                 data={"result":"","message":"Invalid mobileNo","status":"false"}
