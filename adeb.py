@@ -3813,8 +3813,10 @@ def addDriverDocs():
 
                     if (key == 3) or (key =="3"):
                         print('rr')
-                        driver_Id=data1['result']['driverId']
-                        print(mobileNo,"+++++++++")
+                        print('qw')
+                        print('1')
+                        #driver_Id=data1['result']['driverId']
+                        print(mobileNo,"+++++++++111111111111111111111111")
                         columns="HealthReport,bloodGroup"
                         WhereCondition=""
                         WhereCondition = "  and mobileNo = '" + str(mobileNo) + "'"
