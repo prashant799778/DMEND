@@ -3711,7 +3711,7 @@ def addDriverDocs():
                             columns23='driverId,lat,lng'
                             values23 = " '" + str(driverId) + "','" + str(lat) + "','" + str(lng) + "'"
                             data122=databasefile.InsertQuery('driverRideStatus',columns23,values23)
-                            whereCondition222= "  and driverId=  '" + str(ambulanceId) +  "' "
+                            whereCondition222= "  and driverId=  '" + str(driverId) +  "' "
                             columns239="lat,lng,onDuty,onTrip"
                             data12333=databasefile.SelectQuery1('driverRideStatus',columns239,whereCondition222)
 
