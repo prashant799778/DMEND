@@ -919,16 +919,49 @@ def driverlogin():
             if (loginuser['status']!='false'): 
                 if loginuser['result']['userTypeId'] =="3" or loginuser['result']['userTypeId'] ==3 :
                     driverId=loginuser['result']['userId']
-                    column="documentstatus"
+                    column="documentstatus,HealthReport,DlFrontImage,pIDFrontFilename"
                     whereCondition=" and driverId='"+str(driverId)+"'"
                     data1=databasefile.SelectQuery1('driverMaster',column,whereCondition)
                     if data1['status']!="false":
-                        y=data1['result']
+                        y={"documentstatus":data1['result']['documentstatus']}
+                        
+                        if data1['result']['HealthReport'] ==None:
+                            
+                            y2={"healthReport":"No"}
+                            loginuser['result'].update(y2)
+                        
+                        if data1['result']['HealthReport']!=None:
+                            
+                            y2={"healthReport":"Yes"}
+                            loginuser['result'].update(y2)
+
+                        if data1['result']['DlFrontImage'] ==None:
+                            
+                            y2={"drivinglicense":"No"}
+                            loginuser['result'].update(y2)
+                        
+                        if data1['result']['DlFrontImage']!=None:
+                            y2={"drivingLicense":"Yes"}
+                            loginuser['result'].update(y2)
+
+                        if data1['result']['pIDFrontFilename'] ==None:
+                            
+                            y2={"personalDetails":"No"}
+                            loginuser['result'].update(y2)
+                        
+                        if data1['result']['pIDFrontFilename']!=None:
+                            y2={"personalDetails":"Yes"}
+                            loginuser['result'].update(y2)
+
+
+
+
+
 
 
                         loginuser['result'].update(y)
                     else:
-                        y={"documentstatus":"No"}
+                        y={"documentstatus":"No","drivingLicense":"No","personalDetails":"No","healthReport":"No"}
                         loginuser['result'].update(y)
 
                     return loginuser
