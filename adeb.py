@@ -2461,7 +2461,7 @@ def userBookings():
                     whereCondition2=whereCondition2+" and bm.bookingId= '"+ str(bookingId)+"'"
 
             if "bookingTypeId" in inputdata:
-                if inputdata['bookingTypeId'] != "":
+                if inputdata['bookingTypeId'] != None:
                     bookingTypeId =str(inputdata["bookingTypeId"])
                     whereCondition2=whereCondition2+" and bm.bookingTypeId= '"+ str(bookingTypeId)+"'"
 
