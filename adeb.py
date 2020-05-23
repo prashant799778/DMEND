@@ -2185,7 +2185,7 @@ def acceptRide():
             column="bookingId"
             whereCondition2=" and  driverId='"+str(driverId)+"'"
             d=databasefile,SelectQuery1('bookingDriver',column,whereCondition2)
-            if d['status'] !="False": 
+            if d['status'] =="False": 
 
                 columns="mobileNo,name"
                 whereCondition22="  and userId= '"+str(userId)+"' and userTypeId='2' "
