@@ -1731,7 +1731,7 @@ def updateDriverLatLong():
            
                 
                 
-            WhereCondition2=" and driverId= '" + str(ambulanceId) + "'"
+            WhereCondition2=" and driverId= '" + str(driverId) + "'"
             columns23="lat='" + str(lat) + "',lng='" + str(lng) + "'"
             data122=databasefile.UpdateQuery('driverRideStatus',columns23,WhereCondition2)
             print("333333333333")
