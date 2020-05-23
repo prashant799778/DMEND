@@ -1707,7 +1707,7 @@ def updateDriverLatLong():
         
         inputdata=commonfile.DecodeInputdata(request.get_data())
        
-        keyarr = ['driverId']
+        keyarr = ['driverId','avial']
        
         
         startlimit,endlimit="",""
@@ -1724,6 +1724,9 @@ def updateDriverLatLong():
             if 'lng' in inputdata:
                 lng=inputdata["lng"]
 
+            if 'avial' in inputdata:
+                avial=inputdata["avial"]
+
             if 'driverId' in inputdata:
                 driverId=inputdata["driverId"]
 
@@ -1734,6 +1737,15 @@ def updateDriverLatLong():
             WhereCondition2=" and driverId= '" + str(driverId) + "'"
             columns23="lat='" + str(lat) + "',lng='" + str(lng) + "'"
             data122=databasefile.UpdateQuery('driverRideStatus',columns23,WhereCondition2)
+
+
+
+                
+            WhereCondition2=" driverId= '" + str(driverId) + "'"
+            columns23="onDuty='" + str(avial) + "'"
+            data122=databasefile.UpdateQuery('driverRideStatus',columns23,WhereCondition2)
+            print("333333333333")
+            
             print("333333333333")
             if data122 != "0":
                 data11={"result":"","message":"Updated successfully","status":"true"}
