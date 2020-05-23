@@ -919,7 +919,7 @@ def driverlogin():
             if (loginuser['status']!='false'): 
                 if loginuser['result']['userTypeId'] =="3" or loginuser['result']['userTypeId'] ==3 :
                     driverId=loginuser['result']['userId']
-                    column="documentstatus,HealthReport,DlFrontImage,pIDFrontFilename"
+                    column="documentstatus,HealthReport,dlNo,pIDFrontFilename"
                     whereCondition=" and driverId='"+str(driverId)+"'"
                     data1=databasefile.SelectQuery1('driverMaster',column,whereCondition)
                     if data1['status']!="false":
@@ -935,12 +935,12 @@ def driverlogin():
                             y2={"healthReport":"Yes"}
                             loginuser['result'].update(y2)
 
-                        if data1['result']['DlFrontImage'] ==None:
+                        if data1['result']['dlNo'] ==None:
                             
                             y2={"drivingLicense":"No"}
                             loginuser['result'].update(y2)
                         
-                        if data1['result']['DlFrontImage']!=None:
+                        if data1['result']['dlNo']!=None:
                             y2={"drivingLicense":"Yes"}
                             loginuser['result'].update(y2)
 
