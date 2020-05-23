@@ -2434,6 +2434,10 @@ def userBookings():
         inputdata =  commonfile.DecodeInputdata(request.get_data())
         startlimit,endlimit="",""
         whereCondition2=""
+        keyarr=['userId','bookingTypeId']
+
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+       
        
         commonfile.writeLog("userBookings",inputdata,0)
         msg="1"
@@ -2446,15 +2450,15 @@ def userBookings():
                 if inputdata['endLimit'] != "":
                     endlimit =str(inputdata["endLimit"])
 
-                 
             if "userId" in inputdata:
-                if inputdata['userId'] != "":
+                if inputdata['driverId'] != "":
                     userId =str(inputdata["userId"])
+                    whereCondition2=whereCondition2+" and bm.userId= '"+ str(userId)+"'"
 
             if "bookingId" in inputdata:
                 if inputdata['bookingId'] != "":
                     bookingId =str(inputdata["bookingId"])
-                    whereCondition2=" and bm.bookingId= '"+ str(bookingId)+"'"
+                    whereCondition2=whereCondition2+" and bm.bookingId= '"+ str(bookingId)+"'"
 
             if "bookingTypeId" in inputdata:
                 if inputdata['bookingTypeId'] != "":
@@ -2469,7 +2473,7 @@ def userBookings():
                 columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
                 columns=columns+",b.finalAmount,b.pickUpTime,b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.userMobile"
                 columns=columns+",bm.driverMobile,b.status"
-                whereCondition22=" and dr.driverId=bm.driverId and bm.bookingId=b.bookingId "
+                whereCondition22=" and dr.driverId=bm.driverId and bm.bookingId=b.bookingId "+whereCondition2
                 bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookDaliyDriver  b,driverRideStatus dr",columns,whereCondition22,"",startlimit,endlimit,orderby)
                 print('Dd')
             if bookingTypeId ==2 or bookingTypeId=='2':
@@ -2480,14 +2484,14 @@ def userBookings():
                 columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
                 columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalHours,bm.userMobile "
                 columns=columns+",bm.driverMobile,b.status"
-                whereCondition22="  and dr.driverId=bm.driverId and bm.bookingId=b.bookingId "
+                whereCondition22="  and dr.driverId=bm.driverId and bm.bookingId=b.bookingId "+whereCondition2
                 bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookHourlyMaster b,driverRideStatus dr",columns,whereCondition22,"",startlimit,endlimit,orderby)
                 print('hourly')
             if bookingTypeId ==4 or bookingTypeId =='4':
             	columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
             	columns=columns+",bm.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile "
             	columns=columns+",bm.driverMobile,b.status"
-            	whereCondition22=" and dr.driverId=bm.driverId and bm.bookingId=b.bookingId "
+            	whereCondition22=" and dr.driverId=bm.driverId and bm.bookingId=b.bookingId "+whereCondition2
             	bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookOneMaster b,driverRideStatus dr",columns,whereCondition22,"",startlimit,endlimit,orderby)
             	print('one')
             
@@ -2496,7 +2500,7 @@ def userBookings():
             	columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
             	columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile "
             	columns=columns+",bm.driverMobile,b.status"
-            	whereCondition22="  and dr.driverId=bm.driverId and bm.bookingId=b.bookingId "
+            	whereCondition22="  and dr.driverId=bm.driverId and bm.bookingId=b.bookingId "+whereCondition2
             	bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookRoundMaster b,driverRideStatus dr",columns,whereCondition22,"",startlimit,endlimit,orderby)
                         
 
@@ -2531,9 +2535,12 @@ def driverTrips():
         inputdata =  commonfile.DecodeInputdata(request.get_data())
         startlimit,endlimit="",""
         whereCondition2=""
+        keyarr=['driverId','bookingTypeId']
+
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
        
         commonfile.writeLog("driverTrips",inputdata,0)
-        msg="1"
+        
         if msg == "1":
             if "startLimit" in inputdata:
                 if inputdata['startLimit'] != "":
@@ -2544,14 +2551,16 @@ def driverTrips():
                     endlimit =str(inputdata["endLimit"])
 
                  
-            if "userId" in inputdata:
-                if inputdata['userId'] != "":
-                    userId =str(inputdata["userId"])
+            if "driverId" in inputdata:
+                if inputdata['driverId'] != "":
+                    driverId =str(inputdata["driverId"])
+                    whereCondition2=whereCondition2+" and bm.driverId= '"+ str(driverId)+"'"
+
 
             if "bookingId" in inputdata:
                 if inputdata['bookingId'] != "":
                     bookingId =inputdata["bookingId"]
-                    whereCondition2=" and bm.bookingId= '"+ str(bookingId)+"'"
+                    whereCondition2=whereCondition2+" and bm.bookingId= '"+ str(bookingId)+"'"
 
 
             if "bookingTypeId" in inputdata:
@@ -2567,7 +2576,7 @@ def driverTrips():
                 columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
                 columns=columns+",b.finalAmount,b.pickUpTime,b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.userMobile"
                 columns=columns+",bm.driverMobile,b.status"
-                whereCondition22=" and dr.driverId=bm.driverId and bm.bookingId=b.bookingId "
+                whereCondition22=" and dr.driverId=bm.driverId and bm.bookingId=b.bookingId "+whereCondition2
                 bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookDailyDriver b,driverRideStatus dr",columns,whereCondition22,"",startlimit,endlimit,orderby)
                 print('Dd')
             if bookingTypeId ==2 or bookingTypeId=='2':
@@ -2579,14 +2588,14 @@ def driverTrips():
                 columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
                 columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalHours,bm.userMobile "
                 columns=columns+",bm.driverMobile,b.status"
-                whereCondition22=" and  dr.driverId=bm.driverId and bm.bookingId=b.bookingId "
+                whereCondition22=" and  dr.driverId=bm.driverId and bm.bookingId=b.bookingId "+whereCondition2
                 bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookHourlyMaster b,driverRideStatus dr",columns,whereCondition22,"",startlimit,endlimit,orderby)
                 print('hourly')
             if bookingTypeId ==4 or bookingTypeId =='4':
             	columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
             	columns=columns+",bm.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile "
             	columns=columns+",bm.driverMobile,b.status"
-            	whereCondition22=" and  dr.driverId=bm.driverId and bm.bookingId=b.bookingId "
+            	whereCondition22=" and  dr.driverId=bm.driverId and bm.bookingId=b.bookingId "+whereCondition2
             	bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookOneMaster b,driverRideStatus dr",columns,whereCondition22,"",startlimit,endlimit,orderby)
             	print('one')
             
@@ -2595,7 +2604,7 @@ def driverTrips():
             	columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
             	columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile "
             	columns=columns+",bm.driverMobile,b.status"
-            	whereCondition22=" and dr.driverId=bm.driverId and bm.bookingId=b.bookingId "
+            	whereCondition22=" and dr.driverId=bm.driverId and bm.bookingId=b.bookingId "+whereCondition2
             	bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookRoundMaster b,driverRideStatus dr",columns,whereCondition22,"",startlimit,endlimit,orderby)
                         
 
@@ -2629,6 +2638,7 @@ def ActiveBooking():
     try:
         inputdata =  commonfile.DecodeInputdata(request.get_data())
         startlimit,endlimit="",""
+
        
         commonfile.writeLog("endRide",inputdata,0)
         msg="1"
