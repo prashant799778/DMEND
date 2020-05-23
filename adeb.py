@@ -923,7 +923,10 @@ def driverlogin():
                     whereCondition=" and driverId='"+str(driverId)+"'"
                     data1=databasefile.SelectQuery1('driverMaster',column,whereCondition)
                     if data1['status']!="false":
-                        y={"documentstatus":data1['result']['documentstatus']}
+                        if data1['result']['documentstatus'] ==0:
+                            y={"documentstatus":'No'}
+                        if data1['result']['documentstatus'] ==1:
+                            y={"documentstatus":'Yes'}
                         
                         if data1['result']['HealthReport'] ==None:
                             
@@ -1745,7 +1748,7 @@ def updateDriverLatLong():
             columns23="onDuty='" + str(avial) + "'"
             data122=databasefile.UpdateQuery('driverRideStatus',columns23,WhereCondition2)
             print("333333333333")
-            
+
             print("333333333333")
             if data122 != "0":
                 data11={"result":"","message":"Updated successfully","status":"true"}
