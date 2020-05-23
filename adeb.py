@@ -2174,7 +2174,7 @@ def acceptRide():
         bookingTypeId=inputdata['bookingTypeId']
 
         print("3")
-        bookingId = (commonfile.CreateHashKey(driverId,userId)).hex
+        bookingId = (commonfile.CreateHashKey(driverId,pickupLocationAddress)).hex
 
 
         commonfile.writeLog("acceptRide",inputdata,0)
@@ -2182,80 +2182,24 @@ def acceptRide():
         
         if msg == "1":
             print('B')
-            columns="mobileNo,name"
-            whereCondition22="  and userId= '"+str(userId)+"' and userTypeId='2' "
-            data1= databasefile.SelectQuery1("userMaster",columns,whereCondition22)
-            print(data1,'data1')
-            usermobile=data1['result']['mobileNo']
-            userName=data1['result']['name']
+            column="bookingId"
+            whereCondition2=" and  driverId='"+str(driverId)+"'"
+            d=databasefile,SelectQuery1('bookingDriver',column,whereCondition2)
+            if d['status'] !="False": 
+
+                columns="mobileNo,name"
+                whereCondition22="  and userId= '"+str(userId)+"' and userTypeId='2' "
+                data1= databasefile.SelectQuery1("userMaster",columns,whereCondition22)
+                print(data1,'data1')
+                usermobile=data1['result']['mobileNo']
+                userName=data1['result']['name']
 
 
-            whereCondition222="  and driverId= '"+str(driverId)+"' "
-            data11= databasefile.SelectQuery1("driverMaster",columns,whereCondition222)
-            print(data11,'--data')
-            driverName=data11['result']['name']
-            drivermobile=data11['result']['mobileNo']
-
-            if "dropLocationLat" in inputdata:
-                if inputdata['dropLocationLat'] != "":
-                    dropLocationLat =(inputdata["dropLocationLat"])
-            
-            if "dropLocationLong" in inputdata:
-                if inputdata['dropLocationLong'] != "":
-                    dropLocationLong =(inputdata["dropLocationLong"])
-            
-            if "dropLocationAddress" in inputdata:
-                if inputdata['dropLocationAddress'] != "":
-                    dropLocationAddress =str(inputdata["dropLocationAddress"])	
-           
-
-
-
-
-            #insertdata
-            columnqq='userMobile,driverMobile,pickup,pickupLatitude,pickupLongitude,userId,driverId,bookingId,bookingTypeId,dropOff,dropOffLatitude,dropOffLongitude'
-            values111 = " '"+ str(usermobile) +"','" + str(drivermobile)+"','" + str(pickupLocationAddress)+"','" + str(startLocationLat) +"','" + str(startLocationLong) 
-            values111=values111+"','" + str(userId) +"','" + str(driverId) + "','" + str(bookingId)+ "','" + str(bookingTypeId) + "','" + str(dropLocationAddress) +"','" + str(dropLocationLong) +"','" + str(dropLocationLat) +"'" 
-
-            data111=databasefile.InsertQuery('bookDriver',columnqq,values111)
-
-            if bookingTypeId ==1 or bookingTypeId =='1':
-                print('Daily Driver')
-                finalAmount=  520 + 35
-
-                if "pickUpTime" in inputdata:
-                    if inputdata['pickUpTime'] != "":
-                        pickUpTime =inputdata["pickUpTime"]
-                
-                column="bookingId,dropOff,dropOffLatitude,dropOffLongitude,pickUpTime,finalAmount"
-                values= " '"+ str(bookingId)+"','" + str(dropLocationAddress)+"','" + str(dropLocationLat)+"','" + str(dropLocationLong) +"','" + str(pickUpTime)+"','" + str(finalAmount)+"'"  
-                insertdata=databasefile.InsertQuery('bookDaliyDriver',column,values)
-
-                columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
-                columns=columns+",b.finalAmount,b.pickUpTime,b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalHours,bm.userMobile"
-                columns=columns+",bm.driverMobile"
-                whereCondition22=" and  dr.driverId=bm.driverId and bm.bookingId=b.bookingId and bm.bookingId= '"+str(bookingId)+"'"
-                bookingDetails= databasefile.SelectQuery1("bookDriver bm,bookDaliyDriver  b,driverRideStatus dr",columns,whereCondition22)
-                print(bookingDetails,"================")
-
-
-
-
-
-
-
-                
-
-            if bookingTypeId ==2 or bookingTypeId =='2':
-                print('Corporate')
-                #disscussion pending
-                
-                if "startdate" in inputdata:
-                    if inputdata['startdate'] != "":
-                        startdate =inputdata["startdate"]
-                if "enddate" in inputdata:
-                    if inputdata['enddate'] != "":
-                        enddate =inputdata["enddate"]
+                whereCondition222="  and driverId= '"+str(driverId)+"' "
+                data11= databasefile.SelectQuery1("driverMaster",columns,whereCondition222)
+                print(data11,'--data')
+                driverName=data11['result']['name']
+                drivermobile=data11['result']['mobileNo']
 
                 if "dropLocationLat" in inputdata:
                     if inputdata['dropLocationLat'] != "":
@@ -2267,181 +2211,245 @@ def acceptRide():
                 
                 if "dropLocationAddress" in inputdata:
                     if inputdata['dropLocationAddress'] != "":
-                        dropLocationAddress =str(inputdata["dropLocationAddress"])
-
-                if "morningTime" in inputdata:
-                    if inputdata['morningTime'] != "":
-                        morningTime =inputdata["morningTime"]
-                if "eveningTime" in inputdata:
-                    if inputdata['eveningTime'] != "":
-                        eveningTime =inputdata["eveningTime"]
-
-                column='bookingId,startdate,enddate,dropLocationLong,dropLocationLat,dropOff,morningTime,eveningTime'
-                values=" '"+ str(bookingId) +"','" + str(startdate)+"','" + str(enddate)
-                values=values+"','" + str(dropLocationLong) +"','" + str(dropLocationLat) +"','" + str(dropLocationAddress)
-
-                values=values+"','" + str(morningTime) +"','" + str(eveningTime) +"'"
-                insertdata=databasefile.InsertQuery('bookCorporateMaster',column,values)
-
-                columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropLocationLat,b.dropLocationLong"
-                columns=columns+",b.finalAmount,b.morningTime,b.eveningTime,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.userMobile"
-                columns=columns+",bm.driverMobile"
-                whereCondition22="  and dr.driverId=bm.driverId and bm.bookingId=b.bookingId and bm.bookingId= '"+str(bookingId)+"'"
-                bookingDetails= databasefile.SelectQuery1("bookDriver bm,bookCorporateMaster b,driverRideStatus dr",columns,whereCondition22)
-                print(bookingDetails,"================")
+                        dropLocationAddress =str(inputdata["dropLocationAddress"])	
+               
 
 
 
+
+                #insertdata
+                columnqq='userMobile,driverMobile,pickup,pickupLatitude,pickupLongitude,userId,driverId,bookingId,bookingTypeId,dropOff,dropOffLatitude,dropOffLongitude'
+                values111 = " '"+ str(usermobile) +"','" + str(drivermobile)+"','" + str(pickupLocationAddress)+"','" + str(startLocationLat) +"','" + str(startLocationLong) 
+                values111=values111+"','" + str(userId) +"','" + str(driverId) + "','" + str(bookingId)+ "','" + str(bookingTypeId) + "','" + str(dropLocationAddress) +"','" + str(dropLocationLong) +"','" + str(dropLocationLat) +"'" 
+
+                data111=databasefile.InsertQuery('bookDriver',columnqq,values111)
+
+                if bookingTypeId ==1 or bookingTypeId =='1':
+                    print('Daily Driver')
+                    finalAmount=  520 + 35
+
+                    if "pickUpTime" in inputdata:
+                        if inputdata['pickUpTime'] != "":
+                            pickUpTime =inputdata["pickUpTime"]
+                    
+                    column="bookingId,dropOff,dropOffLatitude,dropOffLongitude,pickUpTime,finalAmount"
+                    values= " '"+ str(bookingId)+"','" + str(dropLocationAddress)+"','" + str(dropLocationLat)+"','" + str(dropLocationLong) +"','" + str(pickUpTime)+"','" + str(finalAmount)+"'"  
+                    insertdata=databasefile.InsertQuery('bookDaliyDriver',column,values)
+
+                    columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
+                    columns=columns+",b.finalAmount,b.pickUpTime,b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalHours,bm.userMobile"
+                    columns=columns+",bm.driverMobile"
+                    whereCondition22=" and  dr.driverId=bm.driverId and bm.bookingId=b.bookingId and bm.bookingId= '"+str(bookingId)+"'"
+                    bookingDetails= databasefile.SelectQuery1("bookDriver bm,bookDaliyDriver  b,driverRideStatus dr",columns,whereCondition22)
+                    print(bookingDetails,"================")
+
+
+
+
+
+
+
+                    
+
+                if bookingTypeId ==2 or bookingTypeId =='2':
+                    print('Corporate')
+                    #disscussion pending
+                    
+                    if "startdate" in inputdata:
+                        if inputdata['startdate'] != "":
+                            startdate =inputdata["startdate"]
+                    if "enddate" in inputdata:
+                        if inputdata['enddate'] != "":
+                            enddate =inputdata["enddate"]
+
+                    if "dropLocationLat" in inputdata:
+                        if inputdata['dropLocationLat'] != "":
+                            dropLocationLat =(inputdata["dropLocationLat"])
+                    
+                    if "dropLocationLong" in inputdata:
+                        if inputdata['dropLocationLong'] != "":
+                            dropLocationLong =(inputdata["dropLocationLong"])
+                    
+                    if "dropLocationAddress" in inputdata:
+                        if inputdata['dropLocationAddress'] != "":
+                            dropLocationAddress =str(inputdata["dropLocationAddress"])
+
+                    if "morningTime" in inputdata:
+                        if inputdata['morningTime'] != "":
+                            morningTime =inputdata["morningTime"]
+                    if "eveningTime" in inputdata:
+                        if inputdata['eveningTime'] != "":
+                            eveningTime =inputdata["eveningTime"]
+
+                    column='bookingId,startdate,enddate,dropLocationLong,dropLocationLat,dropOff,morningTime,eveningTime'
+                    values=" '"+ str(bookingId) +"','" + str(startdate)+"','" + str(enddate)
+                    values=values+"','" + str(dropLocationLong) +"','" + str(dropLocationLat) +"','" + str(dropLocationAddress)
+
+                    values=values+"','" + str(morningTime) +"','" + str(eveningTime) +"'"
+                    insertdata=databasefile.InsertQuery('bookCorporateMaster',column,values)
+
+                    columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropLocationLat,b.dropLocationLong"
+                    columns=columns+",b.finalAmount,b.morningTime,b.eveningTime,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.userMobile"
+                    columns=columns+",bm.driverMobile"
+                    whereCondition22="  and dr.driverId=bm.driverId and bm.bookingId=b.bookingId and bm.bookingId= '"+str(bookingId)+"'"
+                    bookingDetails= databasefile.SelectQuery1("bookDriver bm,bookCorporateMaster b,driverRideStatus dr",columns,whereCondition22)
+                    print(bookingDetails,"================")
+
+
+
+
+                    
+
+                    
+                if bookingTypeId==3 or bookingTypeId =='3':
+                    print('hourly')
+
+                    if "totalHours" in inputdata:
+                        if inputdata['totalHours'] != "":
+                            totalHours =inputdata["totalHours"]
+
+                    
+
+
+
+                    finalAmount=  totalHours* 60 + 35
+
+                    column="bookingId,dropOff,dropOffLatitude,dropOffLongitude,finalAmount,totalHours"
+                    values= " '"+ str(bookingId)+"','" + str(dropLocationAddress)+"','" + str(dropLocationLat)+"','" + str(dropLocationLong) +"','" + str(finalAmount)+"','" + str(totalHours)+"'"
+                    insertdata=databasefile.InsertQuery('bookHourlyMaster',column,values)
+
+                    columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
+                    columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalHours,bm.userMobile "
+                    columns=columns+",bm.driverMobile"
+                    whereCondition22=" and  dr.driverId=bm.driverId and bm.bookingId=b.bookingId and bm.bookingId= '"+str(bookingId)+"'"
+                    bookingDetails= databasefile.SelectQuery1("bookDriver bm,bookHourlyMaster b,driverRideStatus dr",columns,whereCondition22)
+                    print(bookingDetails,"================")
+
+
+
+
+
+
+
+                    
+                
+                if bookingTypeId ==4 or bookingTypeId=='4':
+                    print('one')
+
+                    if "dropLocationLat" in inputdata:
+                        if inputdata['dropLocationLat'] != "":
+                            dropLocationLat =(inputdata["dropLocationLat"])
+                    if "dropLocationLong" in inputdata:
+                        if inputdata['dropLocationLong'] != "":
+                            dropLocationLong =(inputdata["dropLocationLong"])
+                    if "dropLocationAddress" in inputdata:
+                        if inputdata['dropLocationAddress'] != "":
+                            dropLocationAddress =str(inputdata["dropLocationAddress"])
+
+
+                    R = 6373.0
+                    print(R,'R')
+                    fromlongitude2= startLocationLong
+                    print(fromlongitude2,'fromlong',type(fromlongitude2))
+                    fromlatitude2 = startLocationLat
+                    # print(fromlongitude2,'fromlong')
+                    print('lat',fromlatitude2)
+                    distanceLongitude = dropLocationLong - fromlongitude2
+                    distanceLatitude = dropLocationLat - fromlatitude2
+                    a = sin(distanceLatitude / 2)**2 + cos(fromlatitude2) * cos(dropLocationLat) * sin(distanceLongitude / 2)**2
+                    c = 2 * atan2(sqrt(a), sqrt(1 - a))
+                    distance = R * c
+                    distance2=distance/100
+                    Distance=distance2*1.85
+                    d=round(Distance)
+                    d2 =str(d) +' Km'
+                    print(d2)
+
+
+                    finalAmount= d * 2.5 + 35
+
+                    print(finalAmount,'final')
+
+                    column="bookingId,dropOff,dropOffLatitude,dropOffLongitude,finalAmount,totalDistance"
+                    values=  " '"+ str(bookingId) +"','" + str(dropLocationAddress)+"','" + str(dropLocationLat)
+                    values=values+"','" + str(dropLocationLong) +"','" + str(finalAmount) +"','" + str(d2)+"'"
+                    insertdata=databasefile.InsertQuery('bookOneMaster',column,values)
+
+                    columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
+                    columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalDistance,bm.userMobile "
+                    columns=columns+",bm.driverMobile"
+                    whereCondition22="  and dr.driverId=bm.driverId and bm.bookingId=b.bookingId and bm.bookingId= '"+str(bookingId)+"'"
+                    bookingDetails= databasefile.SelectQuery1("bookDriver bm,bookOneMaster b,driverRideStatus dr",columns,whereCondition22)
+                    print(bookingDetails,"================")
+
+
+
+                    
+
+                if bookingTypeId ==5 or bookingTypeId=='5':
+                    print('Round')
+
+
+                    R = 6373.0
+                    print(R,'R')
+                    fromlongitude2= startLocationLong
+                    print(fromlongitude2,'fromlong',type(fromlongitude2))
+                    fromlatitude2 = startLocationLat
+                    # print(fromlongitude2,'fromlong')
+                    print('lat',fromlatitude2)
+                    distanceLongitude = dropLocationLong - fromlongitude2
+                    distanceLatitude = dropLocationLat - fromlatitude2
+                    a = sin(distanceLatitude / 2)**2 + cos(fromlatitude2) * cos(dropLocationLat) * sin(distanceLongitude / 2)**2
+                    c = 2 * atan2(sqrt(a), sqrt(1 - a))
+                    distance = R * c
+                    distance2=distance/100
+                    Distance=distance2*1.85
+                    d=round(Distance)
+                    print(d)
+                    d2 =str(d+d) +' Km'
+                    print(d2)
+
+
+                    
+                    finalAmount= (d * 2.5)*2 + 35
+
+                    print(finalAmount,'final')
+
+                    column="bookingId,dropOff,dropOffLatitude,dropOffLongitude,finalAmount,totalDistance"
+                    values=  " '"+ str(bookingId) +"','" + str(dropLocationAddress)+"','" + str(dropLocationLat)
+                    values=values+"','" + str(dropLocationLong) +"','" + str(finalAmount) +"','" + str(d2)+"'"
+                    insertdata=databasefile.InsertQuery('bookRoundMaster',column,values)
+
+
+                    
+                    columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
+                    columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalDistance,bm.userMobile "
+                    columns=columns+",bm.driverMobile"
+                    whereCondition22="  and dr.driverId=bm.driverId and bm.bookingId=b.bookingId and bm.bookingId= '"+str(bookingId)+"'"
+                    bookingDetails= databasefile.SelectQuery1("bookDriver bm,bookRoundMaster b,driverRideStatus dr",columns,whereCondition22)
+                    print(bookingDetails,"================")
+                    print("11111111")
 
                 
+                bookingDetails["result"]["driverName"]=driverName
+                bookingDetails['result']['userName']=userName
 
-                
-            if bookingTypeId==3 or bookingTypeId =='3':
-                print('hourly')
-
-                if "totalHours" in inputdata:
-                    if inputdata['totalHours'] != "":
-                        totalHours =inputdata["totalHours"]
-
-                
-
-
-
-                finalAmount=  totalHours* 60 + 35
-
-                column="bookingId,dropOff,dropOffLatitude,dropOffLongitude,finalAmount,totalHours"
-                values= " '"+ str(bookingId)+"','" + str(dropLocationAddress)+"','" + str(dropLocationLat)+"','" + str(dropLocationLong) +"','" + str(finalAmount)+"','" + str(totalHours)+"'"
-                insertdata=databasefile.InsertQuery('bookHourlyMaster',column,values)
-
-                columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
-                columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalHours,bm.userMobile "
-                columns=columns+",bm.driverMobile"
-                whereCondition22=" and  dr.driverId=bm.driverId and bm.bookingId=b.bookingId and bm.bookingId= '"+str(bookingId)+"'"
-                bookingDetails= databasefile.SelectQuery1("bookDriver bm,bookHourlyMaster b,driverRideStatus dr",columns,whereCondition22)
-                print(bookingDetails,"================")
-
-
-
-
-
-
-
-                
-            
-            if bookingTypeId ==4 or bookingTypeId=='4':
-                print('one')
-
-                if "dropLocationLat" in inputdata:
-                    if inputdata['dropLocationLat'] != "":
-                        dropLocationLat =(inputdata["dropLocationLat"])
-                if "dropLocationLong" in inputdata:
-                    if inputdata['dropLocationLong'] != "":
-                        dropLocationLong =(inputdata["dropLocationLong"])
-                if "dropLocationAddress" in inputdata:
-                    if inputdata['dropLocationAddress'] != "":
-                        dropLocationAddress =str(inputdata["dropLocationAddress"])
-
-
-                R = 6373.0
-                print(R,'R')
-                fromlongitude2= startLocationLong
-                print(fromlongitude2,'fromlong',type(fromlongitude2))
-                fromlatitude2 = startLocationLat
-                # print(fromlongitude2,'fromlong')
-                print('lat',fromlatitude2)
-                distanceLongitude = dropLocationLong - fromlongitude2
-                distanceLatitude = dropLocationLat - fromlatitude2
-                a = sin(distanceLatitude / 2)**2 + cos(fromlatitude2) * cos(dropLocationLat) * sin(distanceLongitude / 2)**2
-                c = 2 * atan2(sqrt(a), sqrt(1 - a))
-                distance = R * c
-                distance2=distance/100
-                Distance=distance2*1.85
-                d=round(Distance)
-                d2 =str(d) +' Km'
-                print(d2)
-
-
-                finalAmount= d * 2.5 + 35
-
-                print(finalAmount,'final')
-
-                column="bookingId,dropOff,dropOffLatitude,dropOffLongitude,finalAmount,totalDistance"
-                values=  " '"+ str(bookingId) +"','" + str(dropLocationAddress)+"','" + str(dropLocationLat)
-                values=values+"','" + str(dropLocationLong) +"','" + str(finalAmount) +"','" + str(d2)+"'"
-                insertdata=databasefile.InsertQuery('bookOneMaster',column,values)
-
-                columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
-                columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalDistance,bm.userMobile "
-                columns=columns+",bm.driverMobile"
-                whereCondition22="  and dr.driverId=bm.driverId and bm.bookingId=b.bookingId and bm.bookingId= '"+str(bookingId)+"'"
-                bookingDetails= databasefile.SelectQuery1("bookDriver bm,bookOneMaster b,driverRideStatus dr",columns,whereCondition22)
-                print(bookingDetails,"================")
-
-
-
-                
-
-            if bookingTypeId ==5 or bookingTypeId=='5':
-                print('Round')
-
-
-                R = 6373.0
-                print(R,'R')
-                fromlongitude2= startLocationLong
-                print(fromlongitude2,'fromlong',type(fromlongitude2))
-                fromlatitude2 = startLocationLat
-                # print(fromlongitude2,'fromlong')
-                print('lat',fromlatitude2)
-                distanceLongitude = dropLocationLong - fromlongitude2
-                distanceLatitude = dropLocationLat - fromlatitude2
-                a = sin(distanceLatitude / 2)**2 + cos(fromlatitude2) * cos(dropLocationLat) * sin(distanceLongitude / 2)**2
-                c = 2 * atan2(sqrt(a), sqrt(1 - a))
-                distance = R * c
-                distance2=distance/100
-                Distance=distance2*1.85
-                d=round(Distance)
-                print(d)
-                d2 =str(d+d) +' Km'
-                print(d2)
-
-
-                
-                finalAmount= (d * 2.5)*2 + 35
-
-                print(finalAmount,'final')
-
-                column="bookingId,dropOff,dropOffLatitude,dropOffLongitude,finalAmount,totalDistance"
-                values=  " '"+ str(bookingId) +"','" + str(dropLocationAddress)+"','" + str(dropLocationLat)
-                values=values+"','" + str(dropLocationLong) +"','" + str(finalAmount) +"','" + str(d2)+"'"
-                insertdata=databasefile.InsertQuery('bookRoundMaster',column,values)
-
-
-                
-                columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
-                columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalDistance,bm.userMobile "
-                columns=columns+",bm.driverMobile"
-                whereCondition22="  and dr.driverId=bm.driverId and bm.bookingId=b.bookingId and bm.bookingId= '"+str(bookingId)+"'"
-                bookingDetails= databasefile.SelectQuery1("bookDriver bm,bookRoundMaster b,driverRideStatus dr",columns,whereCondition22)
-                print(bookingDetails,"================")
-                print("11111111")
-
-            
-            bookingDetails["result"]["driverName"]=driverName
-            bookingDetails['result']['userName']=userName
-
-            if (bookingDetails!='0'):  
-                print('Entered')
-                client = mqtt.Client()
-                client.connect("localhost",1883,60)
-                topic=str(userId)+"/booking"
-                client.publish(topic, str(bookingDetails)) 
-                #bookRide["message"]="ride booked Successfully" 
-                client.disconnect()
-                return bookingDetails
+                if (bookingDetails!='0'):  
+                    print('Entered')
+                    client = mqtt.Client()
+                    client.connect("localhost",1883,60)
+                    topic=str(userId)+"/booking"
+                    client.publish(topic, str(bookingDetails)) 
+                    #bookRide["message"]="ride booked Successfully" 
+                    client.disconnect()
+                    return bookingDetails
+                else:
+                    data={"result":"","message":"No data Found","status":"false"}
+                    return data
             else:
-                data={"result":"","message":"No data Found","status":"false"}
-                
+                data={"result":"","message":"Already accepted Ride","status":"false"}
                 return data
+
         else:
             return msg 
     except KeyError as e:
