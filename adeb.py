@@ -937,7 +937,7 @@ def driverlogin():
 
                         if data1['result']['DlFrontImage'] ==None:
                             
-                            y2={"drivinglicense":"No"}
+                            y2={"drivingLicense":"No"}
                             loginuser['result'].update(y2)
                         
                         if data1['result']['DlFrontImage']!=None:
@@ -952,15 +952,10 @@ def driverlogin():
                         if data1['result']['pIDFrontFilename']!=None:
                             y2={"personalDetails":"Yes"}
                             loginuser['result'].update(y2)
-
-
-
-
-
-
-
                         loginuser['result'].update(y)
+                    
                     else:
+                        
                         y={"documentstatus":"No","drivingLicense":"No","personalDetails":"No","healthReport":"No"}
                         loginuser['result'].update(y)
 
