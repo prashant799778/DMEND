@@ -924,36 +924,36 @@ def driverlogin():
                     data1=databasefile.SelectQuery1('driverMaster',column,whereCondition)
                     if data1['status']!="false":
                         if data1['result']['documentstatus'] ==0:
-                            y={"documentstatus":0}
+                            y={"documentstatus":"No"}
                         if data1['result']['documentstatus'] ==1:
-                            y={"documentstatus":1}
+                            y={"documentstatus":"Yes"}
                         
                         if data1['result']['HealthReport'] ==None:
                             
-                            y2={"healthReport":0}
+                            y2={"healthReport":"No"}
                             loginuser['result'].update(y2)
                         
                         if data1['result']['HealthReport']!=None:
                             
-                            y2={"healthReport":1}
+                            y2={"healthReport":"Yes"}
                             loginuser['result'].update(y2)
 
                         if data1['result']['dlNo'] ==None:
                             
-                            y2={"drivingLicense":0}
+                            y2={"drivingLicense":"No"}
                             loginuser['result'].update(y2)
                         
                         if data1['result']['dlNo']!=None:
-                            y2={"drivingLicense":1}
+                            y2={"drivingLicense":"Yes"}
                             loginuser['result'].update(y2)
 
                         if data1['result']['pIDFrontFilename'] ==None:
                             
-                            y2={"personalDetails":0}
+                            y2={"personalDetails":"No"}
                             loginuser['result'].update(y2)
                         
                         if data1['result']['pIDFrontFilename']!=None:
-                            y2={"personalDetails":1}
+                            y2={"personalDetails":"Yes"}
                             loginuser['result'].update(y2)
                         loginuser['result'].update(y)
                     
