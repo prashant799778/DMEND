@@ -1744,7 +1744,7 @@ def updateDriverLatLong():
 
 
                 
-            WhereCondition2=" driverId= '" + str(driverId) + "'"
+            WhereCondition2=" and driverId= '" + str(driverId) + "'"
             columns23="onDuty='" + str(avial) + "'"
             data122=databasefile.UpdateQuery('driverRideStatus',columns23,WhereCondition2)
             print("333333333333")
