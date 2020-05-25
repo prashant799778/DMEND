@@ -2639,6 +2639,7 @@ def driverTrips():
                     bookingTypeId=i['bookingTypeId']
             
                     if bookingTypeId=='1':
+                        print('ttttttttttttttt')
 
                         columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
                         columns=columns+",b.finalAmount,b.pickUpTime,b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.userMobile"
@@ -2648,11 +2649,10 @@ def driverTrips():
                         print('Dd')
                         if bookingDetails['result'] !="":
                             daily=bookingDetails['result']
-                    if bookingTypeId ==2 or bookingTypeId=='2':
-                        pass
-                        
+                    
                     
                     if bookingTypeId==3 or bookingTypeId=='3':
+                        print("yu")
 
                         columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
                         columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalHours,bm.userMobile "
