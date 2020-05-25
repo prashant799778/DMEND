@@ -2658,6 +2658,7 @@ def driverTrips():
                     whereCondition22=" and  dr.driverId=bm.driverId and bm.bookingId=b.bookingId "+whereCondition2
                     bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookHourlyMaster b,driverRideStatus dr",columns,whereCondition22,"",startlimit,endlimit,orderby)
                     print('hourly')
+                    print(bookingDetails)
                     if bookingDetails['result'] !="":
                         hourly=bookingDetails['result']
                 if bookingTypeId ==4 or bookingTypeId =='4':
