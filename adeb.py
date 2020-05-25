@@ -2634,7 +2634,8 @@ def driverTrips():
             now=[]
             Round=[]
             if data['result'] !="": 
-                bookingTypeId=data['result']['bookingTypeId']
+                for i in data['result']:
+                    bookingTypeId=i['bookingTypeId']
             
                 if bookingTypeId ==1 or bookingTypeId=='1':
 
