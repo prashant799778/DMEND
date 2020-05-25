@@ -2688,8 +2688,9 @@ def driverTrips():
                         bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookRoundMaster b,driverRideStatus dr",columns,whereCondition22,"",startlimit,endlimit,orderby)
                         if bookingDetails['result'] !="":
                             Round=bookingDetails['result']
-                    Data = {"result":{"Daily":daily,"corp":corp,"hourly":hourly,"now":now,"round":Round},"status":"true","message":""}
-                    return Data
+                
+                Data = {"result":{"Daily":daily,"corp":corp,"hourly":hourly,"now":now,"round":Round},"status":"true","message":""}
+                return Data
                 
             else:
                 Data = {"result":"","status":"true","message":"No Rides"}
