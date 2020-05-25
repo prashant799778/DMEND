@@ -2655,7 +2655,10 @@ def driverTrips():
                         bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookDaliyDriver  b,driverRideStatus dr",columns,whereCondition22,"",startlimit,endlimit,orderby)
                         print('Dd')
                         if bookingDetails['result'] !="":
+                            for i in bookingDetails['result']:
+                                i['bookingType']='Daily'
                             daily=bookingDetails['result']
+
                     
                     
                     if i==3 or i=='3':
@@ -2669,7 +2672,11 @@ def driverTrips():
                         print('hourly')
                         print(bookingDetails)
                         if bookingDetails['result'] !="":
-                            hourly=bookingDetails['result']
+                            for i in bookingDetails['result']:
+                                i['bookingType']='hourly'
+                                daily.append(i)
+
+                        
                     if i ==4 or i =='4':
                         columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
                         columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile"
@@ -2679,7 +2686,11 @@ def driverTrips():
                         print('one')
                         print(bookingDetails)
                         if bookingDetails['result'] !="":
-                            now=bookingDetails['result']
+                            for i in bookingDetails['result']:
+                                i['bookingType']='now'
+                                daily.append(i)
+
+                          
                     
                     if i ==5 or i =='5':
                         print('round') 
@@ -2689,9 +2700,11 @@ def driverTrips():
                         whereCondition22=" and dr.driverId=bm.driverId and bm.bookingId=b.bookingId "+whereCondition2
                         bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookRoundMaster b,driverRideStatus dr",columns,whereCondition22,"",startlimit,endlimit,orderby)
                         if bookingDetails['result'] !="":
-                            Round=bookingDetails['result']
+                            for i in bookingDetails['result']:
+                                i['bookingType']='round'
+                                daily.append(i)
                 
-                Data = {"result":{"Daily":daily,"corp":corp,"hourly":hourly,"now":now,"round":Round},"status":"true","message":""}
+                Data = {"result":daily,"status":"true","message":""}
                 return Data
                 
             else:
