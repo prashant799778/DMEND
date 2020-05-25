@@ -2667,6 +2667,7 @@ def driverTrips():
                     whereCondition22=" and  dr.driverId=bm.driverId and bm.bookingId=b.bookingId "+whereCondition2
                     bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookOneMaster b,driverRideStatus dr",columns,whereCondition22,"",startlimit,endlimit,orderby)
                     print('one')
+                    print(bookingDetails)
                     if bookingDetails['result'] !="":
                         now=bookingDetails['result']
                 
