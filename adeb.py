@@ -2657,7 +2657,7 @@ def driverTrips():
                         if bookingDetails['result'] !="":
                             for i in bookingDetails['result']:
                                 i['bookingType']='Daily'
-                            daily=bookingDetails['result']
+                                daily.append(i)
 
                     
                     
