@@ -2635,10 +2635,11 @@ def driverTrips():
             Round=[]
             if data['result'] !="": 
                 print(data['result'],"+++++++=")
-                bookingId=[1,2,3,4,5]
+                
 
-                for i in bookingId:
+                for m in data['result']:
                     print(i,"+++++++====ssdw")
+                    i=m['result']['bookingTypeId']
 
 
                     
