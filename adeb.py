@@ -2638,7 +2638,7 @@ def driverTrips():
                 for i in data['result']:
                     bookingTypeId=i['bookingTypeId']
             
-                    if bookingTypeId ==1 or bookingTypeId=='1':
+                    if bookingTypeId=='1':
 
                         columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
                         columns=columns+",b.finalAmount,b.pickUpTime,b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.userMobile"
