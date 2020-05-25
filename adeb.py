@@ -2646,7 +2646,7 @@ def driverTrips():
                         columns=columns+",b.finalAmount,b.pickUpTime,b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.userMobile"
                         columns=columns+",bm.driverMobile,b.status"
                         whereCondition22=" and dr.driverId=bm.driverId and bm.bookingId=b.bookingId "+whereCondition2
-                        bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookDailyDriver b,driverRideStatus dr",columns,whereCondition22,"",startlimit,endlimit,orderby)
+                        bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookDaliyDriver  b,driverRideStatus dr",columns,whereCondition22,"",startlimit,endlimit,orderby)
                         print('Dd')
                         if bookingDetails['result'] !="":
                             daily=bookingDetails['result']
