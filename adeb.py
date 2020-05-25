@@ -2638,7 +2638,7 @@ def driverTrips():
                 
 
                 for m in data['result']:
-                    print(i,"+++++++====ssdw")
+                    
                     i=m['result']['bookingTypeId']
 
 
