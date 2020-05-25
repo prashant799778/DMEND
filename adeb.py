@@ -2645,7 +2645,7 @@ def driverTrips():
 
                     
             
-                    if i==1:
+                    if i==1 or i=='1': 
                         print('ttttttttttttttt')
 
                         columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
@@ -2658,7 +2658,7 @@ def driverTrips():
                             daily=bookingDetails['result']
                     
                     
-                    if i==3 :
+                    if i==3 or i=='3':
                         print("yu")
 
                         columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
@@ -2670,7 +2670,7 @@ def driverTrips():
                         print(bookingDetails)
                         if bookingDetails['result'] !="":
                             hourly=bookingDetails['result']
-                    if i ==4:
+                    if i ==4 or i =='4':
                         columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
                         columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile"
                         columns=columns+",b.status"
@@ -2681,7 +2681,7 @@ def driverTrips():
                         if bookingDetails['result'] !="":
                             now=bookingDetails['result']
                     
-                    if i ==5:
+                    if i ==5 or i =='5':
                         print('round') 
                         columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
                         columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile "
