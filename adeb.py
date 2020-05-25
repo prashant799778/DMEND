@@ -2704,8 +2704,8 @@ def driverTrips():
                                 i['bookingType']='round'
                                 daily.append(i)
                     
-                    Data = {"result":daily,"status":"true","message":""}
-                    return Data
+                Data = {"result":daily,"status":"true","message":""}
+                return Data
                 
             else:
                 Data = {"result":"","status":"true","message":"No Rides"}
