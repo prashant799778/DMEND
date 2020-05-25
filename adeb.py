@@ -2640,6 +2640,7 @@ def driverTrips():
                 for m in data['result']:
                     
                     i=m['bookingTypeId']
+                    print(i,"bookingTypeId")
 
 
                     
