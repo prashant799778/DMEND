@@ -2703,8 +2703,12 @@ def driverTrips():
                             for i in bookingDetails['result']:
                                 i['bookingType']='round'
                                 daily.append(i)
+                for i in daily:
+                    if i not  in hourly:
+                        hourly.append(i)
+                                
                     
-                Data = {"result":daily,"status":"true","message":""}
+                Data = {"result":hourly,"status":"true","message":""}
                 return Data
                 
             else:
