@@ -2639,7 +2639,7 @@ def driverTrips():
 
                 for m in data['result']:
                     
-                    i=m['result']['bookingTypeId']
+                    i=m['bookingTypeId']
 
 
                     
