@@ -2648,7 +2648,7 @@ def driverTrips():
                     if bookingDetails['result'] !="":
                         daily=bookingDetails['result']
                 if bookingTypeId ==2 or bookingTypeId=='2':
-                    print('corp')
+                    pass
                     
                 
                 if bookingTypeId==3 or bookingTypeId=='3':
