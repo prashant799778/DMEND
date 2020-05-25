@@ -2635,10 +2635,11 @@ def driverTrips():
             Round=[]
             if data['result'] !="": 
                 print(data['result'],"+++++++=")
-                for i in data['result']:
-                    bookingTypeId=i['bookingTypeId']
+                bookingId=[1,2,3,4,5]
+                for i in bookingId:
+                    bookingTypeId=i
             
-                    if bookingTypeId=='1':
+                    if bookingTypeId==1:
                         print('ttttttttttttttt')
 
                         columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
