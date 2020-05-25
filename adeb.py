@@ -2627,7 +2627,7 @@ def driverTrips():
 
             orderby="bm.id" 
             columns=" bookingTypeId,bookingId"
-            data=databasefile.SelectQueryOrderby('bookDriver bm',columns,whereCondition2)
+            data=databasefile.SelectQuery4('bookDriver bm',columns,whereCondition2)
             daily=[]
             corp=[]
             hourly=[]
