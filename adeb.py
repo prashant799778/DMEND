@@ -2667,7 +2667,7 @@ def driverTrips():
                         columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
                         columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile"
                         columns=columns+",dm.mobileNo as driverMobile,b.status"
-                        whereCondition22=" and  dr.driverId=bm.driverId and bm.bookingId=b.bookingId  and dr.driverId=dm.driverId"+whereCondition2
+                        whereCondition22=" and  dr.driverId=bm.driverId and bm.bookingId=b.bookingId  and bm.driverId=dm.driverId"+whereCondition2
                         bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookOneMaster b,driverRideStatus dr,driverMaster as dm",columns,whereCondition22,"",startlimit,endlimit,orderby)
                         print('one')
                         print(bookingDetails)
