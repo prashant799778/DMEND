@@ -2637,9 +2637,10 @@ def driverTrips():
                 print(data['result'],"+++++++=")
                 bookingId=[1,2,3,4,5]
                 for i in bookingId:
-                    bookingTypeId=i
+
+                    
             
-                    if bookingTypeId==1:
+                    if i==1:
                         print('ttttttttttttttt')
 
                         columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
@@ -2652,7 +2653,7 @@ def driverTrips():
                             daily=bookingDetails['result']
                     
                     
-                    if bookingTypeId==3 or bookingTypeId=='3':
+                    if i==3 or i=='3':
                         print("yu")
 
                         columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
@@ -2664,7 +2665,7 @@ def driverTrips():
                         print(bookingDetails)
                         if bookingDetails['result'] !="":
                             hourly=bookingDetails['result']
-                    if bookingTypeId ==4 or bookingTypeId =='4':
+                    if i ==4 or i =='4':
                         columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
                         columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile"
                         columns=columns+",b.status"
@@ -2675,7 +2676,7 @@ def driverTrips():
                         if bookingDetails['result'] !="":
                             now=bookingDetails['result']
                     
-                    if bookingTypeId ==5 or bookingTypeId=='5':
+                    if i ==5 or i=='5':
                         print('round') 
                         columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
                         columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile "
