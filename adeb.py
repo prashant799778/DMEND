@@ -4059,7 +4059,7 @@ def getsupportQuestions():
             if 'id' in inputdata:
                 Id=inputdata['id']
                 column2=column2+",answer"
-                whereCondition2= " and id='"+str(Id)="'"
+                whereCondition2= " and id='"+str(Id)+"'"
 
             column="id ,topicType,question"+column2
             whereCondition=" "+whereCondition2
