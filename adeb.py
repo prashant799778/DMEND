@@ -4046,6 +4046,8 @@ def updatesupportQuestions():
 def getsupportQuestions():
     try:
         inputdata =  commonfile.DecodeInputdata(request.get_data())
+        if inputdata == None:
+            inputdata=""
         startlimit,endlimit="",""
        
         commonfile.writeLog("getsupportQuestions",inputdata,0)
