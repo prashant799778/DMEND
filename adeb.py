@@ -4002,6 +4002,149 @@ def addDriverDocs():
 
 
 
+@app.route('/updatesupportQuestions', methods=['POST'])
+def updatesupportQuestions():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        startlimit,endlimit="",""
+        keyarr = ['topicType','id','question']
+        commonfile.writeLog("updatesupportQuestions'",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        if msg=="1":
+            topicType = inputdata["topicType"]
+            question=inputdata['question']
+            Id = inputdata["id"]
+            column= " * "
+            whereCondition=" and id = '" + str(Id)+ "'"
+            data1 = databasefile.SelectQuery1("supportQuestions",column,whereCondition)
+            print(data1,"data1")
+            if data1 != 0:
+                column = ""
+                whereCondition = ""
+                column= " topicType='" + str(topicType) + "',question='" + str(question) + "'"
+                whereCondition=" and id = '" + str(Id)+ "'"
+                data = databasefile.UpdateQuery("supportQuestions",column,whereCondition)
+                print(data,'===')
+                output = {"result":"Updated Successfully","status":"true"}
+                return output
+            else:
+                output = {"result":"Data Not Found","status":"true"}
+                return output
+        else:
+            return msg
+    except KeyError :
+        print("Key Exception---->")   
+        output = {"result":"key error","status":"false"}
+        return output  
+
+    except Exception as e :
+        print("Exception---->" +str(e))    
+        output = {"result":"somthing went wrong","status":"false"}
+        return output
+
+@app.route('/getsupportQuestions', methods=['POST'])
+def getsupportQuestions():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        startlimit,endlimit="",""
+       
+        commonfile.writeLog("getsupportQuestions",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        msg="1"
+        if msg == "1":
+            column="id ,topicType,question"
+            whereCondition=" "
+            data=databasefile.SelectQueryMaxId("supportQuestions",column,whereCondition)
+        
+            if (data['result']!=""):
+                for i in data['result']:
+                    if i['topicType'] == 0 or i['topicType'] == '0':
+                        i['topicTypeName']='All Topics'
+                    if i['topicType'] == 1 or i['topicType'] == '1':
+                        i['topicTypeName']='Suggested Topics'
+
+                
+                return data
+            else:
+                output = {"message":"No Data Found","result":"No Data Found","status":"false"}
+                return output
+        else:
+            return msg
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"result":"something went wrong","status":"false"}
+        return output
+
+
+@app.route('/addsupportQuestions', methods=['POST'])
+def addsupportQuestions():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        startlimit,endlimit="",""
+        keyarr = ['topicType','question']
+        commonfile.writeLog("addsupportQuestions",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        if msg=="1":
+            topicType = inputdata["topicType"]
+            column="*"
+            whereCondition= " and topicType='"+str(topicType)+ "' and question= '"+str(question)+ "'"
+            data=databasefile.SelectQuery1("paymentTypeMaster",column,whereCondition)
+            print(data,'data')
+            if data['status']=='false':
+                column="topicType,question"
+                values="'"+str(topicType)+"','"+str(question)+"' "
+                insertdata=databasefile.InsertQuery("supportQuestions",column,values)
+                return insertdata
+            else:
+                output = {"result":"User Already Added Existed ","status":"true","ambulance Details":data}
+                return output
+        else:
+            return msg 
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"result":"something went wrong","status":"false"}
+        return output
+
+
+
+
+@app.route('/deleteSupportQuestions', methods=['POST'])
+def deleteSupportQuestions():
+    try: 
+
+        inputdata =  commonfile.DecodeInputdata(request.get_data()) 
+        WhereCondition=""
+  
+        if len(inputdata) > 0:           
+            commonfile.writeLog("deleteSupportQuestions",inputdata,0)
+        
+        keyarr = ['id']
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        if "id" in inputdata:
+            if inputdata['id'] != "":
+                Id =inputdata["id"] 
+                WhereCondition=WhereCondition+" and id='"+str(Id)+"'" 
+        if msg == "1":                        
+            
+            data = databasefile.DeleteQuery("supportQuestions",WhereCondition)
+
+            if data != "0":
+                return data
+            else:
+                return commonfile.Errormessage()
+        else:
+            return msg
+
+    except Exception as e :
+        print("Exception--->" + str(e))                                  
+        return commonfile.Errormessage()
+
+
+
+
+
+
+
 if __name__ == "__main__":
     CORS(app, support_credentials=True)
     app.run(host='0.0.0.0',port=5034,debug=True)
