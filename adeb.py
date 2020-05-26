@@ -4335,11 +4335,11 @@ def updateMobileToken():
         commonfile.writeLog("updatePassword",inputdata,0)
         msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
         if msg =="1":
-            driverId=str(inputdata["driveId"])
+            driverId=str(inputdata["driverId"])
             deviceKey=str(inputdata["deviceKey"])
          
             column="deviceKey='" + deviceKey+ "'"
-            whereCondition= "  and userId = '" + str(userId)+ "' "
+            whereCondition= "  and userId = '" + str(driverId)+ "' "
             output=databasefile.UpdateQuery("userMaster",column,whereCondition)
                        
             if output!='0':
@@ -4454,7 +4454,7 @@ def adddriverdocupdateRequest():
     try:
         inputdata =  commonfile.DecodeInputdata(request.get_data())
         startlimit,endlimit="",""
-        keyarr = ['topicType','question']
+        keyarr = ['docType','driverId']
         commonfile.writeLog("adddriverdocupdateRequest",inputdata,0)
         msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
         if msg=="1":
@@ -4471,6 +4471,256 @@ def adddriverdocupdateRequest():
         print("Exception---->" + str(e))    
         output = {"result":"something went wrong","status":"false"}
         return output
+
+
+
+
+@app.route('/updateDrivingLicense', methods=['POST'])
+def updateDrivingLicense():
+    try:
+        inputdata=request.form.get('data')
+        print(inputdata,'inputdata')
+        inputdata=json.loads(inputdata)
+        startlimit,endlimit="",""
+        keyarr = ['driverId']
+        print(inputdata,"B555555555555555555555555")
+        commonfile.writeLog("updateDrivingLicense",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        if msg =="1":
+            driverId=str(inputdata["driverId"])
+        
+            
+            if 'DlNo' in inputdata:
+                DlNo=inputdata["DlNo"]
+
+            if 'DlFrontImage' in request.files:
+                    print("immmmmmmmmmmmmmmmm")
+                    file = request.files.get('DlFrontImage')        
+                    filename = file.filename or ''  
+                    print(filename)               
+                    dlFrontFilename= str(str(driverId)+"Front"+".png")
+                    
+                    print(dlFrontFilename,'Changed_filename')
+                    DlFrontFolderPath = ConstantData.GetdlImagePath(dlFrontFilename)
+                    DlFrontfilepath = '/DLImage/' + dlFrontFilename 
+                    file.save(DlFrontFolderPath)
+                    DlFrontPicPath = DlFrontfilepath
+                    print(DlFrontPicPath)
+                    
+
+            if 'DlBackImage' in request.files:
+                    print("immmmmmmmmmmmmmmmm")
+                    file = request.files.get('DlBackImage')        
+                    filename = file.filename or ''  
+                    print(filename)               
+                    dlBackFilename=  ststr(str(driverId)+"Back"+".png")
+                  
+                    DlBackFolderPath = ConstantData.GetdlImagePath(dlBackFilename)
+                    DlBackfilepath = '/DLImage/' + dlBackFilename 
+                    file.save(DlBackFolderPath)
+                    DlBackPicPath = DlBackfilepath
+                    print(DlBackPicPath)
+
+
+            if 'gearType' in inputdata:
+                gearType=inputdata["gearType"]    
+
+            column = "gearType='" + str(gearType) + "',dlNo = '" + str(DlNo) + "',dlFrontFilename = '" + str(dlFrontFilename) + "',dlFrontFilepath = '" + str(DlFrontPicPath) + "',dlBackFilename = '" + str(dlBackFilename) + "',dlBackFilepath = '" + str(DlBackPicPath) + "'"
+            print(column,'column')
+            whereCondition= "  and driverId = '" + str(driverId)+ "' "
+            output=databasefile.UpdateQuery("driverMaster",column,whereCondition)
+
+                       
+            if output!='0':
+                Data = {"status":"true","message":commonfile.Successmessage('update'),"result":""}                   
+                return Data
+            else:
+                return commonfile.Errormessage()    
+        else:
+            return msg         
+ 
+    except KeyError :
+        print("Key Exception---->")   
+        output = {"result":"key error","status":"false"}
+        return output  
+
+    except Exception as e :
+        print("Exceptio`121QWAaUJIHUJG n---->" +str(e))    
+        output = {"result":"somthing went wrong","status":"false"}
+        return output 
+
+
+
+
+
+@app.route('/updatePersonalDetails', methods=['POST'])
+def updatePersonalDetails():
+    try:
+        inputdata=request.form.get('data')
+        print(inputdata,'inputdata')
+        inputdata=json.loads(inputdata)
+        startlimit,endlimit="",""
+        keyarr = ['driverId']
+        print(inputdata,"B555555555555555555555555")
+        commonfile.writeLog("updatePersonalDetails",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        if msg =="1":
+            driverId=str(inputdata["driverId"])
+        
+            
+            
+            if 'PIDType' in inputdata:
+                PIDType=inputdata["PIDType"]
+
+            if 'PIDNo' in inputdata:
+                PIDNo=inputdata["PIDNo"]
+
+            if 'PIDFrontImage' in request.files:
+                    print("immmmmmmmmmmmmmmmm")
+                    file = request.files.get('PIDFrontImage')        
+                    filename = file.filename or ''  
+                    print(filename)               
+                    PIDFrontFilename=str(str(driverId)+"Front"+".png")
+                  
+                    print(PIDFrontFilename,'Changed_filename')
+                    PIDFrontFolderPath = ConstantData.GetPIDImagePath(PIDFrontFilename)
+                    PIDFrontfilepath = '/PIDImage/' + PIDFrontFilename 
+                    file.save(PIDFrontFolderPath)
+                    PIDFrontPicPath = PIDFrontfilepath
+                    print(PIDFrontPicPath)
+                    
+
+            if 'PIDBackImage' in request.files:
+                    print("immmmmmmmmmmmmmmmm")
+                    file = request.files.get('PIDBackImage')        
+                    filename = file.filename or ''  
+                    print(filename)               
+                    PIDBackFilename= str(str(driverId)+"Back"+".png")
+                  
+                    PIDBackFolderPath = ConstantData.GetPIDImagePath(PIDBackFilename)
+                    PIDBackfilepath = '/PIDImage/' + PIDBackFilename 
+                    file.save(PIDBackFolderPath)
+                    PIDBackPicPath = PIDBackfilepath
+                    print(PIDBackPicPath)
+
+
+
+            if 'profilePic' in request.files:  
+                print("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
+                file = request.files.get('profilePic')        
+                filename = file.filename or ''  
+                print(filename)               
+                filename= str(driverId)+".png"
+                #filename = filename.replace("'","") 
+
+                #folder path to save campaign image
+                FolderPath = ConstantData.GetProfilePicPath(filename)  
+
+                filepath = '/profilePic/' + filename    
+                print(filepath,"filepath================")
+                print(FolderPath,"FolderPathFolderPathFolderPathFolderPath")
+                file.save(FolderPath)
+                PicPath = filepath 
+
+
+
+            if 'DOB' in inputdata:
+                DOB=inputdata["DOB"]   
+
+            column = " pIDType = '" + str(PIDType) + "',pIDNo = '" + str(PIDNo) + "',pIDFrontFilename = '" + str(PIDFrontFilename) + "',pIDFrontFilepath = '" + str(PIDFrontPicPath) + "',pIDBackFilename = '" + str(PIDBackFilename) + "',pIDBackFilepath = '" + str(PIDBackPicPath) + "',DOB='" + str(DOB) + "',profilePic='" + str(PicPath) + "'"
+            print(column,'column')
+            whereCondition= "  and driverId = '" + str(driverId)+ "' "
+            output=databasefile.UpdateQuery("driverMaster",column,whereCondition)
+
+                       
+            if output!='0':
+                Data = {"status":"true","message":commonfile.Successmessage('update'),"result":""}                   
+                return Data
+            else:
+                return commonfile.Errormessage()    
+        else:
+            return msg         
+ 
+    except KeyError :
+        print("Key Exception---->")   
+        output = {"result":"key error","status":"false"}
+        return output  
+
+    except Exception as e :
+        print("Exceptio`121QWAaUJIHUJG n---->" +str(e))    
+        output = {"result":"somthing went wrong","status":"false"}
+        return output 
+
+
+
+@app.route('/updateHealthReport', methods=['POST'])
+def updateHealthReport():
+    try:
+        inputdata=request.form.get('data')
+        print(inputdata,'inputdata')
+        inputdata=json.loads(inputdata)
+        startlimit,endlimit="",""
+        keyarr = ['driverId']
+        print(inputdata,"B555555555555555555555555")
+        commonfile.writeLog("updateHealthReport",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        if msg =="1":
+            driverId=str(inputdata["driverId"])
+        
+            
+            
+            if 'bloodGroup' in inputdata:
+                bloodGroup=inputdata["bloodGroup"]
+
+            if 'Surgery' in inputdata:
+                Surgery=inputdata["Surgery"]
+
+            
+
+
+
+            if 'HealthReport' in request.files:
+                    print("immmmmmmmmmmmmmmmm")
+                    file = request.files.get('HealthReport')        
+                    filename = file.filename or ''  
+                    print(filename)               
+                    AIFilename=  str(str(data['result']["userId"])+".png")
+                   
+                    AIFolderPath = ConstantData.GetHealthReport(AIFilename)
+                    AIfilepath = '/HealthReport/' + AIFilename 
+                    file.save(AIFolderPath)
+                    HealthReport = AIfilepath
+                    print(AIPicPath)
+            
+            column = "bloodGroup = '" + str(bloodGroup) + "',Surgery = '" + str(Surgery) + "',HealthReport = '" + str(HealthReport) + "'"
+            print(column,'column')
+            whereCondition= "  and driverId = '" + str(driverId)+ "' "
+            output=databasefile.UpdateQuery("driverMaster",column,whereCondition)
+
+                       
+            if output!='0':
+                Data = {"status":"true","message":commonfile.Successmessage('update'),"result":""}                   
+                return Data
+            else:
+                return commonfile.Errormessage()    
+        else:
+            return msg         
+ 
+    except KeyError :
+        print("Key Exception---->")   
+        output = {"result":"key error","status":"false"}
+        return output  
+
+    except Exception as e :
+        print("Exceptio`121QWAaUJIHUJG n---->" +str(e))    
+        output = {"result":"somthing went wrong","status":"false"}
+        return output 
+        
+
+
+
+
+
 
 
 if __name__ == "__main__":
