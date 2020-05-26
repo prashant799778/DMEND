@@ -4154,6 +4154,84 @@ def deleteSupportQuestions():
 
 
 
+@app.route('/addDriverbankDetails', methods=['POST'])
+def addDriverbankDetails():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        startlimit,endlimit="",""
+        keyarr = ['driverId','nationality','name','mobileNo','city','DOB','accountnumber','address','IBAN','bankName']
+        commonfile.writeLog("addDriverbankDetails",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        if msg=="1":
+            driverId = inputdata["driverId"]
+            nationality=inputdata['nationality']
+            name=inputdata['name']
+            mobileNo=inputdata['mobileNo']
+            city=inputdata['city']
+            DOB=inputdata['DOB']
+            accountnumber=inputdata['accountnumber']
+            address=inputdata['address']
+            IBAN=inputdata['IBAN']
+            bankName=inputdata['bankName']
+            column="*"
+            whereCondition= "  and driverId= '"+str(driverId)+ "'"
+            data=databasefile.SelectQuery1("sdriverBankDetails",column,whereCondition)
+            print(data,'data')
+            if data['status']=='false':
+                column=" driverId,nationality,name,mobileNo,city,DOB,accountnumber,address,IBAN,bankName"
+                values="'"+str(driverId)+"','"+str(nationality)+"','"+str(name)+"','"+str(mobileNo)+"','"+str(city)+"','"+str(DOB)+"','"+str(accountnumber)+"','"+str(address)+"','"+str(IBAN)+"','"+str(bankName)+"' "
+                insertdata=databasefile.InsertQuery("driverBankDetails",column,values)
+                return insertdata
+            else:
+                output = {"result":" Already Added ","status":"true","bankDetails":data['result']}
+                return output
+        else:
+            return msg 
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"result":"something went wrong","status":"false"}
+        return output
+
+
+
+
+
+@app.route('/getdriverBankDetails', methods=['POST'])
+def getdriverBankDetails():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        if inputdata == None:
+            inputdata=""
+        startlimit,endlimit="",""
+        whereCondition2=""
+       
+        commonfile.writeLog("getdriverBankDetails",inputdata,0)
+        
+        msg="1"
+        if msg == "1":
+            column2=""
+            if 'driverId' in inputdata:
+                driverId=inputdata['driverId']
+                whereCondition2= " and driverId='"+str(driverId)+"'"
+
+            column=" driverId,nationality,name,mobileNo,city,DOB,accountnumber,address,IBAN,bankName"
+            whereCondition=" "+whereCondition2
+            data=databasefile.SelectQuery4("driverBankDetails",column,whereCondition)
+        
+            if (data['result']!=""):
+              return data
+            else:
+                output = {"message":"No Data Found","result":"No Data Found","status":"false"}
+                return output
+        else:
+            return msg
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"result":"something went wrong","status":"false"}
+        return output        
+
+
+
 
 
 if __name__ == "__main__":
