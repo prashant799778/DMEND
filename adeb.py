@@ -4057,7 +4057,7 @@ def getsupportQuestions():
                 Id=inputdata['id']
                 column2=column2+",answer"
 
-            column="id ,topicType,question"+columns2
+            column="id ,topicType,question"+column2
             whereCondition=" "
             data=databasefile.SelectQueryMaxId("supportQuestions",column,whereCondition)
         
