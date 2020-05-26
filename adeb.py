@@ -4049,7 +4049,7 @@ def getsupportQuestions():
         startlimit,endlimit="",""
        
         commonfile.writeLog("getsupportQuestions",inputdata,0)
-        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        
         msg="1"
         if msg == "1":
             column2=""
