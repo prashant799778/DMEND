@@ -4363,6 +4363,116 @@ def updateMobileToken():
 
 
 
+
+
+@app.route('/approveDriverDocRequest', methods=['POST'])
+def approveDriverDocRequest():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        startlimit,endlimit="",""
+        keyarr = ['driverId','id']
+        commonfile.writeLog("approveDriverDocRequest'",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        if msg=="1":
+            driverId = inputdata["driverId"]
+           
+            Id = inputdata["id"]
+            column= " * "
+            whereCondition=" and id = '" + str(Id)+ "'"
+            data1 = databasefile.SelectQuery1("driverdocupdateRequest",column,whereCondition)
+            print(data1,"data1")
+            if data1 != 0:
+                column = ""
+                whereCondition = ""
+                column= " status=" + str('1') + " "
+                whereCondition=" and id = '" + str(Id)+ "'"
+                data = databasefile.UpdateQuery("driverdocupdateRequest",column,whereCondition)
+                print(data,'===')
+                output = {"result":"Updated Successfully","status":"true"}
+                return output
+            else:
+                output = {"result":"Data Not Found","status":"true"}
+                return output
+        else:
+            return msg
+    except KeyError :
+        print("Key Exception---->")   
+        output = {"result":"key error","status":"false"}
+        return output  
+
+    except Exception as e :
+        print("Exception---->" +str(e))    
+        output = {"result":"somthing went wrong","status":"false"}
+        return output
+
+@app.route('/getdriverdocupdateRequest', methods=['POST'])
+def getdriverdocupdateRequest():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        if inputdata == None:
+            inputdata=""
+        startlimit,endlimit="",""
+        whereCondition2=""
+       
+        commonfile.writeLog("getdriverdocupdateRequest",inputdata,0)
+        
+        msg="1"
+        if msg == "1":
+            column2=""
+            if 'driverId' in inputdata:
+                driverId=inputdata['id']
+                whereCondition2= " and driverId='"+str(driverId)+"'"
+
+            column="docType"
+            whereCondition=" "+whereCondition2
+            data=databasefile.SelectQuery4("driverdocupdateRequest",column,whereCondition)
+        
+            if (data['result']!=""):
+                for i in data['result']:
+                    if i['docType'] == 1 or i['topicType'] == '1':
+                        i['docTypeName']='drivingLicense'
+                    if i['docType'] == 2 or i['topicType'] == '2':
+                        i['docTypeName']='personalDetails'
+                    if i['docType'] == 3 or i['topicType'] == '3':
+                        i['docTypeName']='healthReport'    
+
+                
+                return data
+            else:
+                output = {"message":"No Data Found","result":"No Data Found","status":"false"}
+                return output
+        else:
+            return msg
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"result":"something went wrong","status":"false"}
+        return output
+
+
+@app.route('/adddriverdocupdateRequest', methods=['POST'])
+def adddriverdocupdateRequest():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        startlimit,endlimit="",""
+        keyarr = ['topicType','question']
+        commonfile.writeLog("adddriverdocupdateRequest",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        if msg=="1":
+            docType = inputdata["docType"]
+            driverId=inputdata['driverId']
+            column="docType,driverId"
+            values="'"+str(topicType)+"','"+str(driverId)+"' "
+            insertdata=databasefile.InsertQuery("driverdocupdateRequest",column,values)
+            return insertdata
+            
+        else:
+            return msg 
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"result":"something went wrong","status":"false"}
+        return output
+
+
 if __name__ == "__main__":
     CORS(app, support_credentials=True)
     app.run(host='0.0.0.0',port=5034,debug=True)
