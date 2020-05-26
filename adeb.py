@@ -989,15 +989,21 @@ def driverlogin1():
     try:
         inputdata =  commonfile.DecodeInputdata(request.get_data())
         startlimit,endlimit="",""
-        keyarr = ['password','mobileNo']
+        keyarr = ['password','mobileNo','deviceKey']
         commonfile.writeLog("driverLogin",inputdata,0)
         msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
         if msg == "1":
             mobileNo = inputdata["mobileNo"]
             password = inputdata["password"]
+            deviceKey=inputdata['deviceKey']
+
             column=  "us.mobileNo,us.name,us.userId,um.usertype,um.id as userTypeId"
             whereCondition= " and us.mobileNo = '" + str(mobileNo) + "' and us.userTypeId=um.id  "
             loginuser=databasefile.SelectQuery1("userMaster as us,usertypeMaster as um",column,whereCondition)
+            if deviceKey !=None:
+                d=databasefile.UpdateQuery("userMaster as us,userTypeMaster as um"," deviceKey = '"+str(deviceKey)+"'",whereCondition)
+
+
            
             y1= loginuser['result']['Password']
             y=str(bcrypt.hashpw(Password.encode('utf-8'), loginuser['result']['Password'].encode('utf-8')))
