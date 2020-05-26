@@ -4059,7 +4059,7 @@ def getsupportQuestions():
 
             column="id ,topicType,question"+column2
             whereCondition=" "
-            data=databasefile.SelectQueryMaxId("supportQuestions",column,whereCondition)
+            data=databasefile.SelectQueryMaxId("supportQuestions",whereCondition)
         
             if (data['result']!=""):
                 for i in data['result']:
