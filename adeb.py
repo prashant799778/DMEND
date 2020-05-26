@@ -4052,7 +4052,12 @@ def getsupportQuestions():
         msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
         msg="1"
         if msg == "1":
-            column="id ,topicType,question"
+            column2=""
+            if 'id' in inputdata:
+                Id=inputdata['id']
+                column2=column2+",answer"
+
+            column="id ,topicType,question"+columns2
             whereCondition=" "
             data=databasefile.SelectQueryMaxId("supportQuestions",column,whereCondition)
         
@@ -4086,13 +4091,15 @@ def addsupportQuestions():
         msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
         if msg=="1":
             topicType = inputdata["topicType"]
+            question=inputdata['question']
+            answer=inputdata['answer']
             column="*"
             whereCondition= " and topicType='"+str(topicType)+ "' and question= '"+str(question)+ "'"
-            data=databasefile.SelectQuery1("paymentTypeMaster",column,whereCondition)
+            data=databasefile.SelectQuery1("supportQuestions",column,whereCondition)
             print(data,'data')
             if data['status']=='false':
-                column="topicType,question"
-                values="'"+str(topicType)+"','"+str(question)+"' "
+                column="topicType,question,answer"
+                values="'"+str(topicType)+"','"+str(question)+"','"+str(answer)+"' "
                 insertdata=databasefile.InsertQuery("supportQuestions",column,values)
                 return insertdata
             else:
