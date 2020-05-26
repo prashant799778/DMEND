@@ -4325,6 +4325,42 @@ def getdriverBankDetails():
 
 
 
+@app.route('/updateMobileToken', methods=['POST'])
+def updateMobileToken():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        startlimit,endlimit="",""
+        keyarr = ['driverId','deviceKey']
+        print(inputdata,"B555555555555555555555555")
+        commonfile.writeLog("updatePassword",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        if msg =="1":
+            driverId=str(inputdata["driveId"])
+            deviceKey=str(inputdata["deviceKey"])
+         
+            column="deviceKey='" + deviceKey+ "'"
+            whereCondition= "  and userId = '" + str(userId)+ "' "
+            output=databasefile.UpdateQuery("userMaster",column,whereCondition)
+                       
+            if output!='0':
+                Data = {"status":"true","message":commonfile.Successmessage('update'),"result":""}                   
+                return Data
+            else:
+                return commonfile.Errormessage()    
+        else:
+            return msg         
+ 
+    except KeyError :
+        print("Key Exception---->")   
+        output = {"result":"key error","status":"false"}
+        return output  
+
+    except Exception as e :
+        print("Exceptio`121QWAaUJIHUJG n---->" +str(e))    
+        output = {"result":"somthing went wrong","status":"false"}
+        return output
+
+
 
 
 if __name__ == "__main__":
