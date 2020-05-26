@@ -981,7 +981,94 @@ def driverlogin():
         print("Exception---->" +str(e))           
         output = {"result":"something went wrong","status":"false"}
         return output
-       
+
+
+#driver Login
+@app.route('/driverLogin1', methods=['POST'])
+def driverlogin1():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        startlimit,endlimit="",""
+        keyarr = ['password','mobileNo']
+        commonfile.writeLog("driverLogin",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        if msg == "1":
+            mobileNo = inputdata["mobileNo"]
+            password = inputdata["password"]
+            column=  "us.mobileNo,us.name,us.userId,um.usertype,um.id as userTypeId"
+            whereCondition= " and us.mobileNo = '" + str(mobileNo) + "' and us.userTypeId=um.id  "
+            loginuser=databasefile.SelectQuery1("userMaster as us,usertypeMaster as um",column,whereCondition)
+           
+            y1= loginuser['result']['Password']
+            y=str(bcrypt.hashpw(Password.encode('utf-8'), loginuser['result']['Password'].encode('utf-8')))
+            h11=y.split("'")
+            encpassword1=h11[1]
+            print("111112222222222222",encpassword1)
+            if y1 == encpassword1:
+                if loginuser['result']['userTypeId'] =="3" or loginuser['result']['userTypeId'] ==3 :
+                    driverId=loginuser['result']['userId']
+                    column="documentstatus,HealthReport,dlNo,pIDFrontFilename"
+                    whereCondition=" and driverId='"+str(driverId)+"'"
+                    data1=databasefile.SelectQuery1('driverMaster',column,whereCondition)
+                    if data1['status']!="false":
+                        if data1['result']['documentstatus'] ==0:
+                            y={"documentstatus":"No"}
+                        if data1['result']['documentstatus'] ==1:
+                            y={"documentstatus":"Yes"}
+                        
+                        if data1['result']['HealthReport'] ==None:
+                            
+                            y2={"healthReport":"No"}
+                            loginuser['result'].update(y2)
+                        
+                        if data1['result']['HealthReport']!=None:
+                            
+                            y2={"healthReport":"Yes"}
+                            loginuser['result'].update(y2)
+
+                        if data1['result']['dlNo'] ==None:
+                            
+                            y2={"drivingLicense":"No"}
+                            loginuser['result'].update(y2)
+                        
+                        if data1['result']['dlNo']!=None:
+                            y2={"drivingLicense":"Yes"}
+                            loginuser['result'].update(y2)
+
+                        if data1['result']['pIDFrontFilename'] ==None:
+                            
+                            y2={"personalDetails":"No"}
+                            loginuser['result'].update(y2)
+                        
+                        if data1['result']['pIDFrontFilename']!=None:
+                            y2={"personalDetails":"Yes"}
+                            loginuser['result'].update(y2)
+                        loginuser['result'].update(y)
+                    
+                    else:
+                        
+                        y={"documentstatus":"No","drivingLicense":"No","personalDetails":"No","healthReport":"No"}
+                        loginuser['result'].update(y)
+
+                    return loginuser
+                else:
+                    data={"status":"false","message":"You are user,Not a driver","result":""}
+                    return data
+
+            else:
+                data={"status":"false","message":"Please enter correct Password & mobileNo.","result":""}
+                return data
+
+        else:
+            return msg 
+    except KeyError as e:
+        print("Exception---->" +str(e))        
+        output = {"result":"Input Keys are not Found","status":"false"}
+        return output    
+    except Exception as e :
+        print("Exception---->" +str(e))           
+        output = {"result":"something went wrong","status":"false"}
+        return output       
 
 @app.route('/driverWallet', methods=['POST'])
 def driverWallet():
