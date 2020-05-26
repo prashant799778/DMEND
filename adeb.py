@@ -4049,6 +4049,7 @@ def getsupportQuestions():
         if inputdata == None:
             inputdata=""
         startlimit,endlimit="",""
+        whereCondition2=""
        
         commonfile.writeLog("getsupportQuestions",inputdata,0)
         
@@ -4058,9 +4059,10 @@ def getsupportQuestions():
             if 'id' in inputdata:
                 Id=inputdata['id']
                 column2=column2+",answer"
+                whereCondition2=whereCondition2+" and id='"+str(Id)="'"
 
             column="id ,topicType,question"+column2
-            whereCondition=" "
+            whereCondition=" "+whereCondition2
             data=databasefile.SelectQuery4("supportQuestions",column,whereCondition)
         
             if (data['result']!=""):
