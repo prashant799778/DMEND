@@ -2805,7 +2805,7 @@ def driverTrips():
                 return Data
                 
             else:
-                Data = {"result":"","status":"true","message":"No Rides"}
+                Data = {"result":[],"status":"true","message":"No Rides"}
                 return Data
 
                     
