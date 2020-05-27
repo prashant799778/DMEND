@@ -923,6 +923,7 @@ def driverlogin():
                     whereCondition=" and driverId='"+str(driverId)+"'"
                     data1=databasefile.SelectQuery1('driverMaster',column,whereCondition)
                     if data1['status']!="false":
+                        print(data1['result']['documentstatus'] ,"opegge")
                         if data1['result']['documentstatus'] ==0:
                             y={"documentstatus":"No"}
                         if data1['result']['documentstatus'] ==1:
@@ -2796,6 +2797,7 @@ def driverTrips():
                             for i in bookingDetails['result']:
                                 i['bookingType']='round'
                                 daily.append(i)
+                
                 for i in daily:
                     if i not  in hourly:
                         hourly.append(i)
@@ -2861,8 +2863,10 @@ def ActiveBooking():
                 whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId  and b.status='2' "
                 bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookDailyDriver b,driverRideStatus ar",columns,whereCondition22,"",startlimit,endlimit,orderby)
                 print('Dd')
+            
             if bookingTypeId ==2 or bookingTypeId=='2':
                 print('corp')
+            
             
             if bookingTypeId==3 or bookingTypeId=='3':
 
@@ -2873,6 +2877,7 @@ def ActiveBooking():
                 bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookHourlyMaster b,driverRideStatus ar",columns,whereCondition22,"",startlimit,endlimit,orderby)
                 print('hourly')
             if bookingTypeId ==4 or bookingTypeId =='4':
+                
                 columns="(dr.lat)driverLat,(dr.lng)driverLng, bm.ambulanceId,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
                 columns=columns+",bm.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile "
                 columns=columns+",bm.driverMobile,b.status"
@@ -2880,7 +2885,9 @@ def ActiveBooking():
                 bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookOneMaster b,driverRideStatus dr",columns,whereCondition22,"",startlimit,endlimit,orderby)
                 print('one')
             
+            
             if bookingTypeId ==5 or bookingTypeId=='5':
+                
                 print('round') 
                 columns="(dr.lat)driverLat,(dr.lng)driverLng, bm.ambulanceId,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
                 columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile "
@@ -2891,6 +2898,7 @@ def ActiveBooking():
 
            
             if (data['status']!='false'): 
+                
                 Data = {"result":bookingDetails['result'],"status":"true","message":""}
 
                           
@@ -3714,6 +3722,7 @@ def addDriverDocs():
             mobileNo=int(inputdata["mobileNo"])
             driverId=data['result']['userId']
             print(driverId,"++++++++++++=")
+            HealthReport=" "
             
             DlNo,dlFrontFilename,DlFrontPicPath,dlBackFilename,DlBackPicPath,PIDType,PIDNo,PIDFrontFilename,PIDFrontPicPath,PIDBackFilename,PIDBackPicPath,TransportType,TransportModel,Color,AmbulanceRegistrationFuel,TypeNo,AIFilename,AIPicPath,AmbulanceModeId,AmbulanceId,PicPath="","","","","","","","","","","","","","","","","","","0","0",""
             lat,lng="",""
