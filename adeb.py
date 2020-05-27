@@ -4277,7 +4277,7 @@ def addDriverbankDetails():
             bankName=inputdata['bankName']
             column="*"
             whereCondition= "  and driverId= '"+str(driverId)+ "'"
-            data=databasefile.SelectQuery1("sdriverBankDetails",column,whereCondition)
+            data=databasefile.SelectQuery1("driverBankDetails",column,whereCondition)
             print(data,'data')
             if data['status']=='false':
                 column=" driverId,nationality,name,mobileNo,city,DOB,accountnumber,address,IBAN,bankName"
