@@ -4323,7 +4323,7 @@ def getdriverBankDetails():
             if (data['result']!=""):
               return data
             else:
-                output = {"message":"No Data Found","result":"No Data Found","status":"false"}
+                output = {"message":"No Data Found","result":[],"status":"false"}
                 return output
         else:
             return msg
