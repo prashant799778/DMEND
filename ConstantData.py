@@ -10,6 +10,8 @@ def GetProfilePicPath(filename):
     path = "/var/www/adeb/backend/adeb/profilePic/"+filename
     return path
 
+    
+
 def GetdlImagePath(filename):
 
     path = "/var/www/adeb/backend/adeb/DLImage/"+filename
@@ -167,11 +169,6 @@ def getEventPath(filename):
 def GetsecurityCampaignImagePath(filename):
 
     path = "/var/www/FandomLive/backend/FandomLive/Api/SecurityImage/"+filename
-    return path
-    
-def GetProfilePicPath(filename):
-
-    path = "/var/www/medParliament/backend/med_parliament/profilePic/"+filename
     return path
 
 def GetTeamPicPath(filename):
