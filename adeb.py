@@ -4159,9 +4159,12 @@ def getsupportQuestions():
         if msg == "1":
             column2=""
             if 'id' in inputdata:
-                Id=inputdata['id']
-                column2=column2+",answer"
-                whereCondition2= " and id='"+str(Id)+"'"
+                if inputdata['id'] != "":
+                    Id=inputdata['id']
+                    column2=column2+",answer"
+                    whereCondition2= " and id='"+str(Id)+"'"
+                else:
+                    whereCondition2=""
 
             column="id ,topicType,question"+column2
             whereCondition=" "+whereCondition2
