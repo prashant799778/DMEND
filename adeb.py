@@ -937,6 +937,9 @@ def driverlogin():
 
                         if data1['result']['profilePic']!=None:
                             data1['result']['profilePic']=str(ConstantData.GetBaseURL())+ str(data1['result']['profilePic'])
+                            y3=data1['result']['profilePic']
+                            y7={"profilePic":y3}
+                            loginuser['result'].update(y7)
 
 
                         if data1['result']['documentstatus'] ==0:
