@@ -919,15 +919,22 @@ def driverlogin():
             if (loginuser['status']!='false'): 
                 if loginuser['result']['userTypeId'] =="3" or loginuser['result']['userTypeId'] ==3 :
                     driverId=loginuser['result']['userId']
-                    column="documentstatus,HealthReport,dlNo,pIDFrontFilename"
+                    column="documentstatus,HealthReport,dlNo,pIDFrontFilename,profilePic"
                     whereCondition=" and driverId='"+str(driverId)+"'"
                     data1=databasefile.SelectQuery1('driverMaster',column,whereCondition)
                     if data1['status']!="false":
                         print(data1['result']['documentstatus'] ,"opegge")
+
+                        if data1['result']['profilePic']!=None:
+                            data1['result']['profilePic']=str(ConstantData.GetBaseURL())+ str(data1['result']['profilePic'])
+
+
                         if data1['result']['documentstatus'] ==0:
                             y={"documentstatus":"No"}
+                        
                         if data1['result']['documentstatus'] ==1:
                             y={"documentstatus":"Yes"}
+                        
                         
                         if data1['result']['HealthReport'] ==None:
                             
