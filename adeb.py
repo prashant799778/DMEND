@@ -37,6 +37,7 @@ app.config['SECRET_KEY'] = 'secret!'
 @app.route("/profilePic/<image_name>")
 def profilePic(image_name):
     try:
+        print(image_name,"+++++++=")
         return send_from_directory('profilePic', filename=image_name, as_attachment=False)
     except FileNotFoundError:
         abort(404)
@@ -3859,7 +3860,8 @@ def addDriverDocs():
                 #folder path to save campaign image
                 FolderPath = ConstantData.GetProfilePicPath(filename)  
 
-                filepath = '/profilePic/' + filename    
+                filepath = '/profilePic/' + filename 
+
                 print(filepath,"filepath================")
                 print(FolderPath,"FolderPathFolderPathFolderPathFolderPath")
                 file.save(FolderPath)
