@@ -4484,7 +4484,18 @@ def getdriverdocupdateRequest():
                     if i['docType'] == 2 or i['topicType'] == '2':
                         i['docTypeName']='personalDetails'
                     if i['docType'] == 3 or i['topicType'] == '3':
-                        i['docTypeName']='healthReport'    
+                        i['docTypeName']='healthReport'
+                    if i['docType'] == '1,3' or i['docType'] == '3,1'  :
+                        i['docTypeName']='drivingLicense,healthReport'
+                    if i['docType'] == '1,2' or i['docType'] == '2,1' :
+                        i['docTypeName']='drivingLicense,personalDetails'
+                    if i['docType'] == '2,3' or  i['docType'] == '3,2' :
+                        i['docTypeName']='personalDetails,healthReport'
+                        
+                        
+
+                        
+
 
                 
                 return data
