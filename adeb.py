@@ -4515,14 +4515,14 @@ def adddriverdocupdateRequest():
     try:
         inputdata =  commonfile.DecodeInputdata(request.get_data())
         startlimit,endlimit="",""
-        keyarr = ['docType','driverId']
+        keyarr = ['docType','driverId','message']
         commonfile.writeLog("adddriverdocupdateRequest",inputdata,0)
         msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
         if msg=="1":
             docType = inputdata["docType"]
             driverId=inputdata['driverId']
             message=inputdata['message']
-            column="docType,driverId"
+            column="docType,driverId,message"
             values="'"+str(topicType)+"','"+str(driverId)+"','"+str(message)+"' "
             insertdata=databasefile.InsertQuery("driverdocupdateRequest",column,values)
             return insertdata
