@@ -4470,7 +4470,7 @@ def getdriverdocupdateRequest():
         if msg == "1":
             column2=""
             if 'driverId' in inputdata:
-                driverId=inputdata['id']
+                driverId=inputdata['driverId']
                 whereCondition2= " and driverId='"+str(driverId)+"'"
 
             column="docType,message"
@@ -4491,6 +4491,8 @@ def getdriverdocupdateRequest():
                         i['docTypeName']='drivingLicense,personalDetails'
                     if i['docType'] == '2,3' or  i['docType'] == '3,2' :
                         i['docTypeName']='personalDetails,healthReport'
+                    if i['docType'] == '1,2,3' or  i['docType'] == '3,2,1' :
+                        i['docTypeName']='personalDetails,healthReport,drivingLicense'
                         
                         
 
@@ -4515,15 +4517,24 @@ def adddriverdocupdateRequest():
     try:
         inputdata =  commonfile.DecodeInputdata(request.get_data())
         startlimit,endlimit="",""
-        keyarr = ['docType','driverId','message']
+        keyarr = ['docType','driverId']
         commonfile.writeLog("adddriverdocupdateRequest",inputdata,0)
         msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
         if msg=="1":
             docType = inputdata["docType"]
             driverId=inputdata['driverId']
-            message=inputdata['message']
-            column="docType,driverId,message"
-            values="'"+str(docType)+"','"+str(driverId)+"','"+str(message)+"' "
+            columns=""
+            values2=""
+
+            if 'message' in inputdata:
+                message=inputdata['message']
+                columns=",message"
+                values2=",'"+str(message)+"'"
+            
+            column="docType,driverId"+columns
+
+
+            values="'"+str(docType)+"','"+str(driverId)+"' "+values2
             insertdata=databasefile.InsertQuery("driverdocupdateRequest",column,values)
             return insertdata
             
