@@ -3706,8 +3706,6 @@ def myFavDrivers():
         return output  
 
 
-
-
 @app.route('/addDriverDocs', methods=['POST'])
 def addDriverDocs():
     try:
@@ -3866,6 +3864,7 @@ def addDriverDocs():
                 print(FolderPath,"FolderPathFolderPathFolderPathFolderPath")
                 file.save(FolderPath)
                 PicPath = filepath 
+                
                
 
             if data['status']!='False':
@@ -3995,7 +3994,12 @@ def addDriverDocs():
 
                             return data11
                         else:
-                            data={"result":"","message":"Already Uploaded","status":"false"}
+                            column = "gearType='" + str(gearType) + "',dlNo = '" + str(DlNo) + "',dlFrontFilename = '" + str(dlFrontFilename) + "',dlFrontFilepath = '" + str(DlFrontPicPath) + "',dlBackFilename = '" + str(dlBackFilename) + "',dlBackFilepath = '" + str(DlBackPicPath) + "'"
+                            print(column,'column')
+                            whereCondition= "  and driverId = '" + str(driverId)+ "' "
+                            output=databasefile.UpdateQuery("driverMaster",column,whereCondition)
+
+                            data={"result":{},"message":"Updated Succesfully","status":"false"}
                             return data
 
                     if (key == 2) or (key =="2"):
@@ -4035,7 +4039,12 @@ def addDriverDocs():
                             return data11
                         
                         else:
-                            data={"result":"","message":"Already Uploaded","status":"false"}
+                            column = " pIDType = '" + str(PIDType) + "',pIDNo = '" + str(PIDNo) + "',pIDFrontFilename = '" + str(PIDFrontFilename) + "',pIDFrontFilepath = '" + str(PIDFrontPicPath) + "',pIDBackFilename = '" + str(PIDBackFilename) + "',pIDBackFilepath = '" + str(PIDBackPicPath) + "',DOB='" + str(DOB) + "',profilePic='" + str(PicPath) + "'"
+                            print(column,'column')
+                            whereCondition= "  and driverId = '" + str(driverId)+ "' "
+                            output=databasefile.UpdateQuery("driverMaster",column,whereCondition)
+                            
+                            data={"result":{},"message":"Updated Succesfully","status":"true"}
                             return data
 
 
@@ -4102,14 +4111,18 @@ def addDriverDocs():
 
                                 return data11
                             else:
-                                data11={"result":"","message":"Already Uploaded","status":"false"}
-                                return data11
+                                column = "bloodGroup = '" + str(bloodGroup) + "',Surgery = '" + str(Surgery) + "',HealthReport = '" + str(HealthReport) + "'"
+                                print(column,'column')
+                                whereCondition= "  and driverId = '" + str(driverId)+ "' "
+                                output=databasefile.UpdateQuery("driverMaster",column,whereCondition)
+                                data={"result":{},"message":"Updated Succesfully","status":"true"}
+                                return data
 
 
 
                             print('q')
                         else:
-                            data11={"result":"","message":"Already Uploaded","status":"false"}
+                            data11={"result":"","message":"Invalid mobileNo","status":"false"}
                             return data11
 
             else:
@@ -4123,6 +4136,9 @@ def addDriverDocs():
         print("Exception---->" + str(e))    
         output = {"result":"something went wrong","status":"false"}
         return output
+
+            
+
 
 
 
