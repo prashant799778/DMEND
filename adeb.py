@@ -4473,7 +4473,7 @@ def getdriverdocupdateRequest():
                 driverId=inputdata['id']
                 whereCondition2= " and driverId='"+str(driverId)+"'"
 
-            column="docType"
+            column="docType,message"
             whereCondition=" "+whereCondition2
             data=databasefile.SelectQuery4("driverdocupdateRequest",column,whereCondition)
         
@@ -4521,8 +4521,9 @@ def adddriverdocupdateRequest():
         if msg=="1":
             docType = inputdata["docType"]
             driverId=inputdata['driverId']
+            message=inputdata['message']
             column="docType,driverId"
-            values="'"+str(topicType)+"','"+str(driverId)+"' "
+            values="'"+str(topicType)+"','"+str(driverId)+"','"+str(message)+"' "
             insertdata=databasefile.InsertQuery("driverdocupdateRequest",column,values)
             return insertdata
             
