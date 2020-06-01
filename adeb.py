@@ -4523,7 +4523,7 @@ def adddriverdocupdateRequest():
             driverId=inputdata['driverId']
             message=inputdata['message']
             column="docType,driverId,message"
-            values="'"+str(topicType)+"','"+str(driverId)+"','"+str(message)+"' "
+            values="'"+str(docType)+"','"+str(driverId)+"','"+str(message)+"' "
             insertdata=databasefile.InsertQuery("driverdocupdateRequest",column,values)
             return insertdata
             
