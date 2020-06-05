@@ -431,30 +431,31 @@ def generateOtp():
     try:
         inputdata =  commonfile.DecodeInputdata(request.get_data())
         startlimit,endlimit="",""
-        keyarr = ['email']
+        keyarr = ['mobileNo']
         print(inputdata,"B")
         commonfile.writeLog("generateOtp",inputdata,0)
         msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
         if msg =="1":
-            email=str(inputdata["email"])
+            mobileNo=inputdata["mobileNo"]
 
             digits = "0123456789"
             OTP = ""
             for i in range(4):
                 OTP += digits[math.floor(random.random() * 10)]
-            message = Mail(
-                from_email = 'adeb@achievers.com',
-                to_emails = str(email),
-                subject = "Otp for Reset Password",
-                html_content = '<strong> Otp To Reset Your Password is:' + str(OTP) + ' </strong> <br> <br> Thanks<br> <br> ADEB Team')
-            sg = SendGridAPIClient('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')
-            response = sg.send(message)
+
+            # message = Mail(
+            #     from_email = 'adeb@achievers.com',
+            #     to_emails = str(email),
+            #     subject = "Otp for Reset Password",
+            #     html_content = '<strong> Otp To Reset Your Password is:' + str(OTP) + ' </strong> <br> <br> Thanks<br> <br> ADEB Team')
+            # sg = SendGridAPIClient('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')
+            # response = sg.send(message)
            
 
 
           
             column="otp='" + str(OTP)+ "'"
-            whereCondition= "  and email = '" + str(email)+ "' "
+            whereCondition= "  and mobileNo = '" + str(mobileNo)+ "' "
             output=databasefile.UpdateQuery("userMaster",column,whereCondition)
             columns='otp'
             
@@ -482,16 +483,16 @@ def updatePassword():
     try:
         inputdata =  commonfile.DecodeInputdata(request.get_data())
         startlimit,endlimit="",""
-        keyarr = ['email','password']
+        keyarr = ['mobileNo','password']
         print(inputdata,"B")
         commonfile.writeLog("updatePassword",inputdata,0)
         msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
         if msg =="1":
-            email=str(inputdata["email"])
+            mobileNo=inputdata["mobileNo"]
             password=str(inputdata["password"])
          
             column="password='" + password+ "'"
-            whereCondition= "  and email = '" + str(email)+ "' "
+            whereCondition= "  and mobileNo = '" + str(mobileNo)+ "' "
             output=databasefile.UpdateQuery("userMaster",column,whereCondition)
                        
             if output!='0':
