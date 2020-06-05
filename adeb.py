@@ -461,7 +461,7 @@ def generateOtp():
             
             data=databasefile.SelectQuery("userMaster",columns,whereCondition,"",startlimit,endlimit)
             if data['result']!="":
-                Data = {"status":"true","message":"","result":data["result"]}                  
+                Data = {"status":"true","message":"","result":data["result"][0]}                  
                 return Data
             else:
                 return {"status":"false","message":"Invalid Email","result":""}  
