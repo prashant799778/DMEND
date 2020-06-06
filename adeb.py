@@ -220,7 +220,7 @@ def userlogin():
                 if loginuser['result']['userTypeId'] =="2" or loginuser['result']['userTypeId'] ==2 :
                     return loginuser
                 else:
-                    data={"status":"false","message":"You are user,Not a driver","result":""}
+                    data={"status":"false","message":"You are Driver,Not User","result":""}
                     return data
 
 
