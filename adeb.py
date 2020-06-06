@@ -4296,6 +4296,39 @@ def deleteSupportQuestions():
 
 
 
+@app.route('/getBankName', methods=['GET'])
+def getBankName():
+    try:
+        whereCondition=""
+        
+       
+        
+        msg="1"
+        if msg == "1":
+            if 'id' in inputdata:
+                if inputdata['id'] != "":
+                    Id=inputdata['id']
+                else:
+                    whereCondition2=""
+
+            column="id ,bankName,license"
+            whereCondition=" "
+            data=databasefile.SelectQuery4("bankName",column,whereCondition)
+        
+            if (data['result']!=""):
+                return data
+            else:
+                output = {"message":"No Data Found","result":"No Data Found","status":"false"}
+                return output
+        else:
+            return msg
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"result":"something went wrong","status":"false"}
+        return output
+
+
+
 
 
 @app.route('/addDriverbankDetails', methods=['POST'])
