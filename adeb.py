@@ -4305,11 +4305,7 @@ def getBankName():
         
         msg="1"
         if msg == "1":
-            if 'id' in inputdata:
-                if inputdata['id'] != "":
-                    Id=inputdata['id']
-                else:
-                    whereCondition2=""
+            
 
             column="id ,bankName,license"
             whereCondition=" "
