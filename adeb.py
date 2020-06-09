@@ -807,7 +807,7 @@ def driververifyOtp():
             mobileNo=str(inputdata['mobileNo'])
 
             column="mobileNo,otp,userId,userTypeId"
-            whereCondition= "  and  otp='"+str(otp)+"'	and mobileNo= '" + mobileNo+"' "
+            whereCondition= "  and  otp= " + otp+ " 		and mobileNo= " + mobileNo+" "
             verifyOtp=databasefile.SelectQuery1(" userMaster ",column,whereCondition)
             print("verifyOtp======",verifyOtp)
             if  (verifyOtp["status"]!="false"): 
