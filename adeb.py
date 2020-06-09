@@ -45,6 +45,20 @@ def profilePic(image_name):
 
 
 
+@app.route("/profilePic1/<image_name>")
+def profilePic1(image_name):
+    try:
+        print(image_name,"+++++++=")
+        return send_from_directory('profilePic1', filename=image_name, as_attachment=False)
+    except FileNotFoundError:
+        abort(404)
+
+
+
+
+
+
+
 
 @app.route('/selectUserTypeMaster', methods=['GET'])
 def selectUserTypeMaster():
@@ -981,8 +995,9 @@ def driverlogin():
                         loginuser['result'].update(y)
                     
                     else:
+                        pic=str(ConstantData.GetBaseURL())+"/profilePic1/profilePic.jpg"
                         
-                        y={"documentstatus":"No","drivingLicense":"No","personalDetails":"No","healthReport":"No","profilePic":"None"}
+                        y={"documentstatus":"No","drivingLicense":"No","personalDetails":"No","healthReport":"No","profilePic":pic}
                         loginuser['result'].update(y)
 
                     return loginuser
