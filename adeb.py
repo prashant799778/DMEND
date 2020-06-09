@@ -982,7 +982,7 @@ def driverlogin():
                     
                     else:
                         
-                        y={"documentstatus":"No","drivingLicense":"No","personalDetails":"No","healthReport":"No"}
+                        y={"documentstatus":"No","drivingLicense":"No","personalDetails":"No","healthReport":"No","profilePic":"None"}
                         loginuser['result'].update(y)
 
                     return loginuser
