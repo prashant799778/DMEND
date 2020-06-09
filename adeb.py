@@ -701,6 +701,7 @@ def deletepaymentTypeMaster():
 def driverSignup():
     try:
         inputdata =  commonfile.DecodeInputdata(request.get_data()) 
+        print(inputdata,"inputdata")
         startlimit,endlimit="",""
         keyarr = ['mobileNo','deviceKey']
         commonfile.writeLog("driverSignup",inputdata,0)
