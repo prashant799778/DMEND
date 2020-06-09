@@ -735,14 +735,14 @@ def driverSignup():
             
             if count['status']!='false':
                 if (count['result']['userTypeId'] == '3') or (count['result']['userTypeId'] == 3):
-                    data={"result":"","status":"false","message":"You already Registed through same mobileNo and email"}
+                    data={"result":{},"status":"false","message":"You already Registed through same mobileNo and email"}
                     print(data)
                     return data
                 
                 
                 if (count['result']['userTypeId'] == '2') or (count['result']['userTypeId'] == 2):
                    
-                    data={"result":"","status":"false","message":"You already signedUp as a user"}
+                    data={"result":{},"status":"false","message":"You already signedUp as a user"}
                     print(data)
                     return data
                 
