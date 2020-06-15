@@ -2516,14 +2516,18 @@ def acceptRide():
                         if inputdata['totalHours'] != "":
                             totalHours =inputdata["totalHours"]
 
+                    if "pickUpTime" in inputdata:
+                        if inputdata['pickUpTime'] != "":
+                            pickUpTime =inputdata["pickUpTime"]
+
                     
 
 
 
                     finalAmount=  totalHours* 60 + 35
 
-                    column="bookingId,dropOff,dropOffLatitude,dropOffLongitude,finalAmount,totalHours"
-                    values= " '"+ str(bookingId)+"','" + str(dropLocationAddress)+"','" + str(dropLocationLat)+"','" + str(dropLocationLong) +"','" + str(finalAmount)+"','" + str(totalHours)+"'"
+                    column="bookingId,dropOff,dropOffLatitude,dropOffLongitude,finalAmount,totalHours,pickUpTime"
+                    values= " '"+ str(bookingId)+"','" + str(dropLocationAddress)+"','" + str(dropLocationLat)+"','" + str(dropLocationLong) +"','" + str(finalAmount)+"','" + str(totalHours)+"','" + str(pickUpTime)+"'"
                     insertdata=databasefile.InsertQuery('bookHourlyMaster',column,values)
 
                     columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
@@ -2543,6 +2547,10 @@ def acceptRide():
                 
                 if bookingTypeId ==4 or bookingTypeId=='4':
                     print('one')
+
+                    if "pickUpTime" in inputdata:
+                        if inputdata['pickUpTime'] != "":
+                            pickUpTime =inputdata["pickUpTime"]
 
                     if "dropLocationLat" in inputdata:
                         if inputdata['dropLocationLat'] != "":
@@ -2578,9 +2586,9 @@ def acceptRide():
 
                     print(finalAmount,'final')
 
-                    column="bookingId,dropOff,dropOffLatitude,dropOffLongitude,finalAmount,totalDistance"
+                    column="bookingId,dropOff,dropOffLatitude,dropOffLongitude,finalAmount,totalDistance,pickUpTime"
                     values=  " '"+ str(bookingId) +"','" + str(dropLocationAddress)+"','" + str(dropLocationLat)
-                    values=values+"','" + str(dropLocationLong) +"','" + str(finalAmount) +"','" + str(d2)+"'"
+                    values=values+"','" + str(dropLocationLong) +"','" + str(finalAmount) +"','" + str(d2) +"','" + str(pickUpTime)+"'"
                     insertdata=databasefile.InsertQuery('bookOneMaster',column,values)
 
                     columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
@@ -2596,6 +2604,10 @@ def acceptRide():
 
                 if bookingTypeId ==5 or bookingTypeId=='5':
                     print('Round')
+
+                    if "pickUpTime" in inputdata:
+                        if inputdata['pickUpTime'] != "":
+                            pickUpTime =inputdata["pickUpTime"]
 
 
                     R = 6373.0
@@ -2625,7 +2637,7 @@ def acceptRide():
 
                     column="bookingId,dropOff,dropOffLatitude,dropOffLongitude,finalAmount,totalDistance"
                     values=  " '"+ str(bookingId) +"','" + str(dropLocationAddress)+"','" + str(dropLocationLat)
-                    values=values+"','" + str(dropLocationLong) +"','" + str(finalAmount) +"','" + str(d2)+"'"
+                    values=values+"','" + str(dropLocationLong) +"','" + str(finalAmount) +"','" + str(d2) +"','" + str(pickUpTime)+"'"
                     insertdata=databasefile.InsertQuery('bookRoundMaster',column,values)
 
 
