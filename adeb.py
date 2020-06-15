@@ -2635,7 +2635,7 @@ def acceptRide():
 
                     print(finalAmount,'final')
 
-                    column="bookingId,dropOff,dropOffLatitude,dropOffLongitude,finalAmount,totalDistance"
+                    column="bookingId,dropOff,dropOffLatitude,dropOffLongitude,finalAmount,totalDistance,pickUpTime"
                     values=  " '"+ str(bookingId) +"','" + str(dropLocationAddress)+"','" + str(dropLocationLat)
                     values=values+"','" + str(dropLocationLong) +"','" + str(finalAmount) +"','" + str(d2) +"','" + str(pickUpTime)+"'"
                     insertdata=databasefile.InsertQuery('bookRoundMaster',column,values)
