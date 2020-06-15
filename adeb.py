@@ -1127,16 +1127,15 @@ def driverWallet():
         msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
         if msg == "1":
             mobileNo = inputdata["mobileNo"]
-            userId=inputdata['userId']
+            driverId=inputdata['driverId']
            
             column=  "us.walletBalance  as money"
-            whereCondition= "us.mobileNo = '" + str(mobileNo) + "'and us.userTypeId=um.id and us.userId='" + str(mobileNo) + "'"
+            whereCondition= "us.mobileNo = '" + str(mobileNo) + "'and us.userTypeId=um.id and us.userId='" + str(driverId) + "'"
             loginuser=databasefile.SelectQuery1("userMaster as us,usertypeMaster as um",column,whereCondition)
-            if (loginuser!=0):
-                Data = {"result":loginuser,"status":"true"}                  
-                return Data
+            if (loginuser['result']!=''):
+                return loginuser
             else:
-                data={"status":"Failed","result":"Login Failed"}
+                data={"status":"false","result":{},"message":'wrong data'}
                 return data
 
         else:
@@ -1249,6 +1248,7 @@ def startRide():
             if bookingTypeId ==2 or bookingTypeId =='2':
                 print('1')
 
+
             if bookingTypeId ==3 or bookingTypeId =='3':
                 print('hourly')
 
@@ -1290,6 +1290,7 @@ def startRide():
             if bookingTypeId == 5 or bookingTypeId =='5':
                 print('round')
 
+                
                 column = "date_format(CURDATE(),'%Y-%m-%d')Today,date_format(CURDATE(),'%Y-%m-%d 00:00:00')dayStart,date_format(CURDATE(),'%Y-%m-%d 23:59:59')dayEnd"
                 data3 = databasefile.SelectTimeQuery(column)
                 Today = str(data3["result"][0]["Today"])
@@ -1567,6 +1568,7 @@ def cancelRide():
         print("Exception---->" +str(e))           
         output = {"result":"something went wrong","status":"false"}
         return output
+
 
 
 #______________________________________________
@@ -2362,18 +2364,24 @@ def acceptRide():
 
         bookingTypeId=inputdata['bookingTypeId']
 
+
+        
         print("3")
+        
         bookingId = (commonfile.CreateHashKey(driverId,pickupLocationAddress)).hex
 
 
         commonfile.writeLog("acceptRide",inputdata,0)
         msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
         
+        
         if msg == "1":
+            
             print('B')
             column="bookingId"
             whereCondition2=" and  driverId='"+str(driverId)+"'"
             d=databasefile,SelectQuery1('bookingDriver',column,whereCondition2)
+            
             if d['status'] =="False": 
 
                 columns="mobileNo,name"
@@ -2475,12 +2483,18 @@ def acceptRide():
                         if inputdata['eveningTime'] != "":
                             eveningTime =inputdata["eveningTime"]
 
-                    column='bookingId,startdate,enddate,dropLocationLong,dropLocationLat,dropOff,morningTime,eveningTime,Days'
+                    column='bookingId,startdate,enddate,dropLocationLong,dropLocationLat,dropOff,morningTime,eveningTime'
                     values=" '"+ str(bookingId) +"','" + str(startdate)+"','" + str(enddate)
                     values=values+"','" + str(dropLocationLong) +"','" + str(dropLocationLat) +"','" + str(dropLocationAddress)
 
                     values=values+"','" + str(morningTime) +"','" + str(eveningTime)   +"','" + str(Days)+"'"
                     insertdata=databasefile.InsertQuery('bookCorporateMaster',column,values)
+
+                    for i in Days:
+                        columns="bookingId,days"
+                        values=" '"+ str(bookingId) +"','" + str(i)+"'"
+                        insertdata=databasefile.InsertQuery('bookCorporateMasterDays',column,values)
+
 
                     columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropLocationLat,b.dropLocationLong"
                     columns=columns+",b.finalAmount,b.morningTime,b.eveningTime,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.userMobile"
