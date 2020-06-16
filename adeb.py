@@ -2764,6 +2764,7 @@ def userBookings():
             
             
             if bookingTypeId ==5 or bookingTypeId=='5':
+
             	print('round') 
             	columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
             	columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile "
@@ -3385,9 +3386,9 @@ def cancelledBooking():
 
                 columns="(dr.lat)driverLat,(dr.lng)driverLng,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
                 columns=columns+",b.finalAmount,b.pickUpTime,b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalHours,bm.userMobile"
-                columns=columns+",bm.driverMobile,b.status"
+                columns=columns+",b.status"
                 whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId  and b.status='4' "
-                bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookDailyDriver b,driverRideStatus ar",columns,whereCondition22,"",startlimit,endlimit,orderby)
+                bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookDailyDriver b,driverRideStatus dr",columns,whereCondition22,"",startlimit,endlimit,orderby)
                 print('Dd')
             if bookingTypeId ==2 or bookingTypeId=='2':
                 print('corp')
@@ -3398,12 +3399,12 @@ def cancelledBooking():
                 columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,b.totalHours,bm.userMobile "
                 columns=columns+",bm.driverMobile,b.status"
                 whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId and b.status='4' "
-                bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookHourlyMaster b,driverRideStatus ar",columns,whereCondition22,"",startlimit,endlimit,orderby)
+                bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookHourlyMaster b,driverRideStatus dr",columns,whereCondition22,"",startlimit,endlimit,orderby)
                 print('hourly')
             if bookingTypeId ==4 or bookingTypeId =='4':
                 columns="(dr.lat)driverLat,(dr.lng)driverLng, bm.ambulanceId,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
                 columns=columns+",bm.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile "
-                columns=columns+",bm.driverMobile,b.status"
+                columns=columns+",b.status"
                 whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId and b.status='4' "
                 bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookOneMaster b,driverRideStatus dr",columns,whereCondition22,"",startlimit,endlimit,orderby)
                 print('one')
@@ -3412,7 +3413,7 @@ def cancelledBooking():
                 print('round') 
                 columns="(dr.lat)driverLat,(dr.lng)driverLng, bm.ambulanceId,bm.bookingId,bm.driverId,b.dropOff,b.dropOffLatitude,b.dropOffLongitude"
                 columns=columns+",b.finalAmount,bm.pickup,bm.pickupLatitude,bm.pickupLongitude,bm.totalDistance,bm.userMobile "
-                columns=columns+",bm.driverMobile,b.status"
+                columns=columns+",b.status"
                 whereCondition22=" dr.driverId=bm.driverId and bm.bookingId=b.bookingId and b.status='4' "
                 bookingDetails= databasefile.SelectQueryOrderby("bookDriver bm,bookRoundMaster b,driverRideStatus dr",columns,whereCondition22,"",startlimit,endlimit,orderby)
                         
@@ -3787,8 +3788,8 @@ def myFavDrivers():
            
             
            
-            column="dr.driverId,us.profilePic,us.userName,us.mobileNo"
-            whereCondition=" fv.userId='"+str(userId)+"' and fv.driverId=dr.driverId and dr.driverId-us.userId"
+            column="dr.driverId,dr.profilePic,us.userName,us.mobileNo"
+            whereCondition=" fv.userId='"+str(userId)+"' and fv.driverId=dr.driverId and dr.driverId=sus.userId"
             data=databasefile.SelectQuery4("favDriver as fv,driverMaster as dr,userMaster as us",column,whereCondition)
             if data['status'] !='false':
                 output= {"result":data['result'],"message":"","status":"true"}
