@@ -3492,7 +3492,7 @@ def driverCurrentRides2():
         output = {"result":"something went wrong","status":"false"}
         return output         
 
-        
+
 
 
 @app.route('/cancelledBooking', methods=['POST'])
@@ -5060,6 +5060,85 @@ def updateHealthReport():
         output = {"result":"somthing went wrong","status":"false"}
         return output 
         
+
+
+
+@app.route('/addUserbankDetails', methods=['POST'])
+def addUserbankDetails():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        startlimit,endlimit="",""
+        keyarr = ['userId','nationality','name','mobileNo','city','DOB','accountnumber','address','IBAN','bankName']
+        commonfile.writeLog("addDriverbankDetails",inputdata,0)
+        msg = commonfile.CheckKeyNameBlankValue(keyarr,inputdata)
+        if msg=="1":
+            userId = inputdata["userId"]
+            nationality=inputdata['nationality']
+            name=inputdata['name']
+            mobileNo=inputdata['mobileNo']
+            city=inputdata['city']
+            DOB=inputdata['DOB']
+            accountnumber=inputdata['accountnumber']
+            address=inputdata['address']
+            IBAN=inputdata['IBAN']
+            bankName=inputdata['bankName']
+            column="*"
+            whereCondition= "  and userId= '"+str(userId)+ "'"
+            data=databasefile.SelectQuery1("driverBankDetails",column,whereCondition)
+            print(data,'data')
+            if data['status']=='false':
+                column=" userId,nationality,name,mobileNo,city,DOB,accountnumber,address,IBAN,bankName"
+                values="'"+str(userId)+"','"+str(nationality)+"','"+str(name)+"','"+str(mobileNo)+"','"+str(city)+"','"+str(DOB)+"','"+str(accountnumber)+"','"+str(address)+"','"+str(IBAN)+"','"+str(bankName)+"' "
+                insertdata=databasefile.InsertQuery("userBankDetails",column,values)
+                return insertdata
+            else:
+                output = {"result":" Already Added ","status":"true","bankDetails":data['result']}
+                return output
+        else:
+            return msg 
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"result":"something went wrong","status":"false"}
+        return output
+
+
+
+
+
+@app.route('/getuserDetails', methods=['POST'])
+def getuserBankDetails():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        if inputdata == None:
+            inputdata=""
+        startlimit,endlimit="",""
+        whereCondition2=""
+       
+        commonfile.writeLog("getdriverBankDetails",inputdata,0)
+        
+        msg="1"
+        if msg == "1":
+            column2=""
+            if 'userId' in inputdata:
+                userId=inputdata['userId']
+                whereCondition2= " and userId='"+str(userId)+"'"
+
+            column=" userId,nationality,name,mobileNo,city,DOB,accountnumber,address,IBAN,bankName"
+            whereCondition=" "+whereCondition2
+            data=databasefile.SelectQuery4("userBankDetails",column,whereCondition)
+        
+            if (data['result']!=""):
+              return data
+            else:
+                output = {"message":"No Data Found","result":[],"status":"false"}
+                return output
+        else:
+            return msg
+    except Exception as e :
+        print("Exception---->" + str(e))    
+        output = {"result":"something went wrong","status":"false"}
+        return output        
+
 
 
 
