@@ -5105,7 +5105,7 @@ def addUserbankDetails():
 
 
 
-@app.route('/getuserDetails', methods=['POST'])
+@app.route('/getuserbankBDetails', methods=['POST'])
 def getuserBankDetails():
     try:
         inputdata =  commonfile.DecodeInputdata(request.get_data())
@@ -5114,7 +5114,7 @@ def getuserBankDetails():
         startlimit,endlimit="",""
         whereCondition2=""
        
-        commonfile.writeLog("getdriverBankDetails",inputdata,0)
+        commonfile.writeLog("getuserBankDetails",inputdata,0)
         
         msg="1"
         if msg == "1":
