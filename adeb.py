@@ -3353,6 +3353,148 @@ def acceptBooking():
         return output
 
 
+
+
+@app.route('/userCurrentRides', methods=['POST'])
+def userCurrentRides():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        startlimit,endlimit="",""
+        whereCondition2=""
+       
+        commonfile.writeLog("myrides",inputdata,0)
+        print('aa')
+        msg="1"
+        if msg == "1":
+            if "startLimit" in inputdata:
+                if inputdata['startLimit'] != "":
+                    startlimit =str(inputdata["startLimit"])
+                
+            if "endLimit" in inputdata:
+                if inputdata['endLimit'] != "":
+                    endlimit =str(inputdata["endLimit"])
+
+                 
+            if "userId" in inputdata:
+                if inputdata['userId'] != "":
+                    userId =str(inputdata["userId"])
+
+            if "bookingId" in inputdata:
+                if inputdata['bookingId'] != "":
+                    bookingId =str(inputdata["bookingId"])
+                    whereCondition2=" and bm.bookingId= '"+ str(bookingId)+"'"
+
+            orderby="bm.id"                
+
+                    
+
+
+
+            whereCondition=" and bm.ambulanceId=am.ambulanceId  and bm.status='1' and  am.ambulanceModeId=aM.Id and am.ambulanceTypeId=atm.id  and  bm.userId=um.userId and bm.driverId=dm.driverId and um.userId='"+str(userId)+"' "+whereCondition2
+
+            column="bm.id,bm.userMobile,bm.drivermobile,bm.bookingId,atm.ambulanceType as ambulanceTypeId ,aM.ambulanceType as ambulanceModeId,bm.pickup as tripFrom,bm.dropOff as tripTo,date_format(bm.ateCreate,'%Y-%m-%d %H:%i:%s')startTime,dm.name as driverName,um.name as userName,bm.status,bm.finalAmount,bm.totalDistance"
+            data=databasefile.SelectQueryOrderby("bookAmbulance as bm,userMaster as um,driverMaster as dm,ambulanceMaster as am,ambulanceTypeMaster as atm,ambulanceMode as aM",column,whereCondition,"",startlimit,endlimit,orderby)
+            print(data,"--------------------------------------------------")
+            countdata=databasefile.SelectQuery4("bookAmbulance as bm,userMaster as um,driverMaster as dm",column,whereCondition)
+
+            whereCondition3=" and bm.ambulanceId= am.ambulanceId and bm.status='1' and am.ambulanceModeId=aM.Id and   bm.userId=um.userId and bm.driverId=dm.driverId and um.userId='"+str(userId)+"' "+whereCondition2
+
+            column2="distinct(bm.id),bm.userMobile,bm.drivermobile,bm.bookingId,aM.ambulanceType as ambulanceModeId,bm.pickup as tripFrom,bm.dropOff as tripTo,date_format(bm.dateCreate,'%Y-%m-%d %H:%i:%s')startTime,dm.name as driverName,um.name as userName,bm.status,bm.finalAmount,bm.totalDistance"
+            data2=databasefile.SelectQueryOrderby("bookResponder as bm,userMaster as um,driverMaster as dm,ambulanceMaster as am,ambulanceTypeMaster as atm,ambulanceMode as aM",column2,whereCondition3,"",startlimit,endlimit,orderby)
+            print(data,"--------------------------------------------------")
+            countdata2=databasefile.SelectQuery4("bookResponder as bm,userMaster as um,driverMaster as dm,ambulanceMaster as am,ambulanceMode as aM",column2,whereCondition3)
+            
+            if (data2['status']=='false'):
+                data2['result']=[]
+
+            if (data['status']=='false'):
+                data['result']=[]
+                
+           
+
+            if (data['status']!='false'): 
+                Data = {"result":{"ambulance":data['result'][0],"responder":data2['result'][0]},"status":"true","message":""}
+                return Data
+            else: 
+                Data = {"result":{"ambulance":data['result'][0],"responder":data2['result'][0]},"status":"true","message":""}
+                return Data
+        else:
+            return msg 
+    except KeyError as e:
+        print("Exception---->" +str(e))        
+        output = {"result":"Input Keys are not Found","status":"false"}
+        return output    
+    except Exception as e :
+        print("Exception---->" +str(e))           
+        output = {"result":"something went wrong","status":"false"}
+        return output
+
+
+
+
+@app.route('/driverCurrentRides2', methods=['POST'])
+def driverCurrentRides2():
+    try:
+        inputdata =  commonfile.DecodeInputdata(request.get_data())
+        startlimit,endlimit="",""
+        whereCondition2=""
+       
+        commonfile.writeLog("driverCurrentRides",inputdata,0)
+        msg="1"
+        if msg == "1":
+            if "startLimit" in inputdata:
+                if inputdata['startLimit'] != "":
+                    startlimit =str(inputdata["startLimit"])
+                
+            if "endLimit" in inputdata:
+                if inputdata['endLimit'] != "":
+                    endlimit =str(inputdata["endLimit"])
+
+                 
+            if "userId" in inputdata:
+                if inputdata['userId'] != "":
+                    userId =str(inputdata["userId"])
+
+            if "bookingId" in inputdata:
+                if inputdata['bookingId'] != "":
+                    bookingId =str(inputdata["bookingId"])
+                    whereCondition2=" and bm.bookingId= '"+ str(bookingId)+"'"
+
+            orderby="bm.id"                
+
+                    
+
+
+
+            whereCondition="  and  bm.userId=um.userId and bm.status='1' and bm.driverId=dm.driverId and dm.driverId='"+str(userId)+"' "+whereCondition2
+
+            column="bm.id,bm.userMobile,bm.drivermobile,bm.bookingId,bm.pickup as tripFrom,bm.dropOff as tripTo,date_format(bm.ateCreate,'%Y-%m-%d %H:%i:%s')startTime,dm.name as driverName,um.name as userName,bm.status,bm.finalAmount,bm.totalDistance"
+            data=databasefile.SelectQueryOrderby("bookAmbulance as bm,userMaster as um,driverMaster as dm",column,whereCondition,"",startlimit,endlimit,orderby)
+            print(data,"--------------------------------------------------")
+            countdata=databasefile.SelectQuery4("bookAmbulance as bm,userMaster as um,driverMaster as dm",column,whereCondition)
+           
+            if (data['status']!='false'): 
+                Data = {"result":data['result'][0],"status":"true","message":""}
+
+                          
+                return Data
+            else:
+                
+                return data
+        else:
+            return msg 
+    except KeyError as e:
+        print("Exception---->" +str(e))        
+        output = {"result":"Input Keys are not Found","status":"false"}
+        return output    
+    except Exception as e :
+        print("Exception---->" +str(e))           
+        output = {"result":"something went wrong","status":"false"}
+        return output         
+
+        
+
+
 @app.route('/cancelledBooking', methods=['POST'])
 def cancelledBooking():
     try:
